@@ -48,11 +48,14 @@ private extension SKSynchronizedArray {
 // MARK: - Public Extension SKSynchronizedArray With Properties
 public extension SKSynchronizedArray {
     
+    // MARK: Subscript
     subscript(atIndex: Int) -> T {
+        // Get Subscript
         get {
             self.reader { target in target[atIndex] }
         }
         
+        // Set Subscript
         set {
             self.writer { target in target[atIndex] = newValue }
         }
@@ -62,8 +65,36 @@ public extension SKSynchronizedArray {
         return self.reader { target in target.count }
     }
     
+    var capacity: Int {
+        return self.reader { target in target.capacity }
+    }
+    
     var indices: Range<Int> {
         return self.reader { target in target.indices }
+    }
+    
+    var startIndex: Int {
+        return self.reader { target in target.startIndex }
+    }
+    
+    var endIndex: Int {
+        return self.reader { target in target.endIndex }
+    }
+    
+    var first: Optional<T> {
+        return self.reader { target in target.first }
+    }
+    
+    var last: Optional<T> {
+        return self.reader { target in target.last }
+    }
+    
+    var isEmpty: Bool {
+        return self.reader { target in target.isEmpty }
+    }
+    
+    var reversed: SynchronizedArrayType {
+        return self.reader { target in target.reversed() }
     }
     
     typealias EnumeratedSequenceType = EnumeratedSequence<SynchronizedArrayType>
@@ -100,6 +131,11 @@ public extension SKSynchronizedArray {
     }
     
     final func removeAll() {
+        /// - Complexity: O(*n*), where *n* is the length of the array.
         self.indices.forEach { index in self.remove(at: index) }
+    }
+    
+    final func swapAt(i left: Int, j right: Int) {
+        self.writer { target in target.swapAt(left, right) }
     }
 }
