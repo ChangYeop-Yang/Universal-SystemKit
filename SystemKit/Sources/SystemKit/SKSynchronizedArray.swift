@@ -97,6 +97,14 @@ public extension SKSynchronizedArray {
         return self.reader { target in target.reversed() }
     }
     
+    var dropLast: SynchronizedArrayType {
+        return self.reader { target in target.dropLast() }
+    }
+    
+    var dropFirst: ArraySlice<T> {
+        return self.reader { target in target.dropFirst() }
+    }
+    
     typealias EnumeratedSequenceType = EnumeratedSequence<SynchronizedArrayType>
     var enumerated: EnumeratedSequenceType {
         return self.reader { target in target.enumerated() }

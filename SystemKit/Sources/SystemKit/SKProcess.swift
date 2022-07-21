@@ -20,8 +20,65 @@
  * THE SOFTWARE.
  */
 
+import Logging
 import Foundation
 
 public class SKProcess: NSObject {
     
+    // MARK: - Typealias
+    public typealias SKProcessErrorResult = (NSError) -> Swift.Void
+    
+    // MARK: - Object Properties
+    public static let shared: SKProcess = SKProcess()
+    
+    // MARK: - Initalize
+    private override init() { super.init() }
 }
+
+// MARK: - Private Extension SKProcess
+private extension SKProcess {
+    
+    final func launch(process: Process) throws {
+        
+        // macOS 10.13 미만의 운영체제에서는 launch() 함수를 통하여 실행합니다.
+        guard #available(macOS 10.13, *) else {
+            process.launch()
+            return
+        }
+        
+        // macOS 10.13 이상의 운영체제에서는 run() 함수를 통하여 실행합니다.
+        try process.run()
+    }
+}
+
+// MARK: - Public Extension SKProcess
+public extension SKProcess {
+    
+    @discardableResult
+    final func run(launchPath: String, arguments: [String],
+                   standardInput: Any? = nil, standardOutput: Any? = nil, standardError: Any? = nil,
+                   waitUntilExit: Bool,
+                   errorCompletionHandler: SKProcessErrorResult? = nil) -> Int32 {
+        
+        let process = Process()
+        process.launchPath = launchPath
+        process.arguments = arguments
+        process.standardInput = standardInput
+        process.standardOutput = standardOutput
+        process.standardError = standardError
+        
+        do {
+            try launch(process: process)
+
+            if waitUntilExit {
+                process.waitUntilExit()
+            }
+        } catch let error as NSError {
+            errorCompletionHandler?(error)
+            return EOF
+        }
+        
+        return process.processIdentifier
+    }
+}
+
