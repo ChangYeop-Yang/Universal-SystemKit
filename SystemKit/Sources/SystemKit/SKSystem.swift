@@ -49,8 +49,27 @@ public extension SKSystem {
         return result as String
     }
     
+    /**
+        - NOTE: [Apple Document](https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment)
+        - Returns: The example function returns the value 0 for a native process, 1 for a translated process, and -1 when an error occurs.
+     */
+    final func isRosettaTranslatedProcess() -> TranslatedRosettaResult {
+        
+        var ret: Int = Int.zero
+        var size: size_t = MemoryLayout.size(ofValue: ret)
+        
+        let flag: String = "sysctl.proc_translated"
+        if sysctlbyname(flag, &ret, &size, nil, Int.zero) == EOF {
+            if errno == ENOENT { return .native }
+            return .error
+        }
+        
+        let rawValue = Int32(ret)
+        return TranslatedRosettaResult(rawValue: rawValue) ?? .error
+    }
+    
     @available(macOS 10.10, *)
-    final func getUsageCPU() -> Double {
+    final func getRunningProcessUsingCPU() -> Double {
 
         var threadsList: thread_act_array_t?
         var totalUsageOfCPU: Double = Double.zero

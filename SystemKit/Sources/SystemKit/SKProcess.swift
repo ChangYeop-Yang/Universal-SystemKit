@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-import Logging
 import Foundation
 
 public class SKProcess: NSObject {
