@@ -26,21 +26,24 @@ public class SKAsyncOperation: Operation {
     
     // MARK: - Enum
     public enum State: String {
-        
-        case ready, executing, finished
+        case ready = "Ready"
+        case executing = "Executing"
+        case finished = "Finished"
         
         // KVO notifications을 위한 keyPath설정
         fileprivate var keyPath: String {
-            return "is\(rawValue.capitalized)"
-        } // isReady/isExecuting/isFinished
+            return String(format: "is%@", rawValue.capitalized)
+        }
     }
     
-    // 직접 관리하기 위한 상태 변수 생성
+    // MARK: - Object Properties
     public var state = State.ready {
+        // 직접적으로 Operation 작업 상태를 관리하기 위한 Status Variable 생성
         willSet {
             willChangeValue(forKey: newValue.keyPath)
             willChangeValue(forKey: state.keyPath)
         }
+        
         didSet {
             didChangeValue(forKey: oldValue.keyPath)
             didChangeValue(forKey: state.keyPath)
@@ -48,36 +51,38 @@ public class SKAsyncOperation: Operation {
     }
 }
 
-// MARK: - Public Extension AsyncOperation
+// MARK: - Public Extension AsyncOperation With Properties
 public extension SKAsyncOperation {
-    // 상태속성은 모두 read-only
-    override var isReady: Bool {
-        return super.isReady && state == .ready
-    }
     
-    override var isExecuting: Bool {
-        return state == .executing
-    }
+    override var isReady: Bool { return super.isReady && self.state == State.ready }
     
-    override var isFinished: Bool {
-        return state == .finished
-    }
+    override var isExecuting: Bool { return self.state == State.executing }
     
-    override var isAsynchronous: Bool {  // 무조건 true로 리턴
-        return true
-    }
+    override var isFinished: Bool { return self.state == State.finished }
+    
+    override var isAsynchronous: Bool { return true }
+}
+
+// MARK: - Public Extension AsyncOperation With Method
+public extension SKAsyncOperation {
     
     override func start() {
-        if isCancelled {
-            state = .finished
+    
+        if self.isCancelled {
+            self.state = State.finished
             return
         }
-        main()
-        state = .executing
+        
+        self.main()
+        
+        NSLog("[SKAsyncOperation] Action, Operation Start: %@", self.state.keyPath)
+        self.state = State.executing
     }
     
     override func cancel() {
         super.cancel()
-        state = .finished
+        
+        NSLog("[SKAsyncOperation] Action, Operation Cancel: %@", self.state.keyPath)
+        self.state = State.finished
     }
 }

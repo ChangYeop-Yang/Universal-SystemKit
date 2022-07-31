@@ -33,8 +33,10 @@ public class SKSystem: NSObject {
 public extension SKSystem {
     
     @available(macOS 10.1, *)
-    final func getConsoleUserName(forKey: String = "GetConsoleUser") -> String? {
+    final func getConsoleUserName() -> String? {
 
+        let forKey: String = "GetConsoleUser"
+        
         // Creates a new session used to interact with the dynamic store maintained by the System Configuration server.
         let store = SCDynamicStoreCreate(nil, forKey as CFString, nil, nil)
 
