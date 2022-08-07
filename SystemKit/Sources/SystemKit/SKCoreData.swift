@@ -70,56 +70,64 @@ public extension SKCoreData {
     @available(macOS 10.12, *)
     @discardableResult
     final func open() -> Bool {
-        return true
+        
+        self.implementQueue.sync {
+            
+            
+            return true
+        }
     }
     
     final func insert<T: NSManagedObject>(object: T...) {
         
-        guard let context = self.inContext else { return }
-        
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
+            
+            guard let self = self, let context = self.inContext else { return }
+            
             object.forEach { item in context.insert(item) }
         }
     }
     
     final func insert<T: NSManagedObject>(objects: [T]) {
         
-        guard let context = self.inContext else { return }
-        
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
+            
+            guard let self = self, let context = self.inContext else { return }
+            
             objects.forEach { item in context.insert(item) }
         }
     }
     
     final func delete<T: NSManagedObject>(objects: [T]) {
         
-        guard let context = self.inContext else { return }
-        
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
+            
+            guard let self = self, let context = self.inContext else { return }
+            
             objects.forEach { target in context.delete(target) }
         }
     }
     
     final func delete<T: NSManagedObject>(object: T...) {
         
-        guard let context = self.inContext else { return }
-        
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
+            
+            guard let self = self, let context = self.inContext else { return }
+            
             object.forEach { target in context.delete(target) }
         }
     }
     
     final func first(entityName: String, predicate: NSPredicate? = nil) -> Optional<NSManagedObject> {
         
-        self.implementQueue.sync {
+        self.implementQueue.sync { [weak self] in
                         
-            guard let context = self.inContext else { return nil }
+            guard let self = self, let context = self.inContext else { return nil }
             
             let request = self.createRequest(entityName: entityName, predicate: predicate, fetchLimit: 1)
             
-            do {
-                return try context.fetch(request).first
-            } catch let error as NSError {
+            do { return try context.fetch(request).first }
+            catch let error as NSError {
                 NSLog(error.description)
                 return nil
             }
@@ -128,15 +136,14 @@ public extension SKCoreData {
     
     final func last(entityName: String, predicate: NSPredicate? = nil) -> Optional<NSManagedObject> {
         
-        self.implementQueue.sync {
+        self.implementQueue.sync { [weak self] in
             
-            guard let context = self.inContext else { return nil }
+            guard let self = self, let context = self.inContext else { return nil }
                         
             let request = self.createRequest(entityName: entityName, predicate: predicate, fetchLimit: 1)
             
-            do {
-                return try context.fetch(request).last
-            } catch let error as NSError {
+            do { return try context.fetch(request).last }
+            catch let error as NSError {
                 NSLog(error.description)
                 return nil
             }
@@ -149,27 +156,27 @@ public extension SKCoreData {
                      fetchLimit: Int = Int.max,
                      errorHandler: CoreDataErrorHandler? = nil) -> [NSManagedObject] {
         
-        self.implementQueue.sync {
+        self.implementQueue.sync { [weak self] in
                                     
-            guard let context = self.inContext else { return Array.init() }
+            guard let self = self, let context = self.inContext else { return Array.init() }
             
             let request = self.createRequest(entityName: entityName, predicate: predicate,
                                              sortDescriptors: sortDescriptors, fetchLimit: fetchLimit)
             
-            do {
-                return try context.fetch(request)
-            } catch let error as NSError {
+            do { return try context.fetch(request) }
+            catch let error as NSError {
                 errorHandler?(error)
                 return Array.init()
             }
         }
     }
     
-    final func update<T: NSManagedObject>(object: T, errorHandler: CoreDataErrorHandler? = nil) {
+    final func update<T: NSManagedObject>(object: T,
+                                          errorHandler: Optional<CoreDataErrorHandler> = nil) {
         
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
             
-            guard let context = self.inContext else { return }
+            guard let self = self, let context = self.inContext else { return }
             
             // NSManagedObject 대상이 현재 삭제가 된 상태인 경우에는 업데이트 작업을 수행하지 않습니다.
             if object.isDeleted { return }
@@ -190,9 +197,9 @@ public extension SKCoreData {
      */
     final func save(errorHandler: CoreDataErrorHandler? = nil) {
         
-        self.implementQueue.async(flags: .barrier) {
+        self.implementQueue.async(flags: .barrier) { [weak self] in
             
-            guard let context = self.inContext else { return }
+            guard let self = self, let context = self.inContext else { return }
             
             // CoreData 저장 된 데이터들에 대하여 변경사항이 존재하지 않는 경우에는 영구 저장 작업을 수행하지 않습니다.
             guard context.hasChanges else { return }
