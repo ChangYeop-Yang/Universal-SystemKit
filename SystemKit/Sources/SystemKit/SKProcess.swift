@@ -25,7 +25,7 @@ import Foundation
 public class SKProcess: NSObject {
     
     // MARK: - Typealias
-    public typealias SKProcessErrorResult = (NSError) -> Swift.Void
+    public typealias SKProcessErrorResult = (NSError, Process) -> Swift.Void
     
     // MARK: - Object Properties
     public static let shared: SKProcess = SKProcess()
@@ -73,7 +73,7 @@ public extension SKProcess {
                 process.waitUntilExit()
             }
         } catch let error as NSError {
-            errorCompletionHandler?(error)
+            errorCompletionHandler?(error, process)
             return EOF
         }
         

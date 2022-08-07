@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15C6096228994536000CB3CB /* SystemKit in Frameworks */ = {isa = PBXBuildFile; productRef = 15C6096128994536000CB3CB /* SystemKit */; };
 		15F9D8202891805C009CDEED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9D81F2891805C009CDEED /* AppDelegate.swift */; };
 		15F9D8222891805C009CDEED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9D8212891805C009CDEED /* ViewController.swift */; };
 		15F9D8252891805C009CDEED /* SystemKitTesting.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 15F9D8232891805C009CDEED /* SystemKitTesting.xcdatamodeld */; };
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15C6096228994536000CB3CB /* SystemKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +103,7 @@
 			);
 			name = SystemKitTesting;
 			packageProductDependencies = (
+				15C6096128994536000CB3CB /* SystemKit */,
 			);
 			productName = SystemKitTesting;
 			productReference = 15F9D81C2891805C009CDEED /* SystemKitTesting.app */;
@@ -369,6 +372,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		15C6096128994536000CB3CB /* SystemKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SystemKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		15F9D8232891805C009CDEED /* SystemKitTesting.xcdatamodeld */ = {
