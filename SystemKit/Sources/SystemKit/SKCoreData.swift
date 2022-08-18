@@ -33,16 +33,16 @@ public class SKCoreData: NSObject {
     public static let label: String = "com.SystemKit.SKCoreData"
     private let implementQueue = DispatchQueue(label: SKCoreData.label, qos: .userInitiated, attributes: .concurrent)
     private var attribute: CoreDataAttribute
-    private var inContext: NSManagedObjectContext?
+    private lazy var inContext: NSManagedObjectContext? = nil
     
     // MARK: - Initalize
+    @available(macOS 10.12, *)
     public init(modelPath: String, persistentPath: String) {
         self.attribute.modelPath = modelPath
         self.attribute.persistentPath = persistentPath
     }
     
-    public convenience init(managedContext: NSManagedObjectContext) {
-        self.init(modelPath: "", persistentPath: "")
+    public init(managedContext: NSManagedObjectContext) {
         self.inContext = managedContext
     }
 }
@@ -50,10 +50,12 @@ public class SKCoreData: NSObject {
 // MARK: - Private Extension SKCoreData
 private extension SKCoreData {
     
-    final func createRequest<T: NSManagedObject>(entityName: String,
+    final func createRequest<T: NSManagedObject>(entity: T,
                                                  predicate: NSPredicate? = nil,
                                                  sortDescriptors: [NSSortDescriptor] = Array.init(),
                                                  fetchLimit: Int = Int.max) -> NSFetchRequest<T> {
+        
+        let entityName = String(describing: entity)
         
         let request = NSFetchRequest<T>(entityName: entityName)
         request.predicate = predicate
@@ -62,121 +64,101 @@ private extension SKCoreData {
         
         return request
     }
+    
+    typealias PerformAndWaitBlock = (NSManagedObjectContext) -> Swift.Void
+    final func performAndWait(_ syncBlock: @escaping PerformAndWaitBlock) {
+        
+        guard let context = self.inContext else { return }
+        
+        context.performAndWait { syncBlock(context) }
+    }
+
+    typealias PerformBlock = (NSManagedObjectContext) -> Swift.Void
+    final func perform(_ asyncBlock: @escaping PerformBlock) {
+        
+        guard let context = self.inContext else { return }
+        
+        context.perform { asyncBlock(context) }
+    }
 }
 
-// MARK: - Public Extension SKCoreData
+// MARK: - Public Extension SKCoreData With Properties
+public extension SKCoreData {
+    
+    var managedContext: Optional<NSManagedObjectContext> {
+        self.implementQueue.sync { return self.inContext }
+    }
+}
+
+// MARK: - Public Extension SKCoreData With Method
 public extension SKCoreData {
     
     @available(macOS 10.12, *)
-    @discardableResult
-    final func open() -> Bool {
+    final func open() {
         
-        self.implementQueue.sync {
+        self.performAndWait { context in
             
-            
-            return true
         }
     }
     
     final func insert<T: NSManagedObject>(object: T...) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
-            
-            guard let self = self, let context = self.inContext else { return }
-            
+        self.perform { context in
             object.forEach { item in context.insert(item) }
         }
     }
     
     final func insert<T: NSManagedObject>(objects: [T]) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
-            
-            guard let self = self, let context = self.inContext else { return }
-            
+        self.perform { context in
             objects.forEach { item in context.insert(item) }
         }
     }
     
     final func delete<T: NSManagedObject>(objects: [T]) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
-            
-            guard let self = self, let context = self.inContext else { return }
-            
+        self.perform { context in
             objects.forEach { target in context.delete(target) }
         }
     }
     
     final func delete<T: NSManagedObject>(object: T...) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
-            
-            guard let self = self, let context = self.inContext else { return }
-            
+        self.perform { context in
             object.forEach { target in context.delete(target) }
         }
     }
     
-    final func first(entityName: String, predicate: NSPredicate? = nil) -> Optional<NSManagedObject> {
+    final func fetch<T: NSManagedObject>(entity: T,
+                                         predicate: NSPredicate? = nil,
+                                         sortDescriptors: [NSSortDescriptor] = Array.init(),
+                                         fetchLimit: Int = Int.max,
+                                         errorHandler: Optional<CoreDataErrorHandler> = nil) -> [T] {
         
-        self.implementQueue.sync { [weak self] in
-                        
-            guard let self = self, let context = self.inContext else { return nil }
-            
-            let request = self.createRequest(entityName: entityName, predicate: predicate, fetchLimit: 1)
-            
-            do { return try context.fetch(request).first }
-            catch let error as NSError {
-                NSLog(error.description)
-                return nil
-            }
-        }
-    }
-    
-    final func last(entityName: String, predicate: NSPredicate? = nil) -> Optional<NSManagedObject> {
+        var result: [T] = Array.init()
         
-        self.implementQueue.sync { [weak self] in
+        self.performAndWait { context in
             
-            guard let self = self, let context = self.inContext else { return nil }
-                        
-            let request = self.createRequest(entityName: entityName, predicate: predicate, fetchLimit: 1)
-            
-            do { return try context.fetch(request).last }
-            catch let error as NSError {
-                NSLog(error.description)
-                return nil
-            }
-        }
-    }
-    
-    final func fetch(entityName: String,
-                     predicate: NSPredicate? = nil,
-                     sortDescriptors: [NSSortDescriptor] = Array.init(),
-                     fetchLimit: Int = Int.max,
-                     errorHandler: CoreDataErrorHandler? = nil) -> [NSManagedObject] {
-        
-        self.implementQueue.sync { [weak self] in
-                                    
-            guard let self = self, let context = self.inContext else { return Array.init() }
-            
-            let request = self.createRequest(entityName: entityName, predicate: predicate,
+            let request = self.createRequest(entity: entity, predicate: predicate,
                                              sortDescriptors: sortDescriptors, fetchLimit: fetchLimit)
             
-            do { return try context.fetch(request) }
+            
+            do { result = try context.fetch(request) }
             catch let error as NSError {
+                NSLog(error.description)
                 errorHandler?(error)
-                return Array.init()
+                return
             }
         }
+        
+        return result
     }
     
-    final func update<T: NSManagedObject>(object: T,
-                                          errorHandler: Optional<CoreDataErrorHandler> = nil) {
+    final func update<T: NSManagedObject>(object: T, errorHandler: Optional<CoreDataErrorHandler> = nil) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
+        self.perform { [weak self] context in
             
-            guard let self = self, let context = self.inContext else { return }
+            guard let self = self else { return }
             
             // NSManagedObject 대상이 현재 삭제가 된 상태인 경우에는 업데이트 작업을 수행하지 않습니다.
             if object.isDeleted { return }
@@ -184,22 +166,16 @@ public extension SKCoreData {
             // NSManagedObject 대상이 변경 사항이 없는 경우에는 업데이트 작업을 수행하지 않습니다.
             guard object.isUpdated else { return }
             
-            do { try context.save() }
-            catch let error as NSError {
-                NSLog(error.description)
-                errorHandler?(error)
-            }
+            self.save(errorHandler: errorHandler)
         }
     }
     
     /**
         - NOTE: `hasChanges` true if you have inserted, deleted or updated the object (a combination of the following properties)
      */
-    final func save(errorHandler: CoreDataErrorHandler? = nil) {
+    final func save(errorHandler: Optional<CoreDataErrorHandler> = nil) {
         
-        self.implementQueue.async(flags: .barrier) { [weak self] in
-            
-            guard let self = self, let context = self.inContext else { return }
+        self.performAndWait { context in
             
             // CoreData 저장 된 데이터들에 대하여 변경사항이 존재하지 않는 경우에는 영구 저장 작업을 수행하지 않습니다.
             guard context.hasChanges else { return }
@@ -212,12 +188,10 @@ public extension SKCoreData {
         }
     }
     
-    final func createObject<T: NSManagedObject>(forEntityName: String) -> T? {
+    final func createObjectWithInsert(forEntityName: String, insertInto: NSManagedObjectContext) -> Optional<NSManagedObject> {
+                
+        guard let entity = NSEntityDescription.entity(forEntityName: forEntityName, in: insertInto) else { return nil }
         
-        guard let context = self.inContext else { return nil }
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: forEntityName, in: context) else { return nil }
-        
-        return NSManagedObject(entity: entity, insertInto: context) as? T
+        return NSManagedObject(entity: entity, insertInto: insertInto)
     }
 }
