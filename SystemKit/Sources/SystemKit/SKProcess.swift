@@ -20,8 +20,10 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS)
 import Foundation
 
+@available(macOS 10.12, *)
 public class SKProcess: NSObject {
     
     // MARK: - Typealias
@@ -35,6 +37,7 @@ public class SKProcess: NSObject {
 }
 
 // MARK: - Private Extension SKProcess
+@available(macOS 10.12, *)
 private extension SKProcess {
     
     final func launch(process: Process) throws {
@@ -51,6 +54,7 @@ private extension SKProcess {
 }
 
 // MARK: - Public Extension SKProcess
+@available(macOS 10.12, *)
 public extension SKProcess {
     
     @discardableResult
@@ -80,3 +84,4 @@ public extension SKProcess {
         return process.processIdentifier
     }
 }
+#endif

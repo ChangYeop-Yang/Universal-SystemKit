@@ -31,26 +31,32 @@ public class SKCoreData: NSObject {
     
     // MARK: - Object Properties
     public static let label: String = "com.SystemKit.SKCoreData"
+    
     private let implementQueue = DispatchQueue(label: SKCoreData.label, qos: .userInitiated, attributes: .concurrent)
-    private var attribute: CoreDataAttribute
-    private lazy var inContext: NSManagedObjectContext? = nil
+    private var attribute: Optional<CoreDataAttribute> = nil
+    private var inContext: Optional<NSManagedObjectContext> = nil
     
     // MARK: - Initalize
     @available(macOS 10.12, *)
     public init(modelPath: String, persistentPath: String) {
-        self.attribute.modelPath = modelPath
-        self.attribute.persistentPath = persistentPath
+        self.attribute?.modelPath = modelPath
+        self.attribute?.persistentPath = persistentPath
     }
     
     public init(managedContext: NSManagedObjectContext) {
         self.inContext = managedContext
+    }
+    
+    public convenience init(concurrencyType: NSManagedObjectContextConcurrencyType) {
+        let managedContext = NSManagedObjectContext(concurrencyType: concurrencyType)
+        self.init(managedContext: managedContext)
     }
 }
 
 // MARK: - Private Extension SKCoreData
 private extension SKCoreData {
     
-    final func createRequest<T: NSManagedObject>(entity: T,
+    final func createRequest<T: NSManagedObject>(entity: T.Type,
                                                  predicate: NSPredicate? = nil,
                                                  sortDescriptors: [NSSortDescriptor] = Array.init(),
                                                  fetchLimit: Int = Int.max) -> NSFetchRequest<T> {
@@ -94,10 +100,17 @@ public extension SKCoreData {
 public extension SKCoreData {
     
     @available(macOS 10.12, *)
-    final func open() {
+    @discardableResult
+    final func open() -> Bool {
         
-        self.performAndWait { context in
+        self.implementQueue.sync {
             
+            guard let attribute = self.attribute else { return false }
+            
+            // CoreData Model 파일이 정상적으로 존재하는지 확인합니다.
+            guard FileManager.default.fileExists(atPath: attribute.modelPath) else { return false }
+            
+            return true
         }
     }
     
@@ -129,7 +142,7 @@ public extension SKCoreData {
         }
     }
     
-    final func fetch<T: NSManagedObject>(entity: T,
+    final func fetch<T: NSManagedObject>(entity: T.Type,
                                          predicate: NSPredicate? = nil,
                                          sortDescriptors: [NSSortDescriptor] = Array.init(),
                                          fetchLimit: Int = Int.max,

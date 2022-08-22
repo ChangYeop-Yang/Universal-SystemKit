@@ -28,3 +28,17 @@ public enum TranslatedRosettaResult: Int32 {
     case native = 0
     case translated = 1
 }
+
+@available(macOS 10.12, *)
+public enum macOSVersion: String {
+    case Sierra = "Sierra"
+    case HighSierra = "High Sierra"
+    case Mojave = "Mojave"
+    case Catalina = "Catalina"
+    case BigSur = "BigSur"
+    case Monterey = "Monterey"
+    case Ventura = "Ventura"
+    
+    // MARK: Enum Properties
+    public var version: String { return String(format: "macOS %@", self.rawValue) }
+}

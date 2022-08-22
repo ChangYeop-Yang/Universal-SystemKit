@@ -29,7 +29,8 @@ public class SKSystem: NSObject {
     public static let shared: SKSystem = SKSystem()
 }
 
-// MARK: - Public Extension SKSystem
+#if os(macOS)
+// MARK: - Public Extension SKSystem With macOS Platform
 public extension SKSystem {
     
     @available(macOS 10.1, *)
@@ -55,6 +56,7 @@ public extension SKSystem {
         - NOTE: [Apple Document](https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment)
         - Returns: The example function returns the value 0 for a native process, 1 for a translated process, and -1 when an error occurs.
      */
+    @available(macOS 10.0, *)
     final func isRosettaTranslatedProcess() -> TranslatedRosettaResult {
         
         var ret: Int = Int.zero
@@ -108,3 +110,4 @@ public extension SKSystem {
         return totalUsageOfCPU
     }
 }
+#endif
