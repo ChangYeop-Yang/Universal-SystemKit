@@ -39,8 +39,7 @@ public class SKCoreData: NSObject {
     // MARK: - Initalize
     @available(macOS 10.12, *)
     public init(modelPath: String, persistentPath: String) {
-        self.attribute?.modelPath = modelPath
-        self.attribute?.persistentPath = persistentPath
+        self.attribute = CoreDataAttribute(modelPath, persistentPath)
     }
     
     public init(managedContext: NSManagedObjectContext) {

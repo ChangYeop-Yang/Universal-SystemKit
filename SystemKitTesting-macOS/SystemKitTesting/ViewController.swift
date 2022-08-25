@@ -37,6 +37,9 @@ class ViewController: NSViewController {
 
         let isRosetta = SKSystem.shared.isRosettaTranslatedProcess()
         print(isRosetta)
+        
+        let versionOS = SKSystem.shared.getOperatingSystemName()
+        print(versionOS)
     }
 
     override var representedObject: Any? {

@@ -29,12 +29,53 @@ public class SKSystem: NSObject {
     public static let shared: SKSystem = SKSystem()
 }
 
-#if os(macOS)
 // MARK: - Public Extension SKSystem With macOS Platform
+#if os(macOS)
 public extension SKSystem {
     
+    final func getOperatingSystemVersion() -> OperatingSystemVersion {
+
+        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
+        
+        return operatingSystemVersion
+    }
+    
+    @available(macOS 10.12, *)
+    final func getOperatingSystemName() -> String {
+        
+        let version = getOperatingSystemVersion()
+        
+        // macOS Sierra ~ macOS Catalina 운영체제는 Minor Version까지 확인
+        let lowerVersion: () -> String = {
+            switch version.minorVersion {
+            // macOS Sierra
+            case 12: return macOSVersion.Sierra.name
+            // macOS High Sierra
+            case 13: return macOSVersion.HighSierra.name
+            // macOS Mojave
+            case 14: return macOSVersion.Mojave.name
+            // macOS Catalina
+            case 15: return macOSVersion.Catalina.name
+            default: return "UNKNOWN"
+            }
+        }
+        
+        switch version.majorVersion {
+        // Above macOS Sierra
+        case 10: return lowerVersion()
+        // Above macOS BigSur
+        case 11: return macOSVersion.BigSur.name
+        // Above macOS Monterey
+        case 12: return macOSVersion.Monterey.name
+        // Above macOS Ventura
+        case 13: return macOSVersion.Ventura.name
+        // macOS 10.12 미만의 운영체제이거나 아직 알려지지 않은 운영체제
+        default: return "UNKNOWN"
+        }
+    }
+        
     @available(macOS 10.1, *)
-    final func getConsoleUserName() -> String? {
+    final func getConsoleUserName() -> Optional<String> {
 
         let forKey: String = "GetConsoleUser"
         

@@ -22,8 +22,11 @@
 
 import Foundation
 
-// MARK: - Enum
+// MARK: - Enum With macOS Platform
+#if os(macOS)
 public enum TranslatedRosettaResult: Int32 {
+    
+    // MARK: Enum Properties
     case error = -1
     case native = 0
     case translated = 1
@@ -31,6 +34,8 @@ public enum TranslatedRosettaResult: Int32 {
 
 @available(macOS 10.12, *)
 public enum macOSVersion: String {
+    
+    // MARK: Enum Properties
     case Sierra = "Sierra"
     case HighSierra = "High Sierra"
     case Mojave = "Mojave"
@@ -39,6 +44,7 @@ public enum macOSVersion: String {
     case Monterey = "Monterey"
     case Ventura = "Ventura"
     
-    // MARK: Enum Properties
-    public var version: String { return String(format: "macOS %@", self.rawValue) }
+    // MARK: Enum Computed Properties
+    public var name: String { return String(format: "macOS %@", self.rawValue) }
 }
+#endif
