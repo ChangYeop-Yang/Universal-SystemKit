@@ -8,14 +8,14 @@
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
-Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+Once you have your Swift package set up, adding `SystemKit` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 
 ```Swift
 dependencies: [
-    .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1"))
+    .package(url: "", .upToNextMajor(from: ""))
 ]
 ```
 
 # License
 
-SystemKit is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
+`SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
