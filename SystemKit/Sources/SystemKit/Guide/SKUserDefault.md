@@ -29,18 +29,21 @@
 # Example Source
 
 ```Swift
+// Usage String UserDefaults
 @SKUserDefaults(forKey: "SKUserDefault_TEST_STRING", defaultValue: "TEST")
 private var defaultsString: Optional<String>
 
 self.defaultsString = "SKUserDefault_PRINT"
 printf(self.defaultsString)
 
+// Usage Integer UserDefaults
 @SKUserDefaults(forKey: "SKUserDefault_TEST_INTEGER", defaultValue: 3540)
 private var defaultsInteger: Optional<Int>
 
 self.defaultsInteger = 8557
 printf(self.defaultsInteger)
 
+// Usage Double UserDefaults
 @SKUserDefaults(forKey: "SKUserDefault_TEST_DOUBLE", defaultValue: 3.14)
 private var defaultsDouble: Optional<Double>
 
