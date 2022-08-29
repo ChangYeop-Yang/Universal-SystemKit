@@ -4,8 +4,6 @@
 
 아래의 예제 소스코드 이외에도 `Object`, `URL`, `Array`, `Dictionary`, `String`, `Data`, `Bool`, `Integer`, `Float`, `Double` 등으 자료형을 지원합니다.
 
-</br>
-
 # Example Source
 
 `SKUserDefault` 예제 소스코드는 아래와 같습니다.
@@ -32,8 +30,6 @@ private var defaultsDouble: Optional<Double>
 self.defaultsInteger = 41.3
 printf(self.defaultsDouble)
 ```
-
-</br>
 
 # License
 
