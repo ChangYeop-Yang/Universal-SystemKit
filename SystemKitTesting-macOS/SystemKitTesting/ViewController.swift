@@ -25,8 +25,8 @@ import SystemKit
 
 class ViewController: NSViewController {
     
-    @SKUserDefaults(forKey: "TESTING", defaultValue: "T")
-    private var defaults: String?
+    @SKUserDefaults(forKey: "QWEASDASD", defaultValue: 3.14)
+    private var defaults: Optional<Double>
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class ViewController: NSViewController {
         print(versionOS)
         
         print(self.defaults)
-        self.defaults = "ABCD"
+        self.defaults = 4.57
         print(self.defaults)
     }
 
