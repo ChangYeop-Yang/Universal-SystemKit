@@ -36,13 +36,13 @@ public enum TranslatedRosettaResult: Int32 {
 public enum macOSVersion: String {
     
     // MARK: Enum Properties
-    case Sierra = "Sierra"
+    case Sierra     = "Sierra"
     case HighSierra = "High Sierra"
-    case Mojave = "Mojave"
-    case Catalina = "Catalina"
-    case BigSur = "BigSur"
-    case Monterey = "Monterey"
-    case Ventura = "Ventura"
+    case Mojave     = "Mojave"
+    case Catalina   = "Catalina"
+    case BigSur     = "BigSur"
+    case Monterey   = "Monterey"
+    case Ventura    = "Ventura"
     
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }

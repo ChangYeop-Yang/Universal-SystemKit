@@ -20,10 +20,26 @@
  * THE SOFTWARE.
  */
 
-public struct SystemKit {
-    
-    public private(set) var label = "com.ChangYeopYang.SystemKit"
+import Foundation
 
-    public init() {
+@propertyWrapper
+public struct SKUserDefaults<Value> {
+    
+    // MARK: - Struct Properties
+    private let forKey: String
+    private let defaultValue: Value
+    private let identifier: String = UUID().uuidString
+    
+    // Property Wrapper 필수 구현 Property
+    public var wrappedValue: Optional<Value> {
+        get { UserDefaults.standard.object(forKey: self.forKey) as? Value ?? self.defaultValue }
+        set { UserDefaults.standard.setValue(newValue, forKey: self.forKey) }
+    }
+    
+    // MARK: - Initalize
+    public init(forKey: String, defaultValue: Value) {
+        NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
+        self.forKey = forKey
+        self.defaultValue = defaultValue
     }
 }

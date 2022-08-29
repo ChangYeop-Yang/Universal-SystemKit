@@ -24,6 +24,9 @@ import Cocoa
 import SystemKit
 
 class ViewController: NSViewController {
+    
+    @SKUserDefaults(forKey: "TESTING", defaultValue: "T")
+    private var defaults: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,10 @@ class ViewController: NSViewController {
         
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
+        
+        print(self.defaults)
+        self.defaults = "ABCD"
+        print(self.defaults)
     }
 
     override var representedObject: Any? {

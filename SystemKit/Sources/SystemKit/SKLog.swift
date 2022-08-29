@@ -20,10 +20,10 @@
  * THE SOFTWARE.
  */
 
-public struct SystemKit {
-    
-    public private(set) var label = "com.ChangYeopYang.SystemKit"
+import Logging
+import Foundation
 
-    public init() {
-    }
+public class SKLog: NSObject {
+    
+    // MARK: - Initalize
 }
