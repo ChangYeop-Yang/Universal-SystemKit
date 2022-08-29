@@ -18,7 +18,7 @@ dependencies: [
 
 # Using SystemKit
 
-* [`SKUserDefault`](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/SystemKit/Sources/SystemKit/Guide/SKUserDefault.md)
+* [`SKUserDefault`](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/SystemKit/Sources/SystemKit/Guide/SKUserDefault.md) → `@propertyWrapper` 사용하여 개발자가 보다 손쉽게 `UserDefaults` 사용할 수 있습니다.
 
 # License
 
