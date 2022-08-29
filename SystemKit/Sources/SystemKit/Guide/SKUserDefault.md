@@ -38,7 +38,7 @@ printf(self.defaultsDouble)
 </br>
 
 ```TEXT
-IT License
+MIT License
 
 Copyright (c) 2022 ChangYeop-Yang
 
