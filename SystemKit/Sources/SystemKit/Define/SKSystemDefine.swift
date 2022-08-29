@@ -48,3 +48,7 @@ public enum macOSVersion: String {
     public var name: String { return String(format: "macOS %@", self.rawValue) }
 }
 #endif
+
+// MARK: - Enum With iOS Platform
+#if os(iOS)
+#endif
