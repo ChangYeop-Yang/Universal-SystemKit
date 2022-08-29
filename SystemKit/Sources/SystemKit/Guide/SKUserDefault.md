@@ -26,3 +26,24 @@
 
 `SKUserDefault`는 `@propertyWrapper` 사용하여 개발자가 보다 손쉽게 `UserDefaults` 사용할 수 있도록 개발되었습니다.
 
+# Example Source
+
+```Swift
+@SKUserDefaults(forKey: "SKUserDefault_TEST_STRING", defaultValue: "TEST")
+private var defaultsString: Optional<String>
+
+self.defaultsString = "SKUserDefault_PRINT"
+printf(self.defaultsString)
+
+@SKUserDefaults(forKey: "SKUserDefault_TEST_INTEGER", defaultValue: 3540)
+private var defaultsInteger: Optional<Int>
+
+self.defaultsInteger = 8557
+printf(self.defaultsInteger)
+
+@SKUserDefaults(forKey: "SKUserDefault_TEST_DOUBLE", defaultValue: 3.14)
+private var defaultsDouble: Optional<Double>
+
+self.defaultsInteger = 41.3
+printf(self.defaultsDouble)
+```
