@@ -27,20 +27,33 @@ public class SKSystem: NSObject {
     
     // MARK: - Object Properties
     public static let shared: SKSystem = SKSystem()
+    
+    private let identifier: String = UUID().uuidString
 }
 
 // MARK: - Public Extension SKSystem With iOS Platform
 #if os(iOS)
+import UIKit
 public extension SKSystem {
     
-    final func te() {
+    typealias SystemVersionResult = (systemName: String, systemVersion: String)
+    final func getOperatingSystemVersion() -> SystemVersionResult {
         
-        guard let dictionary = Bundle.main.infoDictionary,
-                let version = dictionary["CFBundleShortVersionString"] as? String,
-                let build = dictionary["CFBundleVersion"] as? String else {return nil}
+        let systemName = UIDevice.current.systemName
+        let systemVersion = UIDevice.current.systemVersion
+        
+        return SystemVersionResult(systemName, systemVersion)
+    }
+    
+    typealias ApplicationVersionResult = (releaseVersion: String, bundleVersion: String)
+    final func getApplicationVersion() -> Optional<ApplicationVersionResult> {
 
-            let versionAndBuild: String = "vserion: \(version), build: \(build)"
-            return versionAndBuild
+        guard let infoDictionary = Bundle.main.infoDictionary else { return nil }
+
+        guard let releaseVersion = infoDictionary["CFBundleShortVersionString"] as? String,
+              let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
+
+        return ApplicationVersionResult(releaseVersion, bundleVersion)
     }
 }
 #endif
@@ -65,13 +78,13 @@ public extension SKSystem {
         let lowerVersion: () -> String = {
             switch version.minorVersion {
             // macOS Sierra
-            case 12: return macOSVersion.Sierra.name
+            case 12: return macOSSystemVersion.Sierra.name
             // macOS High Sierra
-            case 13: return macOSVersion.HighSierra.name
+            case 13: return macOSSystemVersion.HighSierra.name
             // macOS Mojave
-            case 14: return macOSVersion.Mojave.name
+            case 14: return macOSSystemVersion.Mojave.name
             // macOS Catalina
-            case 15: return macOSVersion.Catalina.name
+            case 15: return macOSSystemVersion.Catalina.name
             default: return "UNKNOWN"
             }
         }
@@ -80,11 +93,11 @@ public extension SKSystem {
         // Above macOS Sierra
         case 10: return lowerVersion()
         // Above macOS BigSur
-        case 11: return macOSVersion.BigSur.name
+        case 11: return macOSSystemVersion.BigSur.name
         // Above macOS Monterey
-        case 12: return macOSVersion.Monterey.name
+        case 12: return macOSSystemVersion.Monterey.name
         // Above macOS Ventura
-        case 13: return macOSVersion.Ventura.name
+        case 13: return macOSSystemVersion.Ventura.name
         // macOS 10.12 미만의 운영체제이거나 아직 알려지지 않은 운영체제
         default: return "UNKNOWN"
         }

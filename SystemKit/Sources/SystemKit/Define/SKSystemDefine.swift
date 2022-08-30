@@ -33,7 +33,7 @@ public enum TranslatedRosettaResult: Int32 {
 }
 
 @available(macOS 10.12, *)
-public enum macOSVersion: String {
+public enum macOSSystemVersion: String {
     
     // MARK: Enum Properties
     case Sierra     = "Sierra"
@@ -49,6 +49,20 @@ public enum macOSVersion: String {
 }
 #endif
 
-// MARK: - Enum With iOS Platform
+// MARK: - Struct With iOS Platform
 #if os(iOS)
+public struct iOSSystemVersion {
+    
+    // MARK: Struct Properties
+    public let systemName: String
+    public let systemVersion: String
+}
+
+public struct iOSDeviceInfo {
+    
+    // MARK: Struct Properties
+    public let deviceName: String
+    public let deviceModel: String
+    public let localizedModel: String
+}
 #endif
