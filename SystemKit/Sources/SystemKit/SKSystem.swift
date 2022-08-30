@@ -41,7 +41,7 @@ public extension SKSystem {
         
         let systemName = UIDevice.current.systemName
         let systemVersion = UIDevice.current.systemVersion
-        
+    
         return SystemVersionResult(systemName, systemVersion)
     }
     
@@ -54,6 +54,16 @@ public extension SKSystem {
               let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
 
         return ApplicationVersionResult(releaseVersion, bundleVersion)
+    }
+    
+    typealias DeviceInformationResult = (deviceName: String, deviceModel: String, localizedModel: String)
+    final func getDeviceInformation() -> DeviceInformationResult {
+        
+        let deviceName = UIDevice.current.name
+        let deviceModel = UIDevice.current.model
+        let localizedModel = UIDevice.current.localizedModel
+        
+        return DeviceInformationResult(deviceName, deviceModel, localizedModel)
     }
 }
 #endif

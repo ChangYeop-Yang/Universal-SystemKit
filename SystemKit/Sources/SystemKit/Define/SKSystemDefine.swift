@@ -51,18 +51,4 @@ public enum macOSSystemVersion: String {
 
 // MARK: - Struct With iOS Platform
 #if os(iOS)
-public struct iOSSystemVersion {
-    
-    // MARK: Struct Properties
-    public let systemName: String
-    public let systemVersion: String
-}
-
-public struct iOSDeviceInfo {
-    
-    // MARK: Struct Properties
-    public let deviceName: String
-    public let deviceModel: String
-    public let localizedModel: String
-}
 #endif
