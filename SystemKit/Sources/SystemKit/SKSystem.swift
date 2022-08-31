@@ -31,6 +31,43 @@ public class SKSystem: NSObject {
     private let identifier: String = UUID().uuidString
 }
 
+// MARK: - Public Extension SKSystem
+public extension SKSystem {
+    
+    typealias ApplicationVersionResult = (releaseVersion: String, bundleVersion: String)
+    final func getApplicationVersion() -> Optional<ApplicationVersionResult> {
+
+        guard let infoDictionary = Bundle.main.infoDictionary else { return nil }
+
+        guard let releaseVersion = infoDictionary["CFBundleShortVersionString"] as? String,
+              let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
+
+        return ApplicationVersionResult(releaseVersion, bundleVersion)
+    }
+    
+    typealias DeviceMemoryResult = (usage: Float, total: Float)
+    func getDeviceMemoryUnitMB() -> DeviceMemoryResult {
+        
+        var usageMegaBytes = Float.zero
+        let totalMegaBytes = Float(ProcessInfo.processInfo.physicalMemory) / 1024.0 / 1024.0
+        
+        var info = mach_task_basic_info()
+        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
+        
+        let result: kern_return_t = withUnsafeMutablePointer(to: &info) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info( mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &count)
+            }
+        }
+        
+        if result == KERN_SUCCESS {
+            usageMegaBytes = Float(info.resident_size) / 1024.0 / 1024.0
+        }
+        
+        return DeviceMemoryResult(usageMegaBytes, totalMegaBytes)
+    }
+}
+
 // MARK: - Public Extension SKSystem With iOS Platform
 #if os(iOS)
 import UIKit
@@ -43,17 +80,6 @@ public extension SKSystem {
         let systemVersion = UIDevice.current.systemVersion
     
         return SystemVersionResult(systemName, systemVersion)
-    }
-    
-    typealias ApplicationVersionResult = (releaseVersion: String, bundleVersion: String)
-    final func getApplicationVersion() -> Optional<ApplicationVersionResult> {
-
-        guard let infoDictionary = Bundle.main.infoDictionary else { return nil }
-
-        guard let releaseVersion = infoDictionary["CFBundleShortVersionString"] as? String,
-              let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
-
-        return ApplicationVersionResult(releaseVersion, bundleVersion)
     }
     
     typealias DeviceInformationResult = (deviceName: String, deviceModel: String, localizedModel: String)

@@ -1,5 +1,7 @@
 # SKProcess
 
+`SKProcess`는 macOS 운영체제 환경을 기반으로 `Process` Class를 사용하여 스크립트 (Script) 또는 응용 프로그램 (Application)을 실행할 수 있습니다. 
+
 # Example Source
 
 `SKProcess` 예제 소스코드는 아래와 같습니다.

@@ -22,7 +22,7 @@
 
 import Foundation
 
-public class SKSynchronizedArray<T>: NSObject {
+public class SKSynchronizedArray<T: Hashable>: NSObject {
     
     // MARK: - Typeaalise
     public typealias SynchronizedArrayType = Array<T>
@@ -103,6 +103,10 @@ public extension SKSynchronizedArray {
     
     var dropFirst: ArraySlice<T> {
         return self.reader { target in target.dropFirst() }
+    }
+    
+    var valueHash: Int {
+        return self.reader { target in target.hashValue }
     }
     
     typealias EnumeratedSequenceType = EnumeratedSequence<SynchronizedArrayType>
