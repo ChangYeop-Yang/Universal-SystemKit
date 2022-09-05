@@ -21,9 +21,29 @@
  */
 
 import Logging
+import Collections
 import Foundation
 
 public class SKLog: NSObject {
     
+    // MARK: - Object Properties
+    public let logger: Logger
+    
     // MARK: - Initalize
+    public init(label: String) {
+        self.logger = Logger(label: label)
+    }
+    
+    public func test() {
+        
+        self.logger.critical("...", source: "!@#`", file: self.logger.label)
+    }
+}
+
+// MARK: - Public Extension SKLog
+public extension SKLog {
+    
+    final func critical(_ message: String) {
+        self.logger.critical("\(1)")
+    }
 }

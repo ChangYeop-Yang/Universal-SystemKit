@@ -27,6 +27,8 @@ class ViewController: NSViewController {
     
     @SKUserDefaults(forKey: "QWEASDASD", defaultValue: 3.14)
     private var defaults: Optional<Double>
+    
+    private var arr = SKSynchronizedArray<Int>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +46,18 @@ class ViewController: NSViewController {
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
         
+        arr.append(newElement: 4)
+        print(arr[0])
+        
         print(self.defaults)
         self.defaults = 4.57
         print(self.defaults)
+        
+        print(SKSystem.shared.getApplicationVersion())
+        print(SKSystem.shared.getDeviceMemoryUnitMB())
+        
+        let ttt = SKLog(label: "TESTASDASDQWD")
+        ttt.test()
     }
 
     override var representedObject: Any? {

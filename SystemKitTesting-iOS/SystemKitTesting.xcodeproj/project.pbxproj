@@ -26,6 +26,7 @@
 		1595E93F28B26AF700CDA031 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1595E94228B26AF700CDA031 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1595E94428B26AF700CDA031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15C38C6728C3AD4A003479EC /* SystemKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SystemKit; path = ../SystemKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 		1595E92728B26AF600CDA031 = {
 			isa = PBXGroup;
 			children = (
+				15C38C6628C3AD4A003479EC /* Packages */,
 				1595E93228B26AF600CDA031 /* SystemKitTesting */,
 				1595E93128B26AF600CDA031 /* Products */,
 			);
@@ -68,6 +70,14 @@
 				1595E93C28B26AF600CDA031 /* SystemKitTesting.xcdatamodeld */,
 			);
 			path = SystemKitTesting;
+			sourceTree = "<group>";
+		};
+		15C38C6628C3AD4A003479EC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				15C38C6728C3AD4A003479EC /* SystemKit */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +318,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -336,7 +346,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
