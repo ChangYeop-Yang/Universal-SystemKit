@@ -23,12 +23,13 @@
 import Foundation
 import SystemConfiguration
 
-public class SKSystem: NSObject {
+public class SKSystem: NSObject, SKClass {
     
     // MARK: - Object Properties
     public static let shared: SKSystem = SKSystem()
     
-    private let identifier: String = UUID().uuidString
+    public let label: String = "com.SystemKit.SKSystem"
+    public let identifier: String = UUID().uuidString
 }
 
 // MARK: - Public Extension SKSystem
@@ -214,6 +215,10 @@ public extension SKSystem {
         vm_deallocate(mach_task_self_, vm_address_t(UInt(bitPattern: threadsList)), vm_size_t(Int(threadsCount) * MemoryLayout<thread_t>.stride))
 
         return totalUsageOfCPU
+    }
+    
+    final func getUsingMemory() {
+        
     }
 }
 #endif

@@ -24,13 +24,16 @@
 import Foundation
 
 @available(macOS 10.12, *)
-public class SKProcess: NSObject {
+public class SKProcess: NSObject, SKClass {
     
     // MARK: - Typealias
     public typealias SKProcessErrorResult = (NSError, Process) -> Swift.Void
     
     // MARK: - Object Properties
     public static let shared: SKProcess = SKProcess()
+    
+    public let label: String = "com.SystemKit.SKProcess"
+    public let identifier: String = UUID().uuidString
     
     // MARK: - Initalize
     private override init() { super.init() }
@@ -41,6 +44,8 @@ public class SKProcess: NSObject {
 private extension SKProcess {
     
     final func launch(process: Process) throws {
+        
+        NSLog("[%@][%@] Action, Execute Other Process", self.label, self.identifier)
         
         // macOS 10.13 미만의 운영체제에서는 launch() 함수를 통하여 실행합니다.
         guard #available(macOS 10.13, *) else {

@@ -58,6 +58,8 @@ class ViewController: NSViewController {
         
         let ttt = SKLog(label: "TESTASDASDQWD")
         ttt.test()
+        
+        print(SKFinderExtension.shared.isExtensionEnabled)
     }
 
     override var representedObject: Any? {

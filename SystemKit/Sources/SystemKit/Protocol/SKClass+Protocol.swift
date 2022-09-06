@@ -20,31 +20,15 @@
  * THE SOFTWARE.
  */
 
-import Logging
 import Foundation
-import Collections
-import SystemPackage
 
-public class SKLog: NSObject {
+// MARK: - Protocol
+@objc public protocol SKClass {
     
-    // MARK: - Object Properties
-    public let logger: Logger
+    // MARK: Required Protocol Properties
+    var label: String { get }
+    var identifier: String { get }
     
-    // MARK: - Initalize
-    public init(label: String) {
-        self.logger = Logger(label: label)
-    }
-    
-    public func test() {
-        
-        self.logger.critical("...", source: "!@#`", file: self.logger.label)
-    }
-}
-
-// MARK: - Public Extension SKLog
-public extension SKLog {
-    
-    final func critical(_ message: String) {
-        self.logger.critical("\(1)")
-    }
+    // MARK: Optaionl Protocol Properties
+    @objc optional var implementQueue: DispatchQueue { get set }
 }
