@@ -45,7 +45,7 @@ class ViewController: NSViewController {
         
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
-    
+
         SKSystem.shared.checkNotrize(atPath: "/Users/changyeop-yang/Downloads/Whale.app") { result in
             print(result)
         }

@@ -57,8 +57,8 @@ public struct SKNotrizeResult: Codable {
     
     // MARK: String Properties
     public let result: String
-    public let source: String
-    public let origin: String
+    public let source: Optional<String>
+    public let origin: Optional<String>
     public let path: String
 }
 #endif

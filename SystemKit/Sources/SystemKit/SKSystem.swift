@@ -237,12 +237,24 @@ public extension SKSystem {
             
             let sequence = description.split(whereSeparator: \.isNewline)
             
-            guard let notrize = sequence[SKNotrizeResultIndex.result.rawValue].split(whereSeparator: \.isWhitespace).last,
-                  let source = sequence[SKNotrizeResultIndex.source.rawValue].split(separator: "=").last,
-                  let origin = sequence[SKNotrizeResultIndex.origin.rawValue].split(separator: "=").last else { return }
+            guard let notrize = sequence[SKNotrizeResultIndex.result.rawValue].split(whereSeparator: \.isWhitespace).last else { return }
             
-            let result = SKNotrizeResult(result: String(notrize), source: String(source), origin: String(origin), path: atPath)
-            completion(result)
+            // 공증 작업이 수행되지 않은 애플리케이션인 경우
+            if notrize == "rejected" {
+                let result = SKNotrizeResult(result: String(notrize), source: nil, origin: nil, path: atPath)
+                completion(result)
+                return
+            }
+            
+            // 공증 작업이 정상적으로 수행 된 애플리케이션인 경우
+            if notrize == "accepted" {
+                guard let source = sequence[SKNotrizeResultIndex.source.rawValue].split(separator: "=").last,
+                      let origin = sequence[SKNotrizeResultIndex.origin.rawValue].split(separator: "=").last else { return }
+                
+                let result = SKNotrizeResult(result: String(notrize), source: String(source), origin: String(origin), path: atPath)
+                completion(result)
+                return
+            }
         }
         
         let standardError: Pipe = Pipe()
