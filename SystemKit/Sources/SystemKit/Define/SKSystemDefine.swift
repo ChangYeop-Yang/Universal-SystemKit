@@ -50,6 +50,8 @@ public enum macOSSystemVersion: String {
 
 // MARK: - Struct With macOS Platform
 public enum SKNotrizeResultIndex: Int {
+    
+    // MARK: Enum Properties
     case result = 0, source = 1, origin = 2
 }
 
