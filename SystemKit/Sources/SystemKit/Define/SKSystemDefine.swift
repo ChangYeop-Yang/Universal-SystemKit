@@ -47,6 +47,20 @@ public enum macOSSystemVersion: String {
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }
 }
+
+// MARK: - Struct With macOS Platform
+public enum SKNotrizeResultIndex: Int {
+    case result = 0, source = 1, origin = 2
+}
+
+public struct SKNotrizeResult: Codable {
+    
+    // MARK: String Properties
+    public let result: String
+    public let source: String
+    public let origin: String
+    public let path: String
+}
 #endif
 
 // MARK: - Struct With iOS Platform

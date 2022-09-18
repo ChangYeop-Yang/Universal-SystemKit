@@ -58,20 +58,20 @@ public extension SKFinderExtension {
     }
     
     @available(macOS 10.12, *)
-    final func enable(bundle: String, waitUntilExit: Bool) {
+    final func enable(extensionPath: String, waitUntilExit: Bool) {
         
         NSLog("[%@][%@] Action, Enable Application Finder Extension", self.label, self.identifier)
         
-        let arguments: Array<String> = ["-e", "use", "-i", bundle]
+        let arguments: Array<String> = ["-e", "use", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
     }
     
     @available(macOS 10.12, *)
-    final func disable(bundle: String, waitUntilExit: Bool) {
+    final func disable(extensionPath: String, waitUntilExit: Bool) {
         
         NSLog("[%@][%@] Action, Disable Application Finder Extension", self.label, self.identifier)
         
-        let arguments: Array<String> = ["-e", "ignore", "-i", bundle]
+        let arguments: Array<String> = ["-e", "ignore", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
     }
 }

@@ -217,8 +217,39 @@ public extension SKSystem {
         return totalUsageOfCPU
     }
     
-    final func getUsingMemory() {
+    typealias SKSystemNotrizeResult = (SKNotrizeResult) -> Swift.Void
+    @available(macOS 10.15.4, *)
+    final func checkNotrize(atPath: String, completion: @escaping SKSystemNotrizeResult) {
         
+        // 공증 작업 대상이 현재 경로에 존재하는지 확인합니다.
+        guard FileManager.default.fileExists(atPath: atPath) else { return }
+                
+        let terminationHandler: SKProcess.SKProcessTerminationHandler = { process in
+            
+            guard let stream = process.standardError as? Pipe else { return }
+            
+            let availableData = stream.fileHandleForReading.availableData
+            guard availableData.count > Int.zero else { return }
+            
+            guard let description = String(data: availableData, encoding: .utf8) else { return }
+            
+            NSLog("[%@][%@] Completion, Notrize Target Application: %@", self.label, self.identifier, description)
+            
+            let sequence = description.split(whereSeparator: \.isNewline)
+            
+            guard let notrize = sequence[SKNotrizeResultIndex.result.rawValue].split(whereSeparator: \.isWhitespace).last,
+                  let source = sequence[SKNotrizeResultIndex.source.rawValue].split(separator: "=").last,
+                  let origin = sequence[SKNotrizeResultIndex.origin.rawValue].split(separator: "=").last else { return }
+            
+            let result = SKNotrizeResult(result: String(notrize), source: String(source), origin: String(origin), path: atPath)
+            completion(result)
+        }
+        
+        let standardError: Pipe = Pipe()
+        
+        let arguments: [String] = ["-a", "-vvv", "-t", "install", atPath]
+        SKProcess.shared.run(launchPath: "/usr/sbin/spctl", arguments: arguments,
+                             standardError: standardError, terminationHandler: terminationHandler)
     }
 }
 #endif

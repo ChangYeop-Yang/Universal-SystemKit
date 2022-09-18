@@ -28,6 +28,7 @@ public class SKProcess: NSObject, SKClass {
     
     // MARK: - Typealias
     public typealias SKProcessErrorResult = (NSError, Process) -> Swift.Void
+    public typealias SKProcessTerminationHandler = (Process) -> Swift.Void
     
     // MARK: - Object Properties
     public static let shared: SKProcess = SKProcess()
@@ -63,25 +64,34 @@ private extension SKProcess {
 public extension SKProcess {
     
     @discardableResult
-    final func run(launchPath: String, arguments: [String],
-                   standardInput: Any? = nil, standardOutput: Any? = nil, standardError: Any? = nil,
-                   waitUntilExit: Bool,
-                   errorCompletionHandler: SKProcessErrorResult? = nil) -> Int32 {
+    final func run(launchPath: String,
+                   arguments: Array<String>,
+                   standardInput: Optional<Any> = nil,
+                   standardOutput: Optional<Any> = nil,
+                   standardError: Optional<Any> = nil,
+                   waitUntilExit: Bool = false,
+                   qualityOfService: QualityOfService = .default,
+                   terminationHandler: Optional<SKProcessTerminationHandler> = nil,
+                   errorCompletionHandler: Optional<SKProcessErrorResult> = nil) -> Int32 {
         
         let process = Process()
         process.launchPath = launchPath
         process.arguments = arguments
+        process.terminationHandler = terminationHandler
         process.standardInput = standardInput
         process.standardOutput = standardOutput
         process.standardError = standardError
+        process.qualityOfService = qualityOfService
         
         do {
             try launch(process: process)
-
+            
             if waitUntilExit {
+                NSLog("[%@][%@] Process WaitUntilExit", self.label, self.identifier)
                 process.waitUntilExit()
             }
         } catch let error as NSError {
+            NSLog("[%@][%@] Error, %@", self.label, self.identifier, error.description)
             errorCompletionHandler?(error, process)
             return EOF
         }

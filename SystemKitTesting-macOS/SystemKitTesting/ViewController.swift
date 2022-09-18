@@ -45,21 +45,10 @@ class ViewController: NSViewController {
         
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
-        
-        arr.append(newElement: 4)
-        print(arr[0])
-        
-        print(self.defaults)
-        self.defaults = 4.57
-        print(self.defaults)
-        
-        print(SKSystem.shared.getApplicationVersion())
-        print(SKSystem.shared.getDeviceMemoryUnitMB())
-        
-        let ttt = SKLog(label: "TESTASDASDQWD")
-        ttt.test()
-        
-        print(SKFinderExtension.shared.isExtensionEnabled)
+    
+        SKSystem.shared.checkNotrize(atPath: "/Users/changyeop-yang/Downloads/Whale.app") { result in
+            print(result)
+        }
     }
 
     override var representedObject: Any? {
