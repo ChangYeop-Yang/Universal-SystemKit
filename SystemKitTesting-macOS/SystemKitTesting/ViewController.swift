@@ -49,6 +49,11 @@ class ViewController: NSViewController {
         SKSystem.shared.checkNotrize(atPath: "/Users/changyeop-yang/Downloads/Whale.app") { result in
             print(result)
         }
+        
+        SKFinderExtension.shared.enable(extensionPath: "extensionPath", waitUntilExit: false)
+        SKFinderExtension.shared.disable(extensionPath: "extensionPath", waitUntilExit: false)
+        SKFinderExtension.shared.append(extensionPath: "extensionPath", waitUntilExit: false)
+        
     }
 
     override var representedObject: Any? {
