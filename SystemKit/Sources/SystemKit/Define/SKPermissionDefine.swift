@@ -20,31 +20,13 @@
  * THE SOFTWARE.
  */
 
-import Logging
+#if os(macOS)
 import Foundation
-import Collections
-import SystemPackage
 
-public class SKLog: NSObject {
+// MARK: - Enum
+public enum SKPermissionServiceName {
     
-    // MARK: - Object Properties
-    public let logger: Logger
-    
-    // MARK: - Initalize
-    public init(label: String) {
-        self.logger = Logger(label: label)
-    }
-    
-    public func test() {
-        
-        self.logger.critical("...", source: "!@#`", file: self.logger.label)
-    }
+    case fullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
 }
 
-// MARK: - Public Extension SKLog
-public extension SKLog {
-    
-    final func critical(_ message: String) {
-        self.logger.critical("\(1)")
-    }
-}
+#endif
