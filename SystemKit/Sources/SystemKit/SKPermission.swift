@@ -26,7 +26,7 @@ import Foundation
 public class SKPermission: SKClass {
     
     // MARK: - Object Properties
-    public var label: String = "com.SystemKit.SKPermission"
+    public static var label: String = "com.SystemKit.SKPermission"
     public var identifier: String = UUID().uuidString
 }
 

@@ -26,7 +26,7 @@ import Foundation
 @objc public protocol SKClass {
     
     // MARK: Required Protocol Properties
-    var label: String { get }
+    static var label: String { get }
     var identifier: String { get }
     
     // MARK: Optaionl Protocol Properties

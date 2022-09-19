@@ -23,7 +23,7 @@
 import CoreData
 import Foundation
 
-public class SKCoreData: NSObject {
+public class SKCoreData: SKClass {
     
     // MARK: - Typealias
     public typealias CoreDataErrorHandler = (NSError) -> Swift.Void
@@ -31,6 +31,7 @@ public class SKCoreData: NSObject {
     
     // MARK: - Object Properties
     public static let label: String = "com.SystemKit.SKCoreData"
+    public let identifier: String = UUID().uuidString
     
     private let implementQueue = DispatchQueue(label: SKCoreData.label, qos: .userInitiated, attributes: .concurrent)
     private var attribute: Optional<CoreDataAttribute> = nil
@@ -100,17 +101,44 @@ public extension SKCoreData {
     
     @available(macOS 10.12, *)
     @discardableResult
-    final func open() -> Bool {
+    final func open(storeType: String = NSSQLiteStoreType,
+                    configurationName: Optional<String> = nil,
+                    concurrencyType: NSManagedObjectContextConcurrencyType = .privateQueueConcurrencyType) -> Bool {
+        
+        var result: Bool = false
         
         self.implementQueue.sync {
             
-            guard let attribute = self.attribute else { return false }
+            guard let attribute = self.attribute else { return }
             
             // CoreData Model 파일이 정상적으로 존재하는지 확인합니다.
-            guard FileManager.default.fileExists(atPath: attribute.modelPath) else { return false }
+            guard FileManager.default.fileExists(atPath: attribute.modelPath) else { return }
             
-            return true
+            
+            let modelPath = URL(fileURLWithPath: attribute.modelPath)
+            guard let model = NSManagedObjectModel(contentsOf: modelPath) else { return }
+
+            do {
+                let atPersistentPath: URL = URL(fileURLWithPath: attribute.persistentPath)
+                let coordinator: NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+                
+                try coordinator.addPersistentStore(ofType: storeType,
+                                                   configurationName: configurationName, at: atPersistentPath,
+                                                   options: [NSMigratePersistentStoresAutomaticallyOption: true])
+
+                let managedContext = NSManagedObjectContext(concurrencyType: concurrencyType)
+                managedContext.persistentStoreCoordinator = coordinator
+                managedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                managedContext.undoManager = nil
+
+                result = true
+                self.inContext = managedContext
+            } catch let error as NSError {
+                NSLog("[%@][%@] %@", SKCoreData.label, self.identifier, error.description)
+            }
         }
+        
+        return result
     }
     
     final func insert<T: NSManagedObject>(object: T...) {

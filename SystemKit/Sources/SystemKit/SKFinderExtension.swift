@@ -30,7 +30,7 @@ public class SKFinderExtension: NSObject, SKClass {
     // MARK: - Object Properties
     public static let shared: SKFinderExtension = SKFinderExtension()
     
-    public let label: String = "com.SystemKit.SKFinderExtension"
+    public static let label: String = "com.SystemKit.SKFinderExtension"
     public let identifier: String = UUID().uuidString
     private let launchPath: String = "/usr/bin/pluginkit"
     
@@ -51,7 +51,7 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func append(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Append Application Finder Extension", self.label, self.identifier)
+        NSLog("[%@][%@] Action, Append Application Finder Extension", SKFinderExtension.label, self.identifier)
         
         let arguments: Array<String> = ["-a", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
@@ -60,7 +60,7 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func enable(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Enable Application Finder Extension", self.label, self.identifier)
+        NSLog("[%@][%@] Action, Enable Application Finder Extension", SKFinderExtension.label, self.identifier)
         
         let arguments: Array<String> = ["-e", "use", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
@@ -69,7 +69,7 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func disable(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Disable Application Finder Extension", self.label, self.identifier)
+        NSLog("[%@][%@] Action, Disable Application Finder Extension", SKFinderExtension.label, self.identifier)
         
         let arguments: Array<String> = ["-e", "ignore", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)

@@ -21,12 +21,61 @@
  */
 
 #if os(macOS)
+import Cocoa
 import Foundation
 
 // MARK: - Enum
-public enum SKPermissionServiceName {
+public enum SKPermissionServiceName: String {
     
+    case remoteLogin = ""
     case fullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+}
+
+public enum SKSharingPreferencePane: String {
+    
+    case main = "x-apple.systempreferences:com.apple.preferences.sharing"
+    case shareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
+    case sharePrint = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PrinterSharing"
+    case shareFile = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PersonalFileSharing"
+    case remoteLogin = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
+    case remoteAppleEvents = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteAppleEvent"
+    case remoteManagement = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ARDService"
+    case shareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
+    case shareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
+}
+
+public enum SKDictationSpeechPreferencePane: String {
+    
+    case dictation = "x-apple.systempreferences:com.apple.preference.speech?Dictation"
+    case textToSpeech = "x-apple.systempreferences:com.apple.preference.speech?TTS"
+}
+
+public enum SKSecurityPrivacyPreferencePane: String {
+    
+    case Main = "x-apple.systempreferences:com.apple.preference.security"
+    case General = "x-apple.systempreferences:com.apple.preference.security?General"
+    case FileVault = "x-apple.systempreferences:com.apple.preference.security?FDE"
+    case Firewall = "x-apple.systempreferences:com.apple.preference.security?Firewall"
+    case Advanced = "x-apple.systempreferences:com.apple.preference.security?Advanced"
+    case Privacy = "x-apple.systempreferences:com.apple.preference.security?Privacy"
+    case PrivacyAccessibility = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+    case PrivacyAssistive = "x-apple.systempreferences:com.apple.preference.security?Privacy_Assistive"
+    case PrivacyLocationServices = "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices"
+    case PrivacyContacts = "x-apple.systempreferences:com.apple.preference.security?Privacy_Contacts"
+    case PrivacyDiagnosticsUsage = "x-apple.systempreferences:com.apple.preference.security?Privacy_Diagnostics"
+    case PrivacyCalendars = "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars"
+    case PrivacyReminders = "x-apple.systempreferences:com.apple.preference.security?Privacy_Reminders"
+    case PrivacyFacebook = "x-apple.systempreferences:com.apple.preference.security?Privacy_Facebook"
+    case PrivacyLinkedIn = "x-apple.systempreferences:com.apple.preference.security?Privacy_LinkedIn"
+    case PrivacyTwitter = "x-apple.systempreferences:com.apple.preference.security?Privacy_Twitter"
+    case PrivacyWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_Weibo"
+    case PrivacyTencentWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_TencentWeibo"
+    case PrivacyFullDiskAccess = "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+    case PrivacyDesktopFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DesktopFolder"
+    case PrivacyDocumentsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DocumentsFolder"
+    case PrivacyDownloadsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DownloadsFolder"
+    case PrivacyNetworkVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_NetworkVolume"
+    case PrivacyRemovableVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_RemovableVolume"
 }
 
 #endif

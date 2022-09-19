@@ -45,15 +45,10 @@ class ViewController: NSViewController {
         
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
-
-        SKSystem.shared.checkNotrize(atPath: "/Users/changyeop-yang/Downloads/Whale.app") { result in
-            print(result)
-        }
         
-        SKFinderExtension.shared.enable(extensionPath: "extensionPath", waitUntilExit: false)
-        SKFinderExtension.shared.disable(extensionPath: "extensionPath", waitUntilExit: false)
-        SKFinderExtension.shared.append(extensionPath: "extensionPath", waitUntilExit: false)
+        //SKSystem.shared.openPreferencePane(path: SKSharingPreferencePane.main.rawValue)
         
+        SKSystem.shared.openPreferencePane(path: SKSecurityPrivacyPreferencePane.PrivacyFullDiskAccess.rawValue)
     }
 
     override var representedObject: Any? {

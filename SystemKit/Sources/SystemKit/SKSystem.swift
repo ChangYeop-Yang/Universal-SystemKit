@@ -28,7 +28,7 @@ public class SKSystem: NSObject, SKClass {
     // MARK: - Object Properties
     public static let shared: SKSystem = SKSystem()
     
-    public let label: String = "com.SystemKit.SKSystem"
+    public static let label: String = "com.SystemKit.SKSystem"
     public let identifier: String = UUID().uuidString
 }
 
@@ -97,6 +97,7 @@ public extension SKSystem {
 
 // MARK: - Public Extension SKSystem With macOS Platform
 #if os(macOS)
+import Cocoa
 public extension SKSystem {
     
     final func getOperatingSystemVersion() -> OperatingSystemVersion {
@@ -233,7 +234,7 @@ public extension SKSystem {
             
             guard let description = String(data: availableData, encoding: .utf8) else { return }
             
-            NSLog("[%@][%@] Completion, Notrize Target Application: %@", self.label, self.identifier, description)
+            NSLog("[%@][%@] Completion, Notrize Target Application: %@", SKSystem.label, self.identifier, description)
             
             let sequence = description.split(whereSeparator: \.isNewline)
             
@@ -262,6 +263,11 @@ public extension SKSystem {
         let arguments: [String] = ["-a", "-vvv", "-t", "install", atPath]
         SKProcess.shared.run(launchPath: "/usr/sbin/spctl", arguments: arguments,
                              standardError: standardError, terminationHandler: terminationHandler)
+    }
+    
+    final func openPreferencePane(path: String) -> Bool {
+        guard let url: URL = URL(string: path) else { return false }
+        return NSWorkspace.shared.open(url)
     }
 }
 #endif
