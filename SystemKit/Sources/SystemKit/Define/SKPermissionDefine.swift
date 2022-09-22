@@ -91,6 +91,8 @@ public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
     case PrivacyNetworkVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_NetworkVolume"
     case PrivacyRemovableVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_RemovableVolume"
     case PrivacyAutomation = "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation"
+    case PrivacyAnalyticsAndImprovements= "x-apple.systempreferences:com.apple.preference.security?Privacy_Diagnostics"
+    case PrivacyAdvertising = "x-apple.systempreferences:com.apple.preference.security?Privacy_Advertising"
 }
 
 #endif
