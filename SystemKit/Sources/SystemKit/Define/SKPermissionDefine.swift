@@ -33,21 +33,21 @@ public enum SKPermissionServiceName: String {
 
 public enum SKSharingPreferencePane: String {
     
-    case main = "x-apple.systempreferences:com.apple.preferences.sharing"
-    case shareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
-    case sharePrint = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PrinterSharing"
-    case shareFile = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PersonalFileSharing"
-    case remoteLogin = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
-    case remoteAppleEvents = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteAppleEvent"
-    case remoteManagement = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ARDService"
-    case shareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
-    case shareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
+    case Main = "x-apple.systempreferences:com.apple.preferences.sharing"
+    case ShareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
+    case SharePrint = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PrinterSharing"
+    case ShareFile = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PersonalFileSharing"
+    case RemoteLogin = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
+    case RemoteAppleEvents = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteAppleEvent"
+    case RemoteManagement = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ARDService"
+    case ShareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
+    case ShareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
 }
 
 public enum SKDictationSpeechPreferencePane: String {
     
-    case dictation = "x-apple.systempreferences:com.apple.preference.speech?Dictation"
-    case textToSpeech = "x-apple.systempreferences:com.apple.preference.speech?TTS"
+    case Dictation = "x-apple.systempreferences:com.apple.preference.speech?Dictation"
+    case TextToSpeech = "x-apple.systempreferences:com.apple.preference.speech?TTS"
 }
 
 public enum SKSecurityPrivacyPreferencePane: String {
