@@ -31,6 +31,9 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case fullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
 }
 
+public enum SKDefaultPreferencePane: String, CaseIterable {
+}
+
 public enum SKAccessibilityPreferencePane: String, CaseIterable  {
 
     case Display = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_Display"
