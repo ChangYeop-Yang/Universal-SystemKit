@@ -25,13 +25,27 @@ import Cocoa
 import Foundation
 
 // MARK: - Enum
-public enum SKPermissionServiceName: String {
+public enum SKPermissionServiceName: String, CaseIterable {
     
     case remoteLogin = ""
     case fullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
 }
 
-public enum SKSharingPreferencePane: String {
+public enum SKAccessibilityPreferencePane: String, CaseIterable  {
+
+    case Display = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_Display"
+    case Zoom = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_Zoom"
+    case VoiceOver = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_VoiceOver"
+    case Descriptions = "x-apple.systempreferences:com.apple.preference.universalaccess?Media_Descriptions"
+    case Captions = "x-apple.systempreferences:com.apple.preference.universalaccess?Captioning"
+    case Audio = "x-apple.systempreferences:com.apple.preference.universalaccess?Hearing"
+    case Keyboard = "x-apple.systempreferences:com.apple.preference.universalaccess?Keyboard"
+    case Mouse = "x-apple.systempreferences:com.apple.preference.universalaccess?Mouse"
+    case Switch = "x-apple.systempreferences:com.apple.preference.universalaccess?Switch"
+    case Dictation = "x-apple.systempreferences:com.apple.preference.universalaccess?SpeakableItems"
+}
+
+public enum SKSharingPreferencePane: String, CaseIterable {
     
     case Main = "x-apple.systempreferences:com.apple.preferences.sharing"
     case ShareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
@@ -44,13 +58,13 @@ public enum SKSharingPreferencePane: String {
     case ShareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
 }
 
-public enum SKDictationSpeechPreferencePane: String {
+public enum SKDictationSpeechPreferencePane: String, CaseIterable {
     
     case Dictation = "x-apple.systempreferences:com.apple.preference.speech?Dictation"
     case TextToSpeech = "x-apple.systempreferences:com.apple.preference.speech?TTS"
 }
 
-public enum SKSecurityPrivacyPreferencePane: String {
+public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
     
     case Main = "x-apple.systempreferences:com.apple.preference.security"
     case General = "x-apple.systempreferences:com.apple.preference.security?General"
