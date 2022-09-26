@@ -44,7 +44,8 @@ public extension SKPermission {
     }
     
     @available(macOS 10.12, *)
-    final func managePrivacyPermission(service: SKPermissionServiceName = .All, bundlePath: String) {
+    final func managePrivacyPermission(service: SKPermissionServiceName = SKPermissionServiceName.All,
+                                       bundlePath: String) {
         
         let arguments: [String] = ["reset", service.rawValue, bundlePath]
         SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
