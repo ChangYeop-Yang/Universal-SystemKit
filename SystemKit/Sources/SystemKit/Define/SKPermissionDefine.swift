@@ -43,6 +43,8 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case Microphone = "kTCCServiceMicrophone"
     case Motion = "kTCCServiceMotion"
     case Photos = "kTCCServicePhotos"
+    
+    /// Client Would Like to Add to your Photos
     case PhotosAdd = "kTCCServicePhotosAdd"
     
     /// Client Would Like Authorization to Test Service Proto3Right
