@@ -44,8 +44,15 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case Motion = "kTCCServiceMotion"
     case Photos = "kTCCServicePhotos"
     case PhotosAdd = "kTCCServicePhotosAdd"
+    
+    /// Client Would Like Authorization to Test Service Proto3Right
     case Prototype3Rights = "kTCCServicePrototype3Rights"
+    
+    /// Client Would Like Authorization to Test Service Proto4Right
     case Prototype4Rights = "kTCCServicePrototype4Rights"
+    
+    /// Client would like to access your reminders
+    case Reminders = "kTCCServiceReminders"
 }
 
 public enum SKDefaultPreferencePane: String, CaseIterable {
