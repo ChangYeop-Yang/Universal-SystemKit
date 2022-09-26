@@ -32,6 +32,8 @@ public enum SKPermissionServiceName: String, CaseIterable {
 }
 
 public enum SKDefaultPreferencePane: String, CaseIterable {
+    
+    case Notifications = "x-apple.systempreferences:com.apple.preference.notifications"
 }
 
 public enum SKAccessibilityPreferencePane: String, CaseIterable  {
