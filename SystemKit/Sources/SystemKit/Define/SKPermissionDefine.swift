@@ -28,7 +28,24 @@ import Foundation
 public enum SKPermissionServiceName: String, CaseIterable {
     
     case remoteLogin = ""
-    case fullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+    case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+    case AddressBook = "kTCCServiceAddressBook"
+    case AppleEvents = "kTCCServiceAppleEvents"
+    case Bluetooth = "kTCCServiceBluetoothAlways"
+    case Calendar = "kTCCServiceCalendar"
+    case Camera = "kTCCServiceCamera"
+    case ContactsFull = "kTCCServiceContactsFull"
+    case ContactsLimited = "kTCCServiceContactsLimited"
+    case FileProviderDomain = "kTCCServiceFileProviderDomain"
+    case FileProviderPresence = "kTCCServiceFileProviderPresence"
+    case Location = "kTCCServiceLocation"
+    case MediaLibrary = "kTCCServiceMediaLibrary"
+    case Microphone = "kTCCServiceMicrophone"
+    case Motion = "kTCCServiceMotion"
+    case Photos = "kTCCServicePhotos"
+    case PhotosAdd = "kTCCServicePhotosAdd"
+    case Prototype3Rights = "kTCCServicePrototype3Rights"
+    case Prototype4Rights = "kTCCServicePrototype4Rights"
 }
 
 public enum SKDefaultPreferencePane: String, CaseIterable {
