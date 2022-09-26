@@ -28,8 +28,6 @@ import Foundation
 public enum SKPermissionServiceName: String, CaseIterable {
     
     case All = "All"
-    case remoteLogin = ""
-    case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case AddressBook = "kTCCServiceAddressBook"
     case AppleEvents = "kTCCServiceAppleEvents"
     case Bluetooth = "kTCCServiceBluetoothAlways"
@@ -44,26 +42,37 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case Microphone = "kTCCServiceMicrophone"
     case Motion = "kTCCServiceMotion"
     case Photos = "kTCCServicePhotos"
-    
-    /// Client Would Like to Add to your Photos
     case PhotosAdd = "kTCCServicePhotosAdd"
-    
-    /// Client Would Like Authorization to Test Service Proto3Right
     case Prototype3Rights = "kTCCServicePrototype3Rights"
-    
-    /// Client Would Like Authorization to Test Service Proto4Right
     case Prototype4Rights = "kTCCServicePrototype4Rights"
-    
-    /// Client would like to access your reminders
     case Reminders = "kTCCServiceReminders"
-    
-    /// Client would like to capture the contents of the system display
     case ScreenCapture = "kTCCServiceScreenCapture"
+    case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+    case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
+    case SystemPolicyNetworkVolumes = "kTCCServiceSystemPolicyNetworkVolumes"
+    case SystemPolicyDesktopFolder = "kTCCServiceSystemPolicyDesktopFolder"
+    case SystemPolicyDownloadsFolder = "kTCCServiceSystemPolicyDownloadsFolder"
+    case SystemPolicyDocumentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
+    
+    // MARK: Enum Computed Properties
+    public var name: String { self.rawValue }
 }
 
 public enum SKDefaultPreferencePane: String, CaseIterable {
     
+    case Battery = "x-apple.systempreferences:com.apple.preference.battery"
+    case Password = "x-apple.systempreferences:com.apple.preferences.password"
     case Notifications = "x-apple.systempreferences:com.apple.preference.notifications"
+    case SoftwareUpdate = "x-apple.systempreferences:com.apple.preferences.softwareupdate?client=softwareupdateapp"
+    case FamilySharingPrefPane = "x-apple.systempreferences:com.apple.preferences.FamilySharingPrefPane"
+    case AppleID = "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
+    case Wallet = "x-apple.systempreferences:com.apple.preferences.wallet"
+    case Profile = "x-apple.systempreferences:com.apple.preferences.configurationprofiles"
+    case Screentime = "x-apple.systempreferences:com.apple.preference.screentime"
+    
+    // MARK: macOS Ventura (Version 13.*)
+    case LoginItems = "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
+    case DesktopScreenEffect = "x-apple.systempreferences:com.apple.preference.desktopscreeneffect"
 }
 
 public enum SKAccessibilityPreferencePane: String, CaseIterable  {
@@ -114,20 +123,26 @@ public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
     case PrivacyDiagnosticsUsage = "x-apple.systempreferences:com.apple.preference.security?Privacy_Diagnostics"
     case PrivacyCalendars = "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars"
     case PrivacyReminders = "x-apple.systempreferences:com.apple.preference.security?Privacy_Reminders"
+    case PrivacyTencentWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_TencentWeibo"
+    case PrivacyAutomation = "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation"
+    case PrivacyAdvertising = "x-apple.systempreferences:com.apple.preference.security?Privacy_Advertising"
+    
     case PrivacyFacebook = "x-apple.systempreferences:com.apple.preference.security?Privacy_Facebook"
     case PrivacyLinkedIn = "x-apple.systempreferences:com.apple.preference.security?Privacy_LinkedIn"
     case PrivacyTwitter = "x-apple.systempreferences:com.apple.preference.security?Privacy_Twitter"
     case PrivacyWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_Weibo"
-    case PrivacyTencentWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_TencentWeibo"
+    
     case PrivacyFullDiskAccess = "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+    
+    // MARK: macOS Catalina (Version: 10.15)
+    case PrivacyDevTools = "x-apple.systempreferences:com.apple.preference.security?Privacy_DevTools"
     case PrivacyDesktopFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DesktopFolder"
     case PrivacyDocumentsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DocumentsFolder"
     case PrivacyDownloadsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DownloadsFolder"
     case PrivacyNetworkVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_NetworkVolume"
     case PrivacyRemovableVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_RemovableVolume"
-    case PrivacyAutomation = "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation"
-    case PrivacyAnalyticsAndImprovements= "x-apple.systempreferences:com.apple.preference.security?Privacy_Diagnostics"
-    case PrivacyAdvertising = "x-apple.systempreferences:com.apple.preference.security?Privacy_Advertising"
+    case PrivacyInputMonitoring = "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
+    case PrivacyScreenCapture = "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
 }
 
 #endif

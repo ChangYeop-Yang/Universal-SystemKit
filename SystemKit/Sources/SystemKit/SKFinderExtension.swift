@@ -29,8 +29,8 @@ public class SKFinderExtension: NSObject, SKClass {
     
     // MARK: - Object Properties
     public static let shared: SKFinderExtension = SKFinderExtension()
-    
     public static let label: String = "com.SystemKit.SKFinderExtension"
+    
     public let identifier: String = UUID().uuidString
     private let launchPath: String = "/usr/bin/pluginkit"
     

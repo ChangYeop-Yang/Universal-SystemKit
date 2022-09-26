@@ -264,10 +264,5 @@ public extension SKSystem {
         SKProcess.shared.run(launchPath: "/usr/sbin/spctl", arguments: arguments,
                              standardError: standardError, terminationHandler: terminationHandler)
     }
-    
-    final func openPreferencePane(path: String) -> Bool {
-        guard let url: URL = URL(string: path) else { return false }
-        return NSWorkspace.shared.open(url)
-    }
 }
 #endif

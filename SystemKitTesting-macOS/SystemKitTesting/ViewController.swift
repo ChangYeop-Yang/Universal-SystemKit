@@ -48,7 +48,7 @@ class ViewController: NSViewController {
         
         //SKSystem.shared.openPreferencePane(path: SKSharingPreferencePane.main.rawValue)
         
-        SKSystem.shared.openPreferencePane(path: SKSecurityPrivacyPreferencePane.PrivacyFullDiskAccess.rawValue)
+        SKPermission.shared.openPreferencePane(path: SKDefaultPreferencePane.Screentime.rawValue)
     }
 
     override var representedObject: Any? {

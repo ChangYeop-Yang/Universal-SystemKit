@@ -21,12 +21,15 @@
  */
 
 #if os(macOS)
+import Cocoa
 import Foundation
 
 public class SKPermission: SKClass {
     
     // MARK: - Object Properties
+    public static let shared: SKPermission = SKPermission()
     public static var label: String = "com.SystemKit.SKPermission"
+    
     public var identifier: String = UUID().uuidString
 }
 
@@ -41,10 +44,16 @@ public extension SKPermission {
     }
     
     @available(macOS 10.12, *)
-    final func managePrivacyPermission(service: String = "All", bundlePath: String) {
+    final func managePrivacyPermission(service: SKPermissionServiceName = .All, bundlePath: String) {
         
-        let arguments: [String] = ["reset", service, bundlePath]
+        let arguments: [String] = ["reset", service.rawValue, bundlePath]
         SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
+    }
+    
+    final func openPreferencePane(path: String) -> Bool {
+        
+        guard let url: URL = URL(string: path) else { return false }
+        return NSWorkspace.shared.open(url)
     }
 }
 #endif
