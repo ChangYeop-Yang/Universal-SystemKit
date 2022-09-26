@@ -27,6 +27,7 @@ import Foundation
 // MARK: - Enum
 public enum SKPermissionServiceName: String, CaseIterable {
     
+    case All = "All"
     case remoteLogin = ""
     case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case AddressBook = "kTCCServiceAddressBook"
