@@ -55,6 +55,9 @@ public enum SKPermissionServiceName: String, CaseIterable {
     
     /// Client would like to access your reminders
     case Reminders = "kTCCServiceReminders"
+    
+    /// Client would like to capture the contents of the system display
+    case ScreenCapture = "kTCCServiceScreenCapture"
 }
 
 public enum SKDefaultPreferencePane: String, CaseIterable {
