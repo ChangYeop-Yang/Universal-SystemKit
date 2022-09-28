@@ -47,12 +47,16 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case Prototype4Rights = "kTCCServicePrototype4Rights"
     case Reminders = "kTCCServiceReminders"
     case ScreenCapture = "kTCCServiceScreenCapture"
+    case Siri = "kTCCServiceSiri"
+    case SpeechRecognition = "kTCCServiceSpeechRecognition"
     case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+    case SystemPolicyDeveloperFiles = "kTCCServiceSystemPolicyDeveloperFiles"
     case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
     case SystemPolicyNetworkVolumes = "kTCCServiceSystemPolicyNetworkVolumes"
     case SystemPolicyDesktopFolder = "kTCCServiceSystemPolicyDesktopFolder"
     case SystemPolicyDownloadsFolder = "kTCCServiceSystemPolicyDownloadsFolder"
     case SystemPolicyDocumentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
+    case SystemPolicySysAdminFiles = "kTCCServiceSystemPolicySysAdminFiles"
     
     // MARK: Enum Computed Properties
     public var name: String { self.rawValue }
