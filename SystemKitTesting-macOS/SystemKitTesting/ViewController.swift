@@ -46,9 +46,7 @@ class ViewController: NSViewController {
         let versionOS = SKSystem.shared.getOperatingSystemName()
         print(versionOS)
         
-        //SKSystem.shared.openPreferencePane(path: SKSharingPreferencePane.main.rawValue)
-        
-        SKPermission.shared.openPreferencePane(path: SKDefaultPreferencePane.Screentime.rawValue)
+        SKPermission.shared.managePrivacyPermission(service: .SystemPolicyDesktopFolder, bundlePath: "com.apple.Terminal")
     }
 
     override var representedObject: Any? {

@@ -161,7 +161,7 @@ public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
 }
 #endif
 
-#if os(ios)
+#if os(iOS)
 // MARK: - Enum
 public enum SKPermissionServiceName: String, CaseIterable {
     
