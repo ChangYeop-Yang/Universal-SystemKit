@@ -103,14 +103,16 @@ public enum SKAccessibilityPreferencePane: String, CaseIterable  {
 public enum SKSharingPreferencePane: String, CaseIterable {
     
     case Main = "x-apple.systempreferences:com.apple.preferences.sharing"
+    
     case ShareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
     case SharePrint = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PrinterSharing"
     case ShareFile = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PersonalFileSharing"
+    case ShareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
+    case ShareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
+    
     case RemoteLogin = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
     case RemoteAppleEvents = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteAppleEvent"
     case RemoteManagement = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ARDService"
-    case ShareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
-    case ShareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
 }
 
 public enum SKDictationSpeechPreferencePane: String, CaseIterable {
@@ -122,11 +124,13 @@ public enum SKDictationSpeechPreferencePane: String, CaseIterable {
 public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
     
     case Main = "x-apple.systempreferences:com.apple.preference.security"
+    
     case General = "x-apple.systempreferences:com.apple.preference.security?General"
     case FileVault = "x-apple.systempreferences:com.apple.preference.security?FDE"
     case Firewall = "x-apple.systempreferences:com.apple.preference.security?Firewall"
     case Advanced = "x-apple.systempreferences:com.apple.preference.security?Advanced"
     case Privacy = "x-apple.systempreferences:com.apple.preference.security?Privacy"
+    
     case PrivacyAccessibility = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
     case PrivacyAssistive = "x-apple.systempreferences:com.apple.preference.security?Privacy_Assistive"
     case PrivacyLocationServices = "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices"
