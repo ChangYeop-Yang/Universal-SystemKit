@@ -49,6 +49,7 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case ScreenCapture = "kTCCServiceScreenCapture"
     case Siri = "kTCCServiceSiri"
     case SpeechRecognition = "kTCCServiceSpeechRecognition"
+    case Willow = "kTCCServiceWillow"
     case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case SystemPolicyDeveloperFiles = "kTCCServiceSystemPolicyDeveloperFiles"
     case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
