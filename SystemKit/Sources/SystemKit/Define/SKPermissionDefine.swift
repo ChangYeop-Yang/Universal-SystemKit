@@ -54,13 +54,6 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case PostEvent = "kTCCServicePostEvent"
     case ListenEvent = "kTCCServiceListenEvent"
     case DeveloperTool = "kTCCServiceDeveloperTool"
-    case LiverPool = "kTCCServiceLiverpool"
-    case Ubiquity = "kTCCServiceUbiquity"
-    case LinkedIn = "kTCCServiceLinkedIn"
-    case Twitter = "kTCCServiceTwitter"
-    case FaceBook = "kTCCServiceFacebook"
-    case SinaWeibo = "kTCCServiceSinaWeibo"
-    case TencentWeibo = "kTCCServiceTencentWeibo"
     case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case SystemPolicyDeveloperFiles = "kTCCServiceSystemPolicyDeveloperFiles"
     case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
@@ -160,5 +153,19 @@ public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
     case PrivacyInputMonitoring = "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
     case PrivacyScreenCapture = "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
 }
+#endif
 
+#if os(ios)
+// MARK: - Enum
+public enum SKPermissionServiceName: String, CaseIterable {
+    
+    case LiverPool = "kTCCServiceLiverpool"
+    case Ubiquity = "kTCCServiceUbiquity"
+    case ShareKit = "kTCCServiceShareKit"
+    case LinkedIn = "kTCCServiceLinkedIn"
+    case Twitter = "kTCCServiceTwitter"
+    case FaceBook = "kTCCServiceFacebook"
+    case SinaWeibo = "kTCCServiceSinaWeibo"
+    case TencentWeibo = "kTCCServiceTencentWeibo"
+}
 #endif
