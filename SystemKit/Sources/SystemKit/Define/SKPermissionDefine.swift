@@ -54,7 +54,8 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case PostEvent = "kTCCServicePostEvent"
     case ListenEvent = "kTCCServiceListenEvent"
     case DeveloperTool = "kTCCServiceDeveloperTool"
-    case FullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
+    
+    case SystemPolicyFullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case SystemPolicyDeveloperFiles = "kTCCServiceSystemPolicyDeveloperFiles"
     case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
     case SystemPolicyNetworkVolumes = "kTCCServiceSystemPolicyNetworkVolumes"
