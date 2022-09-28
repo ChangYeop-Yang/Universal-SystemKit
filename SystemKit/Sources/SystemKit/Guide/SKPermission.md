@@ -1,6 +1,6 @@
 # 🗂 SKPermission
 
-`SKPermission`는 iOS 또는 macOS 운영체제에서 애플리케이션 구동에 필요 한 다양한 권한 (`Files and Folders`, `Full Disk Access`, `Photos`, `AddressBook`, `Bluetooth`, `Calendar`) 등을 손쉽게 관리할 수 있습니다. 
+`SKPermission`는 iOS 또는 macOS 운영체제에서 애플리케이션 구동에 필요 한 다양한 권한 [`파일 및 폴더 권한 (Files and Folders)`, `전체 디스크 접그 권한 (Full Disk Access)`, `사진 (Photos)`, `연락처 (AddressBook)`, `블루투스 (Bluetooth)`, `캘린더 (Calendar)`] 등을 손쉽게 관리할 수 있습니다. 
 
 # Example Source
 
