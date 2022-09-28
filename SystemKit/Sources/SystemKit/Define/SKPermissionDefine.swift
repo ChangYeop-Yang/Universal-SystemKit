@@ -28,6 +28,7 @@ import Foundation
 public enum SKPermissionServiceName: String, CaseIterable {
     
     case All = "All"
+    
     case AddressBook = "kTCCServiceAddressBook"
     case AppleEvents = "kTCCServiceAppleEvents"
     case Bluetooth = "kTCCServiceBluetoothAlways"
