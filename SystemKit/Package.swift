@@ -26,7 +26,7 @@
 import PackageDescription
 import Foundation
 
-#if os(Linux) || os(macOS) || os(iOS) || os(tvOS)
+#if os(macOS) || os(iOS)
 
 // MARK: - Object Properties
 private let namePackage: String = "SystemKit"
@@ -38,13 +38,15 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(name: namePackage, targets: ["SystemKit"]),
+        .library(name: "Beltex", targets: ["Beltex"])
     ],
     dependencies: dependenciesPackage,
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(name: namePackage, dependencies: dependenciesTarget),
-        .testTarget(name: "SystemKitTests", dependencies: ["SystemKit"]),
+        .binaryTarget(name: "Beltex", path: "Frameworks/Beltex.xcframework"),
+        .testTarget(name: "SystemKitTests", dependencies: ["SystemKit", "Beltex"])
     ]
 )
 

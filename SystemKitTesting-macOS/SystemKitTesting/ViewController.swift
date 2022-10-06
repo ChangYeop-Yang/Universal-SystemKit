@@ -21,6 +21,7 @@
  */
 
 import Cocoa
+//import Beltex_SystemKit
 import SystemKit
 
 class ViewController: NSViewController {
@@ -32,6 +33,8 @@ class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //print(System.CPUPowerLimit())
         
         // Do any additional setup after loading the view.
         let userName = SKSystem.shared.getConsoleUserName()

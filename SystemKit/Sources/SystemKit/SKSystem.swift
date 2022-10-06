@@ -37,12 +37,12 @@ public extension SKSystem {
     
     typealias ApplicationVersionResult = (releaseVersion: String, bundleVersion: String)
     final func getApplicationVersion() -> Optional<ApplicationVersionResult> {
-
+        
         guard let infoDictionary = Bundle.main.infoDictionary else { return nil }
 
         guard let releaseVersion = infoDictionary["CFBundleShortVersionString"] as? String,
               let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
-
+    
         return ApplicationVersionResult(releaseVersion, bundleVersion)
     }
     

@@ -1,0 +1,11 @@
+framework module Beltex {
+  umbrella header "Beltex.h"
+
+  export *
+  module * { export * }
+}
+
+module Beltex.Swift {
+  header "Beltex-Swift.h"
+  requires objc
+}

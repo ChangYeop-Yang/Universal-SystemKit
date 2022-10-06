@@ -301,8 +301,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G325PL7HW2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SystemKitTesting",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SystemKitTesting/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -330,8 +334,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G325PL7HW2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SystemKitTesting",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SystemKitTesting/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";

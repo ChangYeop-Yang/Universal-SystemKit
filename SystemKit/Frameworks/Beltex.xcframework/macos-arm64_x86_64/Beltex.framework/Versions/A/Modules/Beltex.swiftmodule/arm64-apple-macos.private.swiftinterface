@@ -1,0 +1,160 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)
+// swift-module-flags: -target arm64-apple-macos10.12 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Beltex
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+@_exported import Beltex
+import Darwin
+import Foundation
+import IOKit
+import Swift
+import _Concurrency
+import IOKit.pwr_mgt
+public struct System {
+  public static let PAGE_SIZE: Darwin.vm_size_t
+  public enum Unit : Swift.Double {
+    case byte
+    case kilobyte
+    case megabyte
+    case gigabyte
+    public init?(rawValue: Swift.Double)
+    public typealias RawValue = Swift.Double
+    public var rawValue: Swift.Double {
+      get
+    }
+  }
+  public enum LOAD_AVG {
+    case short
+    case long
+    public static func == (a: Beltex.System.LOAD_AVG, b: Beltex.System.LOAD_AVG) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ThermalLevel : Swift.String {
+    case Normal
+    case Danger
+    case Crisis
+    case NotPublished
+    case Unknown
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init()
+  public mutating func usageCPU() -> (system: Swift.Double, user: Swift.Double, idle: Swift.Double, nice: Swift.Double)
+  public static func modelName() -> Swift.String
+  public static func physicalCores() -> Swift.Int
+  public static func logicalCores() -> Swift.Int
+  public static func loadAverage(_ type: Beltex.System.LOAD_AVG = .long) -> [Swift.Double]
+  public static func machFactor() -> [Swift.Double]
+  public static func processCounts() -> (processCount: Swift.Int, threadCount: Swift.Int)
+  public static func physicalMemory(_ unit: Beltex.System.Unit = .gigabyte) -> Swift.Double
+  public static func memoryUsage() -> (free: Swift.Double, active: Swift.Double, inactive: Swift.Double, wired: Swift.Double, compressed: Swift.Double)
+  public static func uptime() -> (days: Swift.Int, hrs: Swift.Int, mins: Swift.Int, secs: Swift.Int)
+  public static func CPUPowerLimit() -> (processorSpeed: Swift.Double, processorCount: Swift.Int, schedulerTime: Swift.Double)
+  public static func thermalLevel() -> Beltex.System.ThermalLevel
+}
+public let kIOReturnError: Darwin.kern_return_t
+public let kIOReturnNoMemory: Darwin.kern_return_t
+public let kIOReturnNoResources: Darwin.kern_return_t
+public let kIOReturnIPCError: Darwin.kern_return_t
+public let kIOReturnNoDevice: Darwin.kern_return_t
+public let kIOReturnBadArgument: Darwin.kern_return_t
+public let kIOReturnLockedRead: Darwin.kern_return_t
+public let kIOReturnExclusiveAccess: Darwin.kern_return_t
+public let kIOReturnBadMessageID: Darwin.kern_return_t
+public let kIOReturnUnsupported: Darwin.kern_return_t
+public let kIOReturnVMError: Darwin.kern_return_t
+public let kIOReturnInternalError: Darwin.kern_return_t
+public let kIOReturnIOError: Darwin.kern_return_t
+public let kIOReturnCannotLock: Darwin.kern_return_t
+public let kIOReturnNotOpen: Darwin.kern_return_t
+public let kIOReturnNotReadable: Darwin.kern_return_t
+public let kIOReturnNotWritable: Darwin.kern_return_t
+public let kIOReturnNotAligned: Darwin.kern_return_t
+public let kIOReturnBadMedia: Darwin.kern_return_t
+public let kIOReturnStillOpen: Darwin.kern_return_t
+public let kIOReturnRLDError: Darwin.kern_return_t
+public let kIOReturnDMAError: Darwin.kern_return_t
+public let kIOReturnBusy: Darwin.kern_return_t
+public let kIOReturnTimeout: Darwin.kern_return_t
+public let kIOReturnOffline: Darwin.kern_return_t
+public let kIOReturnNotReady: Darwin.kern_return_t
+public let kIOReturnNotAttached: Darwin.kern_return_t
+public let kIOReturnNoChannels: Darwin.kern_return_t
+public let kIOReturnNoSpace: Darwin.kern_return_t
+public let kIOReturnPortExists: Darwin.kern_return_t
+public let kIOReturnCannotWire: Darwin.kern_return_t
+public let kIOReturnNoInterrupt: Darwin.kern_return_t
+public let kIOReturnNoFrames: Darwin.kern_return_t
+public let kIOReturnMessageTooLarge: Darwin.kern_return_t
+public let kIOReturnNotPermitted: Darwin.kern_return_t
+public let kIOReturnNoPower: Darwin.kern_return_t
+public let kIOReturnNoMedia: Darwin.kern_return_t
+public let kIOReturnUnformattedMedia: Darwin.kern_return_t
+public let kIOReturnUnsupportedMode: Darwin.kern_return_t
+public let kIOReturnUnderrun: Darwin.kern_return_t
+public let kIOReturnOverrun: Darwin.kern_return_t
+public let kIOReturnDeviceError: Darwin.kern_return_t
+public let kIOReturnNoCompletion: Darwin.kern_return_t
+public let kIOReturnAborted: Darwin.kern_return_t
+public let kIOReturnNoBandwidth: Darwin.kern_return_t
+public let kIOReturnNotResponding: Darwin.kern_return_t
+public let kIOReturnIsoTooOld: Darwin.kern_return_t
+public let kIOReturnIsoTooNew: Darwin.kern_return_t
+public let kIOReturnNotFound: Darwin.kern_return_t
+public let kIOReturnInvalid: Darwin.kern_return_t
+public let CPU_TYPE_ANY: Darwin.cpu_type_t
+public let CPU_TYPE_X86: Darwin.cpu_type_t
+public let CPU_TYPE_I386: Darwin.cpu_type_t
+public let CPU_TYPE_X86_64: Swift.Int32
+public let CPU_TYPE_ARM: Darwin.cpu_type_t
+public let CPU_TYPE_ARM64: Swift.Int32
+public let CPU_TYPE_POWERPC: Darwin.cpu_type_t
+public let CPU_TYPE_POWERPC64: Swift.Int32
+public struct ProcessInfo {
+}
+public struct ProcessAPI {
+  public init()
+  public static func list() -> [Beltex.ProcessInfo]
+}
+public struct Battery {
+  public enum TemperatureUnit {
+    case celsius
+    case fahrenheit
+    case kelvin
+    public static func == (a: Beltex.Battery.TemperatureUnit, b: Beltex.Battery.TemperatureUnit) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public init()
+  public mutating func open() -> Darwin.kern_return_t
+  public mutating func close() -> Darwin.kern_return_t
+  public func currentCapacity() -> Swift.Int
+  public func maxCapactiy() -> Swift.Int
+  public func designCapacity() -> Swift.Int
+  public func cycleCount() -> Swift.Int
+  public func designCycleCount() -> Swift.Int
+  public func isACPowered() -> Swift.Bool
+  public func isCharging() -> Swift.Bool
+  public func isCharged() -> Swift.Bool
+  public func charge() -> Swift.Double
+  public func timeRemaining() -> Swift.Int
+  public func timeRemainingFormatted() -> Swift.String
+  public func temperature(_ unit: Beltex.Battery.TemperatureUnit = .celsius) -> Swift.Double
+}
+extension Beltex.System.Unit : Swift.Equatable {}
+extension Beltex.System.Unit : Swift.Hashable {}
+extension Beltex.System.Unit : Swift.RawRepresentable {}
+extension Beltex.System.LOAD_AVG : Swift.Equatable {}
+extension Beltex.System.LOAD_AVG : Swift.Hashable {}
+extension Beltex.System.ThermalLevel : Swift.Equatable {}
+extension Beltex.System.ThermalLevel : Swift.Hashable {}
+extension Beltex.System.ThermalLevel : Swift.RawRepresentable {}
+extension Beltex.Battery.TemperatureUnit : Swift.Equatable {}
+extension Beltex.Battery.TemperatureUnit : Swift.Hashable {}
