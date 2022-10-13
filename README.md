@@ -12,7 +12,7 @@ Once you have your Swift package set up, adding `SystemKit` as a dependency is a
 
 ```Swift
 dependencies: [
-    .package(url: "", .upToNextMajor(from: ""))
+    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", .branch("master"))
 ]
 ```
 
