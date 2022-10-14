@@ -37,7 +37,7 @@ public struct SKUserDefaults<Value> {
     }
     
     // MARK: - Initalize
-    public init(forKey: String, defaultValue: Optional<Value>) {
+    public init(forKey: String, defaultValue: Optional<Value> = nil) {
         NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
         self.forKey = forKey
         self.defaultValue = defaultValue
