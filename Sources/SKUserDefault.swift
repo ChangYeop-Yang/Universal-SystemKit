@@ -27,7 +27,7 @@ public struct SKUserDefaults<Value> {
     
     // MARK: - Struct Properties
     private let forKey: String
-    private let defaultValue: Value
+    private let defaultValue: Optional<Value>
     private let identifier: String = UUID().uuidString
     
     // Property Wrapper 필수 구현 Property
@@ -37,7 +37,7 @@ public struct SKUserDefaults<Value> {
     }
     
     // MARK: - Initalize
-    public init(forKey: String, defaultValue: Value) {
+    public init(forKey: String, defaultValue: Optional<Value>) {
         NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
         self.forKey = forKey
         self.defaultValue = defaultValue
