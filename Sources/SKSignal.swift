@@ -34,8 +34,14 @@ public class SKSignal: SKAsyncOperation, SKClass {
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKSignal"
     
-    public var identifier: String = UUID().uuidString
+    private let target: SKSignalValue
     private var source: Optional<DispatchSourceSignal> = nil
+    public var identifier: String = UUID().uuidString
+    
+    // MARK: - Initalize
+    public init(signal number: Int32, handler: @escaping SKSignalHandler) {
+        self.target = SKSignalValue(number, handler)
+    }
 }
 
 // MARK: - Private Extension SKSignal
@@ -64,11 +70,11 @@ private extension SKSignal {
 // MARK: - Public Extension SKSignal
 public extension SKSignal {
     
-    public override func start() {
-        observeSignal(signal: <#T##Int32#>, handler: <#T##SKSignalHandler##SKSignalHandler##(Int32) -> Void#>)
+    override func start() {
+        observeSignal(signal: self.target.signal, handler: self.target.handler)
     }
     
-    public override func cancel() {
+    override func cancel() {
         removeObserveSignal()
     }
 }
