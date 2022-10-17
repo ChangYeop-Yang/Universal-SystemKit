@@ -29,18 +29,18 @@ public class SKSignal: SKAsyncOperation, SKClass {
     
     // MARK: - Typealias
     public typealias SKSignalHandler = @convention(c) (Int32) -> Swift.Void
-    private typealias SKSignalValue = (signal: Int32, handler: SKSignalHandler)
+    private typealias SKSignalResult = (signal: Int32, handler: SKSignalHandler)
     
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKSignal"
     
-    private let target: SKSignalValue
+    private let result: SKSignalResult
     private var source: Optional<DispatchSourceSignal> = nil
     public var identifier: String = UUID().uuidString
     
     // MARK: - Initalize
     public init(signal number: Int32, handler: @escaping SKSignalHandler) {
-        self.target = SKSignalValue(number, handler)
+        self.result = SKSignalResult(number, handler)
     }
 }
 
@@ -49,18 +49,23 @@ private extension SKSignal {
     
     final func observeSignal(signal number: Int32, handler: @escaping SKSignalHandler) {
         
+        // 현재 작업이 취소 상태인 경우에는 아래의 등록 작업을 하지 않습니다.
+        if self.isCancelled { return }
+        
+        // SIGNAL 등록 작업을 수행하기 전에 기존의 SIGNAL 이벤트를 거부 작업을 수행합니다.
         signal(number, SIG_IGN)
         
         self.source = DispatchSource.makeSignalSource(signal: number)
-        
         self.source?.setEventHandler { handler(number) }
-        
         self.source?.resume()
     }
     
     final func removeObserveSignal() {
         
+        // 현재 작업이 취소 상태가 아닌 경우에는 아래의 취소작업을 하지 않습니다.
         guard self.isCancelled else { return }
+        
+        NSLog("[%@][%@] Action, Remove Signal Observe: %@", SKSignal.label, self.identifier, self.result.signal)
         
         self.source?.cancel()
         self.source = nil
@@ -71,10 +76,14 @@ private extension SKSignal {
 public extension SKSignal {
     
     override func start() {
-        observeSignal(signal: self.target.signal, handler: self.target.handler)
+        
+        // Signal Handler 등록 작업을 수행합니다.
+        observeSignal(signal: self.result.signal, handler: self.result.handler)
     }
     
     override func cancel() {
+        
+        // Signal handler 등록 해제 작업을 수행합니다.
         removeObserveSignal()
     }
 }
