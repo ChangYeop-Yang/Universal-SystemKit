@@ -32,6 +32,8 @@ dependencies: [
 
 * [SKUserDefault](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKUserDefault.md)
 
+* [SKSignal](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKSignal.md)
+
 # 📃 License
 
 `SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
