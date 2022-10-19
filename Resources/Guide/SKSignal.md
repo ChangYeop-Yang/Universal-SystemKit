@@ -1,6 +1,6 @@
 # 🗂 SKSignal
 
-`SKSignal`는 `macOS` 운영체제에서 쓰이는 제한된 형태의 프로세스 간 통신을 위해서 사용하는 신호 (Signal)을 손쉽게 Handling 할 수 있도록 기능을 제공합니다.
+`SKSignal`는 `macOS` 운영체제에서 쓰이는 제한된 형태의 프로세스 간 통신을 위해서 사용하는 `신호 (Signal)`을 손쉽게 Handling 할 수 있도록 기능을 제공합니다.
 
 # Example Source
 
