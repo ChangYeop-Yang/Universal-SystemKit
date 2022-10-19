@@ -1,6 +1,6 @@
 # 🗂 SKSignal
 
-`SKSignal`는 `macOS` 운영체제에서  
+`SKSignal`는 `macOS` 운영체제에서 쓰이는 제한된 형태의 프로세스 간 통신을 위해서 사용하는 신호 (Signal)을 손쉽게 Handling 할 수 있도록 합니다. 
 
 # Example Source
 
@@ -11,14 +11,14 @@
 
 # License
 
-`SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
+`Universal SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
 
 </br>
 
 ```TEXT
 MIT License
 
-Copyright (c) 2022 ChangYeop-Yang
+Copyright (c) 2022 Universal-SystemKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
