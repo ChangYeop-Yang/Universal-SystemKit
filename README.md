@@ -1,6 +1,6 @@
 # 🛠 Universal SystemKit
 
-`SystemKit` 오픈소스 라이브러리는 `macOS`, `iOS`, `iPadOS`, `tvOS`, `watchOS` 등의 Apple Platform에서 사용할 수 있는 공용 라이브러리입니다.
+`Universal SystemKit` 오픈소스 라이브러리는 `macOS`, `iOS`, `iPadOS`, `tvOS`, `watchOS` 등의 Apple Platform에서 사용할 수 있는 공용 라이브러리입니다.
 
 # Installation
 
@@ -20,7 +20,7 @@ dependencies: [
 
 # Using SystemKit
 
-`SystemKit` 오픈소스 라이브러리를 사용하는 방법은 아래의 Guide 경로에 기술되어 있습니다. 추가적인 관련 사항은 이슈 생성을 통하여 문의부탁드립니다.
+`Universal SystemKit` 오픈소스 라이브러리를 사용하는 방법은 아래의 Guide 경로에 기술되어 있습니다. 추가적인 관련 사항은 이슈 생성을 통하여 문의부탁드립니다.
 
 * [SKAsyncOperation](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKAsyncOperation.md)
 
