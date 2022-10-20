@@ -27,24 +27,47 @@ import CoreFoundation
 
 public class SKProcessMonitor: SKAsyncOperation, SKOperation {
     
-    // MARK: Object Properties
+    // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKProcessMonitor"
     
+    private var pid: pid_t = pid_t.zero
+    private var handler: Optional<CFFileDescriptorCallBack> = nil
     public var identifier: String = UUID().uuidString
     
+    // MARK: - Initalize
+    public override init() { super.init() }
     
+    public required init(name: Optional<String>,
+                         qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority) {
+        super.init()
+        
+        self.name = name
+        self.queuePriority = queuePriority
+        self.qualityOfService = qualityOfService
+    }
+    
+    public convenience init(name: Optional<String> = SKProcessMonitor.label,
+                            qualityOfService: QualityOfService = .default,
+                            queuePriority: Operation.QueuePriority = .normal,
+                            pid: pid_t,
+                            handler callback: @escaping CFFileDescriptorCallBack) {
+        self.init(name: name, qualityOfService: qualityOfService, queuePriority: queuePriority)
+        
+        self.pid = pid
+        self.handler = callback
+    }
 }
 
 // MARK: - Private Extension SKProcessMonitor
 public extension SKProcessMonitor {
     
-    final func test() {
-        self.name = ""
-        self.qualityOfService = .background
-        self.queuePriority = .normal
-    }
-    
     final func monitorProcess(runLoop: CFRunLoop = CFRunLoopGetCurrent(), pid ident: UInt) {
+        
+        // CFFileDescriptorCallBack Optional 경우에는 함수를 종료합니다.
+        if self.handler == nil {
+            NSLog("[%@][%@] Error, Empty CFFileDescriptorCallBack Parameter", SKProcessMonitor.label, self.identifier)
+            return
+        }
         
         let kqueue: Int32 = kqueue()
         var processEvent = kevent(ident: ident, filter: Int16(EVFILT_PROC),
@@ -53,10 +76,10 @@ public extension SKProcessMonitor {
         kevent(kqueue, &processEvent, 1, nil, 1, nil)
         
         var context: CFFileDescriptorContext = CFFileDescriptorContext()
-        let descriptor: CFFileDescriptor = CFFileDescriptorCreate(nil, kqueue, true, { _,_,_ in print(1) }, &context)
+        let descriptor: CFFileDescriptor = CFFileDescriptorCreate(nil, kqueue, true, self.handler, &context)
         
         let source: CFRunLoopSource = CFFileDescriptorCreateRunLoopSource(nil, descriptor, CFIndex.zero)
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, CFRunLoopMode.defaultMode)
+        CFRunLoopAddSource(runLoop, source, CFRunLoopMode.defaultMode)
         
         CFFileDescriptorEnableCallBacks(descriptor, kCFFileDescriptorReadCallBack)
     }
@@ -67,11 +90,8 @@ public extension SKProcessMonitor {
     
     override func start() {
         
-    }
-    
-    override func cancel() {
-        
+        let ident: UInt = UInt(self.pid)
+        monitorProcess(pid: ident)
     }
 }
-
 #endif
