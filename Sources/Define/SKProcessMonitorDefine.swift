@@ -20,22 +20,12 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS)
+import Darwin
 import Foundation
 
-// MARK: - Protocol
-@objc public protocol SKClass {
+public enum SKProcessMonitorFilterFlag {
     
-    // MARK: Required Protocol Properties
-    static var label: String { get }
-    var identifier: String { get }
-    
-    // MARK: Optaionl Protocol Properties
-    @objc optional var implementQueue: DispatchQueue { get set }
 }
 
-@objc public protocol SKOperation: SKClass {
-    
-    // MARK: Required Init Protocol Properties
-    init(name: Optional<String>,
-         qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
-}
+#endif

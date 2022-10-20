@@ -22,7 +22,7 @@
 
 import Foundation
 
-public class SKAsyncOperation: Operation {
+open class SKAsyncOperation: Operation {
     
     // MARK: - Enum
     public enum State: String {
@@ -51,22 +51,22 @@ public class SKAsyncOperation: Operation {
     }
 }
 
-// MARK: - Public Extension AsyncOperation With Properties
-public extension SKAsyncOperation {
+// MARK: - Open Extension AsyncOperation With Properties
+extension SKAsyncOperation {
     
-    override var isReady: Bool { return super.isReady && self.state == State.ready }
+    open override var isReady: Bool { return super.isReady && self.state == State.ready }
     
-    override var isExecuting: Bool { return self.state == State.executing }
+    open override var isExecuting: Bool { return self.state == State.executing }
     
-    override var isFinished: Bool { return self.state == State.finished }
+    open override var isFinished: Bool { return self.state == State.finished }
     
-    override var isAsynchronous: Bool { return true }
+    open override var isAsynchronous: Bool { return true }
 }
 
-// MARK: - Public Extension AsyncOperation With Method
-public extension SKAsyncOperation {
+// MARK: - Open Extension AsyncOperation With Method
+extension SKAsyncOperation {
     
-    override func start() {
+    open override func start() {
     
         if self.isCancelled {
             self.state = State.finished
@@ -79,7 +79,7 @@ public extension SKAsyncOperation {
         self.state = State.executing
     }
     
-    override func cancel() {
+    open override func cancel() {
         super.cancel()
         
         NSLog("[SKAsyncOperation] Action, Operation Cancel: %@", self.state.keyPath)
