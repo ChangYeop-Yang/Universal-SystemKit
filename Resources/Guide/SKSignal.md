@@ -12,6 +12,8 @@ let signal = SKSignal(signal: SIGUSR1) { number in
 }
         
 OperationQueue.main.addOperation(signal)
+
+signal.cancel()
 ```
 
 # License
