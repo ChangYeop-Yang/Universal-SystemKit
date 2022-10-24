@@ -4,11 +4,11 @@
 
 프로세스 (Process) 상태를 추적할 수 있는 상태 값은 아래와 같습니다.
 
-- exec: Process `exec'd`
+- exec: Process Exec'd
 
-- exit: Process `Exited`
+- exit: Process Exited
 
-- fork: Process `Forked`
+- fork: Process Forked
 
 # Example Source
 
