@@ -30,6 +30,8 @@ dependencies: [
 
 * [SKProcess](https://dev-dream-world.tistory.com/225?category=1294828)
 
+* [SKProcessMonitor](https://dev-dream-world.tistory.com/230?category=1294828)
+
 * [SKUserDefault](https://dev-dream-world.tistory.com/224?category=1294828)
 
 * [SKSignal](https://dev-dream-world.tistory.com/229?category=1294828)
