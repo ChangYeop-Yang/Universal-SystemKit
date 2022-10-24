@@ -7,6 +7,11 @@
 `SKSignal` 예제 소스코드는 아래와 같습니다.
 
 ```Swift
+let signal = SKSignal(signal: SIGUSR1) { number in
+    print("Receive Signal: \(number)")
+}
+        
+OperationQueue.main.addOperation(signal)
 ```
 
 # License
