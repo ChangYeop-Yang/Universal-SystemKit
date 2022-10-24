@@ -24,15 +24,15 @@ dependencies: [
 
 * [SKAsyncOperation](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKAsyncOperation.md)
 
-* [SKFinderExtension](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKFinderExtension.md)
+* [SKFinderExtension](https://dev-dream-world.tistory.com/226?category=1294828)
 
-* [SKPermission](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKPermission.md)
+* [SKPermission](https://dev-dream-world.tistory.com/227?category=1294828)
 
-* [SKProcess](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKProcess.md)
+* [SKProcess](https://dev-dream-world.tistory.com/225?category=1294828)
 
-* [SKUserDefault](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKUserDefault.md)
+* [SKUserDefault](https://dev-dream-world.tistory.com/224?category=1294828)
 
-* [SKSignal](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKSignal.md)
+* [SKSignal](https://dev-dream-world.tistory.com/229?category=1294828)
 
 # License
 
