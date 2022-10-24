@@ -24,8 +24,28 @@
 import Darwin
 import Foundation
 
+// MARK: - Enum
 public enum SKProcessMonitorFilterFlag {
     
+    case exit
+    case fork
+    case exec
+    
+    // MARK: Enum Properties
+    public var define: UInt32 {
+        switch self {
+        /// process exec'd: `0x20000000`
+        case .exec:
+            return UInt32(NOTE_EXEC)
+        
+        /// Process Exited: `0x80000000`
+        case .exit:
+            return NOTE_EXIT
+        
+        /// process forked: `0x40000000`
+        case .fork:
+            return UInt32(NOTE_FORK)
+        }
+    }
 }
-
 #endif
