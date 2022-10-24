@@ -1,6 +1,14 @@
 # 🗂 SKProcessMonitor
 
-`SKProcessMonitor`는 `macOS` 운영체제에서 쓰이는 제한된 형태의 프로세스 간 통신을 위해서 사용하는 `신호 (Signal)`을 손쉽게 Handling 할 수 있도록 기능을 제공합니다. `신호 (Signal)` 관련하여 추가적인 정보는 [POSIX Signal](https://en.wikipedia.org/wiki/Signal_(IPC))에서 확인할 수 있습니다.
+`SKProcessMonitor`는 `macOS` 운영체제 프로세스 (Process) 상태를 추적하여 Handling 할 수 있도록 기능을 제공합니다. 
+
+프로세스 (Process) 상태를 추적할 수 있는 상태 값은 아래와 같습니다.
+
+- exec: Process `exec'd`
+
+- exit: Process `Exited`
+
+- fork: Process `Forked`
 
 # Example Source
 
