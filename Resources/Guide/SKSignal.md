@@ -13,6 +13,7 @@ let signal = SKSignal(signal: SIGUSR1) { number in
         
 OperationQueue.main.addOperation(signal)
 
+// Advises the operation object that it should stop executing its task.
 signal.cancel()
 ```
 

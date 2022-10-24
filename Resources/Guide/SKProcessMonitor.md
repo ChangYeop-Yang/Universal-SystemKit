@@ -13,6 +13,7 @@ let monitor = SKProcessMonitor(pid: 3447, fflag: .exit) { decriptor, flag, rawVa
         
 OperationQueue.main.addOperation(monitor)
 
+// Advises the operation object that it should stop executing its task.
 monitor.cancel()
 ```
 
