@@ -27,7 +27,7 @@ import Foundation
     
     // MARK: Required Protocol Properties
     static var label: String { get }
-    var identifier: String { get }
+    static var identifier: String { get }
     
     // MARK: Optaionl Protocol Properties
     @objc optional var implementQueue: DispatchQueue { get set }

@@ -32,9 +32,8 @@ public class SKProcess: NSObject, SKClass {
     
     // MARK: - Object Properties
     public static let shared: SKProcess = SKProcess()
-    
     public static let label: String = "com.SystemKit.SKProcess"
-    public let identifier: String = UUID().uuidString
+    public static let identifier: String = UUID().uuidString
     
     // MARK: - Initalize
     private override init() { super.init() }
@@ -46,7 +45,7 @@ private extension SKProcess {
     
     final func launch(process: Process) throws {
         
-        NSLog("[%@][%@] Action, Execute Other Process", SKProcess.label, self.identifier)
+        NSLog("[%@][%@] Action, Execute Other Process", SKProcess.label, SKProcess.identifier)
         
         // macOS 10.13 미만의 운영체제에서는 launch() 함수를 통하여 실행합니다.
         guard #available(macOS 10.13, *) else {
@@ -87,11 +86,11 @@ public extension SKProcess {
             try launch(process: process)
             
             if waitUntilExit {
-                NSLog("[%@][%@] Process WaitUntilExit", SKProcess.label, self.identifier)
+                NSLog("[%@][%@] Process WaitUntilExit", SKProcess.label, SKProcess.identifier)
                 process.waitUntilExit()
             }
         } catch let error as NSError {
-            NSLog("[%@][%@] Error, %@", SKProcess.label, self.identifier, error.description)
+            NSLog("[%@][%@] Error, %@", SKProcess.label, SKProcess.identifier, error.description)
             errorCompletionHandler?(error, process)
             return EOF
         }

@@ -29,8 +29,7 @@ public class SKPermission: SKClass {
     // MARK: - Object Properties
     public static let shared: SKPermission = SKPermission()
     public static var label: String = "com.SystemKit.SKPermission"
-    
-    public var identifier: String = UUID().uuidString
+    public static var identifier: String = UUID().uuidString
 }
 
 // MARK: - Public SKPermission Extension

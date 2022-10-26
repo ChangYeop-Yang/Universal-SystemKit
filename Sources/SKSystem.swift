@@ -32,7 +32,7 @@ public class SKSystem: NSObject, SKClass {
     public static let shared: SKSystem = SKSystem()
     
     public static let label: String = "com.SystemKit.SKSystem"
-    public let identifier: String = UUID().uuidString
+    public static let identifier: String = UUID().uuidString
 }
 
 // MARK: - Public Extension SKSystem
@@ -237,7 +237,7 @@ public extension SKSystem {
             
             guard let description = String(data: availableData, encoding: .utf8) else { return }
             
-            NSLog("[%@][%@] Completion, Notrize Target Application: %@", SKSystem.label, self.identifier, description)
+            NSLog("[%@][%@] Completion, Notrize Target Application: %@", SKSystem.label, SKSystem.identifier, description)
             
             let sequence = description.split(whereSeparator: \.isNewline)
             

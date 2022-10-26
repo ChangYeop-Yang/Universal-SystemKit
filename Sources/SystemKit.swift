@@ -22,8 +22,7 @@
 
 public struct SystemKit {
     
-    public private(set) var label = "com.ChangYeopYang.SystemKit"
-
-    public init() {
-    }
+    // MARK: - Object Properties
+    public static let label: String = "com.ChangYeopYang.SystemKit"
+    public static let version: String = "1.0.0"
 }

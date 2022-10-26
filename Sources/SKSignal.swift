@@ -33,10 +33,10 @@ public class SKSignal: SKAsyncOperation, SKClass {
     
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKSignal"
+    public static var identifier: String = UUID().uuidString
     
     private let result: SKSignalResult
     private var source: Optional<DispatchSourceSignal> = nil
-    public var identifier: String = UUID().uuidString
     
     // MARK: - Initalize
     public init(signal number: Int32, handler: @escaping SKSignalHandler) {
@@ -65,7 +65,7 @@ private extension SKSignal {
         // 현재 작업이 취소 상태가 아닌 경우에는 아래의 취소작업을 하지 않습니다.
         guard self.isCancelled else { return }
         
-        NSLog("[%@][%@] Action, Remove Signal Observe: %@", SKSignal.label, self.identifier, self.result.signal)
+        NSLog("[%@][%@] Action, Remove Signal Observe: %@", SKSignal.label, SKSignal.identifier, self.result.signal)
         
         self.source?.cancel()
         self.source = nil

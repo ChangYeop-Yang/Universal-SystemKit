@@ -57,7 +57,7 @@ public enum FrameworkInfo: String, CaseIterable {
     public var path: String {
         switch self {
         case .Beltex:
-            return "Frameworks/Beltex.xcframework"
+            return "Frameworks/Beltex/Beltex.xcframework"
         }
     }
     

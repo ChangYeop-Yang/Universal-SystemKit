@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+import Beltex
+
 import Foundation
 
 // MARK: - Enum With macOS Platform

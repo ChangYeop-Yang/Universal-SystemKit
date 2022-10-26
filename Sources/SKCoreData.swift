@@ -31,7 +31,7 @@ public class SKCoreData: SKClass {
     
     // MARK: - Object Properties
     public static let label: String = "com.SystemKit.SKCoreData"
-    public let identifier: String = UUID().uuidString
+    public static let identifier: String = UUID().uuidString
     
     private let implementQueue = DispatchQueue(label: SKCoreData.label, qos: .userInitiated, attributes: .concurrent)
     private var attribute: Optional<CoreDataAttribute> = nil
@@ -134,7 +134,7 @@ public extension SKCoreData {
                 result = true
                 self.inContext = managedContext
             } catch let error as NSError {
-                NSLog("[%@][%@] %@", SKCoreData.label, self.identifier, error.description)
+                NSLog("[%@][%@] %@", SKCoreData.label, SKCoreData.identifier, error.description)
             }
         }
         
