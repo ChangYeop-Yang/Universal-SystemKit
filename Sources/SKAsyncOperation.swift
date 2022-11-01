@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS) || os(iOS)
 import Foundation
 
 open class SKAsyncOperation: Operation {
@@ -86,3 +87,4 @@ extension SKAsyncOperation {
         self.state = State.finished
     }
 }
+#endif

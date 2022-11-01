@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS) || os(iOS)
 import CoreData
 import Foundation
 
@@ -235,3 +236,4 @@ public extension SKCoreData {
         return NSManagedObject(entity: entity, insertInto: insertInto)
     }
 }
+#endif

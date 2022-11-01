@@ -20,32 +20,22 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS)
-import Darwin
+#if os(macOS) || os(iOS)
 import Foundation
 
-// MARK: - Enum
-public enum SKProcessMonitorFilterFlag {
+public struct SKLocation: Codable {
     
-    case exit
-    case fork
-    case exec
+    // MARK: Double Properties
+    public let latitude: Double
+    public let longitude: Double
     
-    // MARK: Enum Properties
-    public var define: UInt32 {
-        switch self {
-        /// process exec'd: `0x20000000`
-        case .exec:
-            return UInt32(NOTE_EXEC)
-        
-        /// Process Exited: `0x80000000`
-        case .exit:
-            return NOTE_EXIT
-        
-        /// process forked: `0x40000000`
-        case .fork:
-            return UInt32(NOTE_FORK)
-        }
-    }
+    // MARK: Date Properties
+    public let date: Date
+    public let createDate: Date
+    
+    // MARK: String Properties
+    public let dateString: String
+    public let description: String
+    
 }
 #endif
