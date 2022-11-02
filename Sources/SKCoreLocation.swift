@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS) || os(iOS)
 import Foundation
 import CoreLocation
 
@@ -51,18 +50,67 @@ public extension SKCoreLocation {
     @available(macOS 10.15, iOS 8.0, *)
     final func requestAuthorization(desiredAccuracy: CLLocationAccuracy = kCLLocationAccuracyBest) {
         
-        NSLog("[%@]", SKCoreLocation.label)
+        NSLog("[%@][%@] Initalize, SKCoreLocation", SKCoreLocation.label, SKCoreLocation.identifier)
         
         self.manager.delegate = self.delegate
         self.manager.desiredAccuracy = desiredAccuracy
-        
+
         self.manager.requestAlwaysAuthorization()
         self.manager.startUpdatingLocation()
     }
 }
 
-// MARK: - Extension CLLocationManagerDelegate
-extension SKCoreLocation: CLLocationManagerDelegate {
+#if os(macOS)
+import AppKit
+
+// MARK: - Public Extension SKCoreLocation
+public extension SKCoreLocation {
     
+    @discardableResult
+    final func openPrivacyLocationServicePref() -> Bool {
+        
+        let rawValue: String = SKSecurityPrivacyPreferencePane.PrivacyLocationServices.rawValue
+        
+        guard let url: URL = URL(string: rawValue) else { return false }
+        
+        return NSWorkspace.shared.open(url)
+    }
+    
+    @available(macOS 10.7, *)
+    final func isLocationServicesEnabled() -> Bool {
+        
+        let locationServicesEnabled: Bool = CLLocationManager.locationServicesEnabled()
+        
+        return locationServicesEnabled
+    }
+    
+    @available(macOS 11.0, *)
+    final func getAuthorizationStatus(openPreference: Bool) -> CLAuthorizationStatus {
+        
+        switch self.manager.authorizationStatus {
+        case CLAuthorizationStatus.notDetermined:
+            NSLog("[%@][%@] Location Permission: NotDetermined", SKCoreLocation.label, SKCoreLocation.identifier)
+            return CLAuthorizationStatus.notDetermined
+            
+        case CLAuthorizationStatus.restricted:
+            NSLog("[%@][%@] Location Permission: Restricted", SKCoreLocation.label, SKCoreLocation.identifier)
+            return CLAuthorizationStatus.restricted
+            
+        case CLAuthorizationStatus.denied:
+            NSLog("[%@][%@] Location Permission: Denied", SKCoreLocation.label, SKCoreLocation.identifier)
+            return CLAuthorizationStatus.denied
+        
+        case CLAuthorizationStatus.authorizedAlways:
+            NSLog("[%@][%@] Location Permission: AuthorizedAlways", SKCoreLocation.label, SKCoreLocation.identifier)
+            return CLAuthorizationStatus.authorizedAlways
+            
+        case CLAuthorizationStatus.authorized:
+            NSLog("[%@][%@] Location Permission: Authorized", SKCoreLocation.label, SKCoreLocation.identifier)
+            return CLAuthorizationStatus.authorized
+            
+        @unknown default:
+            fatalError("")
+        }
+    }
 }
 #endif

@@ -22,6 +22,7 @@
 
 #if os(macOS) || os(iOS)
 import Foundation
+import CoreLocation
 
 public struct SKLocation: Codable {
     
@@ -30,12 +31,23 @@ public struct SKLocation: Codable {
     public let longitude: Double
     
     // MARK: Date Properties
-    public let date: Date
+    public let timestamp: Date
     public let createDate: Date
     
     // MARK: String Properties
-    public let dateString: String
+    public let timestampString: String
     public let description: String
     
+    // MARK: Initalize
+    public init(location: CLLocation) {
+        self.latitude = location.coordinate.latitude
+        self.longitude = location.coordinate.longitude
+        
+        self.createDate = Date()
+        self.timestamp = location.timestamp
+        
+        self.timestampString = location.timestamp.description
+        self.description = location.description
+    }
 }
 #endif
