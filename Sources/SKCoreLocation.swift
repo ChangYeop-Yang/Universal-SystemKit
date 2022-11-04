@@ -39,11 +39,6 @@ public class SKCoreLocation: NSObject, SKClass {
     }
 }
 
-// MARK: - Private Extension SKCoreLocation
-private extension SKCoreLocation {
-    
-}
-
 // MARK: - Public Extension SKCoreLocation
 public extension SKCoreLocation {
     
@@ -54,16 +49,21 @@ public extension SKCoreLocation {
         
         self.manager.delegate = self.delegate
         self.manager.desiredAccuracy = desiredAccuracy
-
+        
         self.manager.requestAlwaysAuthorization()
         self.manager.startUpdatingLocation()
+    }
+    
+    @available(macOS 10.14, *)
+    final func requestLocation() {
+        self.manager.requestLocation()
     }
 }
 
 #if os(macOS)
 import AppKit
 
-// MARK: - Public Extension SKCoreLocation
+// MARK: - Public Extension SKCoreLocation With macOS Platform
 public extension SKCoreLocation {
     
     @discardableResult
@@ -84,32 +84,38 @@ public extension SKCoreLocation {
         return locationServicesEnabled
     }
     
+    typealias AuthorizationStatusResult = (status: CLAuthorizationStatus, isPermission: Bool)
     @available(macOS 11.0, *)
-    final func getAuthorizationStatus(openPreference: Bool) -> CLAuthorizationStatus {
+    final func getAuthorizationStatus(openPreference: Bool) -> AuthorizationStatusResult {
         
         switch self.manager.authorizationStatus {
+        // The user has not chosen whether the app can use location services.
         case CLAuthorizationStatus.notDetermined:
             NSLog("[%@][%@] Location Permission: NotDetermined", SKCoreLocation.label, SKCoreLocation.identifier)
-            return CLAuthorizationStatus.notDetermined
-            
+            return (CLAuthorizationStatus.notDetermined, false)
+        
+        // The app is not authorized to use location services.
         case CLAuthorizationStatus.restricted:
             NSLog("[%@][%@] Location Permission: Restricted", SKCoreLocation.label, SKCoreLocation.identifier)
-            return CLAuthorizationStatus.restricted
-            
+            return (CLAuthorizationStatus.restricted, false)
+        
+        // The user denied the use of location services for the app or they are disabled globally in Settings.
         case CLAuthorizationStatus.denied:
             NSLog("[%@][%@] Location Permission: Denied", SKCoreLocation.label, SKCoreLocation.identifier)
-            return CLAuthorizationStatus.denied
+            return (CLAuthorizationStatus.denied, false)
         
+        // The user authorized the app to start location services at any time.
         case CLAuthorizationStatus.authorizedAlways:
             NSLog("[%@][%@] Location Permission: AuthorizedAlways", SKCoreLocation.label, SKCoreLocation.identifier)
-            return CLAuthorizationStatus.authorizedAlways
-            
+            return (CLAuthorizationStatus.authorizedAlways, true)
+        
+        // The user authorized the app to start location services at any time.
         case CLAuthorizationStatus.authorized:
             NSLog("[%@][%@] Location Permission: Authorized", SKCoreLocation.label, SKCoreLocation.identifier)
-            return CLAuthorizationStatus.authorized
+            return (CLAuthorizationStatus.authorized, true)
             
         @unknown default:
-            fatalError("")
+            fatalError("Invaild, CLAuthorizationStatus")
         }
     }
 }

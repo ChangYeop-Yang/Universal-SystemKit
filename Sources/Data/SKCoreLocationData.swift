@@ -40,6 +40,7 @@ public struct SKLocation: Codable {
     
     // MARK: Initalize
     public init(location: CLLocation) {
+        
         self.latitude = location.coordinate.latitude
         self.longitude = location.coordinate.longitude
         

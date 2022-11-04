@@ -23,7 +23,7 @@
 import Foundation
 
 // MARK: - Protocol
-@objc public protocol SKClass {
+@objc public protocol SKClass: AnyObject {
     
     // MARK: Required Protocol Properties
     static var label: String { get }
@@ -31,11 +31,34 @@ import Foundation
     
     // MARK: Optaionl Protocol Properties
     @objc optional var implementQueue: DispatchQueue { get set }
+    @objc optional var operationQueue: Optional<OperationQueue> { get set }
 }
 
 @objc public protocol SKOperation: SKClass {
     
+    // MARK: Optional Protocol Properties
+    @objc optional var timer: Optional<DispatchSourceTimer> { get set }
+    
     // MARK: Required Init Protocol Properties
-    init(name: Optional<String>,
-         qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
+    init(name: Optional<String>, qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
 }
+
+#if os(macOS)
+import Cocoa
+
+@objc public protocol SKViewController: SKClass {
+    
+    // MARK: Optional Protocol Properties
+    @objc optional var appDelegate: Optional<NSApplicationDelegate> { get set }
+}
+#endif
+
+#if os(iOS)
+import UIKit
+
+@objc public protocol SKViewController: SKClass {
+
+    // MARK: Optional Protocol Properties
+    @objc optional var appDelegate: Optional<UIApplicationDelegate> { get set }
+}
+#endif
