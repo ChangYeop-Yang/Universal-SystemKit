@@ -221,76 +221,20 @@ public extension SKSystem {
         return totalUsageOfCPU
     }
     
-    typealias SKSystemNotrizeResult = (SKNotrizeResult) -> Swift.Void
-    @available(macOS 10.15.4, *)
-    final func checkNotrize(atPath: String, completion: @escaping SKSystemNotrizeResult) {
+    /**
+        - NOTE: [Detect if Swift app is being run from Xcode](https://stackoverflow.com/questions/33177182/detect-if-swift-app-is-being-run-from-xcode)
+     */
+    final func getBeingDebugged(pid: pid_t) -> Bool {
         
-        // 공증 작업 대상이 현재 경로에 존재하는지 확인합니다.
-        guard FileManager.default.fileExists(atPath: atPath) else { return }
-                
-        let terminationHandler: SKProcess.SKProcessTerminationHandler = { process in
-            
-            guard let stream = process.standardError as? Pipe else { return }
-            
-            let availableData = stream.fileHandleForReading.availableData
-            guard availableData.count > Int.zero else { return }
-            
-            guard let description = String(data: availableData, encoding: .utf8) else { return }
-            
-            NSLog("[%@][%@] Completion, Notrize Target Application: %@", SKSystem.label, SKSystem.identifier, description)
-            
-            let sequence = description.split(whereSeparator: \.isNewline)
-            
-            guard let notrize = sequence[SKNotrizeResultIndex.result.rawValue].split(whereSeparator: \.isWhitespace).last else { return }
-            
-            // 공증 작업이 수행되지 않은 애플리케이션인 경우
-            if notrize == "rejected" {
-                let result = SKNotrizeResult(result: String(notrize), source: nil, origin: nil, path: atPath)
-                completion(result)
-                return
-            }
-            
-            // 공증 작업이 정상적으로 수행 된 애플리케이션인 경우
-            if notrize == "accepted" {
-                guard let source = sequence[SKNotrizeResultIndex.source.rawValue].split(separator: "=").last,
-                      let origin = sequence[SKNotrizeResultIndex.origin.rawValue].split(separator: "=").last else { return }
-                
-                let result = SKNotrizeResult(result: String(notrize), source: String(source), origin: String(origin), path: atPath)
-                completion(result)
-                return
-            }
-        }
+        var proc: kinfo_proc = kinfo_proc()
+        var size: Int = MemoryLayout.stride(ofValue: proc)
+        var mib: Array<Int32> = [CTL_KERN, KERN_PROC, KERN_PROC_PID, pid]
+        let junk: Int32 = sysctl(&mib, UInt32(mib.count), &proc, &size, nil, Int.zero)
         
-        let standardError: Pipe = Pipe()
+        // sysctl 함수를 통하여 결과를 가져오지 못하는 경우에는 함수를 종료합니다.
+        guard junk == Int32.zero else { return false }
         
-        let arguments: [String] = ["-a", "-vvv", "-t", "install", atPath]
-        SKProcess.shared.run(launchPath: "/usr/sbin/spctl", arguments: arguments,
-                             standardError: standardError, terminationHandler: terminationHandler)
-    }
-    
-    @available(macOS 10.12, *)
-    final func getProcessState(uid: uid_t, completion: @escaping (SKProcessStateType) -> Swift.Void) {
-        
-        let terminationHandler: SKProcess.SKProcessTerminationHandler = { process in
-            
-            guard let stream = process.standardOutput as? Pipe else { return }
-            
-            let availableData = stream.fileHandleForReading.availableData
-            guard availableData.count > Int.zero else { return }
-            
-            guard let description = String(data: availableData, encoding: .utf8) else { return }
-                        
-            guard let rawValue = description.split(whereSeparator: \.isNewline)
-                .last?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-
-            completion(SKProcessStateType(rawValue: rawValue)!)
-
-        }
-
-        let standardOutput: Pipe = Pipe()
-        let arguments: [String] = ["-o", "stat", "-p", String(uid)]
-        SKProcess.shared.run(launchPath: "/bin/ps", arguments: arguments,
-                             standardOutput: standardOutput, terminationHandler: terminationHandler)
+        return (proc.kp_proc.p_flag & P_TRACED) != Int32.zero
     }
 }
 #endif

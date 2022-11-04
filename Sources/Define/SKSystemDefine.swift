@@ -49,46 +49,6 @@ public enum macOSSystemVersion: String {
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }
 }
-
-// MARK: - Struct With macOS Platform
-public enum SKNotrizeResultIndex: Int {
-    
-    // MARK: Enum Properties
-    case result = 0, source = 1, origin = 2
-}
-
-public enum SKProcessStateType: String {
-    
-    // MARK: Enum Properties
-    
-    /// Marks a process that is idle (sleeping for longer than about 20 seconds).
-    case idle = "I"
-    
-    /// Marks a runnable process.
-    case runnable = "R"
-    
-    /// Marks a process that is sleeping for less than about 20 seconds.
-    case sleeping = "S"
-    
-    /// Marks a stopped process.
-    case stopped = "T"
-    
-    /// Marks a process in uninterruptible wait.
-    case uninterruptible = "U"
-    
-    /// Marks a dead process
-    case zombie = "Z"
-}
-
-public struct SKNotrizeResult: Codable {
-    
-    // MARK: String Properties
-    public let result: String
-    public let source: Optional<String>
-    public let origin: Optional<String>
-    public let path: String
-}
-
 #endif
 
 // MARK: - Struct With iOS Platform

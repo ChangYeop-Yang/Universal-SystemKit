@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS) || os(iOS)
 import Foundation
 
 // MARK: - Protocol
@@ -41,24 +42,5 @@ import Foundation
     
     // MARK: Required Init Protocol Properties
     init(name: Optional<String>, qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
-}
-
-#if os(macOS)
-import Cocoa
-
-@objc public protocol SKViewController: SKClass {
-    
-    // MARK: Optional Protocol Properties
-    @objc optional var appDelegate: Optional<NSApplicationDelegate> { get set }
-}
-#endif
-
-#if os(iOS)
-import UIKit
-
-@objc public protocol SKViewController: SKClass {
-
-    // MARK: Optional Protocol Properties
-    @objc optional var appDelegate: Optional<UIApplicationDelegate> { get set }
 }
 #endif
