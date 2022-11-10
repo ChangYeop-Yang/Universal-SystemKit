@@ -68,6 +68,9 @@ public extension SKProcessMonitor {
     
     final func enableMonitorProcess() {
         
+        // 현재 작업이 취소가 된 상태인 경우에는 아래의 작업을 수행하지 않습니다.
+        if self.isCancelled { return }
+        
         let kqueue: Int32 = kqueue()
         var processEvent = kevent(ident: UInt(self.info.pid), filter: Int16(EVFILT_PROC),
                                   flags: UInt16(EV_ADD | EV_RECEIPT), fflags: self.info.fflag.define,
@@ -85,6 +88,9 @@ public extension SKProcessMonitor {
     
     final func disableMonitorProcess() {
         
+        // 현재 작업이 활성화 상태인 경우에는 아래의 작업을 수행하지 않습니다.
+        guard self.isCancelled else { return }
+        
         CFRunLoopStop(self.info.runLoop)
         CFFileDescriptorDisableCallBacks(self.info.descriptor, kCFFileDescriptorReadCallBack)
     }
@@ -93,8 +99,16 @@ public extension SKProcessMonitor {
 // MARK: - Public Extension SKProcessMonitor
 public extension SKProcessMonitor {
     
-    override func start() { enableMonitorProcess() }
+    override func start() {
+        super.start()
+        
+        enableMonitorProcess()
+    }
     
-    override func cancel() { disableMonitorProcess() }
+    override func cancel() {
+        super.cancel()
+        
+        disableMonitorProcess()
+    }
 }
 #endif

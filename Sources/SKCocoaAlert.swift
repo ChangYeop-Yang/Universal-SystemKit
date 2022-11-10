@@ -20,30 +20,40 @@
  * THE SOFTWARE.
  */
 
+#if os(macOS)
+import Cocoa
 import Foundation
 
-@propertyWrapper
-public struct SKUserDefaults<Value> {
+public class SKCocoaAlert: NSObject, SKClass {
     
-    // MARK: - Struct Properties
-    private let forKey: String
-    private let defaultValue: Optional<Value>
-    private let identifier: String = UUID().uuidString
-    
-    // Property Wrapper 필수 구현 Property
-    public var wrappedValue: Optional<Value> {
-        get { UserDefaults.standard.object(forKey: self.forKey) as? Value ?? self.defaultValue }
-        set { UserDefaults.standard.setValue(newValue, forKey: self.forKey) }
-    }
+    // MARK: - Object Properties
+    public static var label: String = ""
+    public static var identifier: String = ""
+    public static let shared: SKCocoaAlert = SKCocoaAlert()
     
     // MARK: - Initalize
-    public init(forKey: String, defaultValue: Optional<Value> = nil) {
+    private override init() { super.init() }
+}
+
+// MARK: - Public Extension SKCocoaAlert
+public extension SKCocoaAlert {
+    
+    @discardableResult
+    final func runModel(alertStyle: NSAlert.Style = .informational,
+                        informativeText: String, messageText: String,
+                        icon: Optional<NSImage> = nil,
+                        delegate: Optional<NSAlertDelegate> = nil) -> NSApplication.ModalResponse {
         
-        #if DEBUG
-            NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
-        #endif
+        let alert: NSAlert = NSAlert()
+        alert.informativeText = informativeText
+        alert.messageText = messageText
+        alert.alertStyle = alertStyle
+        alert.delegate = delegate
         
-        self.forKey = forKey
-        self.defaultValue = defaultValue
+        // NSAlert 표시할 아이콘이 존재하는 경우에는 아이콘을 설정합니다.
+        if let image = icon { alert.icon = image }
+        
+        return alert.runModal()
     }
 }
+#endif

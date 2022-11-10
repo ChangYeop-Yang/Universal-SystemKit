@@ -97,7 +97,6 @@ public extension SKSystem {
         }
     }
     
-    /// - NOTE:
     struct SKSystemResult: Codable {
         
         // MARK: - Static Properties
@@ -140,5 +139,4 @@ public extension SKSystem {
         }
     }
 }
-
 #endif

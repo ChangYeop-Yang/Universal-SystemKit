@@ -76,12 +76,14 @@ private extension SKSignal {
 public extension SKSignal {
     
     override func start() {
+        super.start()
         
         // Signal Handler 등록 작업을 수행합니다.
         observeSignal(signal: self.result.signal, handler: self.result.handler)
     }
     
     override func cancel() {
+        super.cancel()
         
         // Signal handler 등록 해제 작업을 수행합니다.
         removeObserveSignal()

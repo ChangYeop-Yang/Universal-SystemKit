@@ -10,6 +10,14 @@
 // 현재 프로세스를 실행 시킨 작업 대상이 Debug 형태로 실행이 되었는 경우를 확인합니다.
 let result = SKSystem.shared.getBeingDebugged(pid: pid)
 print(result ? "DEBUG" : "NON DEBUG")
+
+// 운영체제가 구동 중인 장비에 대한 정보를 가져옵니다.
+let resultA = SKSystem.shared.getMachineSystemInfo()
+print(resultA)
+
+// 현재 구동중인 macOS 운영체제 시스템 버전 (System Version) 정보를 가져옵니다.
+let resultB = SKSystem.shared.getOperatingSystemVersion()
+print(resultB)
 ```
 
 # License

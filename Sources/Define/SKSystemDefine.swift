@@ -26,7 +26,7 @@ import Foundation
 
 // MARK: - Enum With macOS Platform
 #if os(macOS)
-public enum TranslatedRosettaResult: Int32 {
+public enum SKTranslatedRosettaResult: Int32 {
     
     // MARK: Enum Properties
     case error = -1
@@ -48,6 +48,25 @@ public enum macOSSystemVersion: String {
     
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }
+}
+
+// MARK: - Struct With macOS Platform
+public struct SKSystemMachineSystemResult: Codable {
+    
+    /// Name of the operating system implementation
+    public let operatingSystemName: String
+    
+    /// Release level of the operating system
+    public let operatingSystemRelease: String
+    
+    /// Version level of the operating system.
+    public let operatingSystemVersion: String
+    
+    /// Network name of this machine
+    public let machineNetworkNodeName: String
+    
+    /// Machine hardware platform
+    public let machineHardwarePlatform: String
 }
 #endif
 

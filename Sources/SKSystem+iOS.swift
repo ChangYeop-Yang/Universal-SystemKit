@@ -20,30 +20,29 @@
  * THE SOFTWARE.
  */
 
+#if os(iOS)
+import UIKit
 import Foundation
 
-@propertyWrapper
-public struct SKUserDefaults<Value> {
+public extension SKSystem {
     
-    // MARK: - Struct Properties
-    private let forKey: String
-    private let defaultValue: Optional<Value>
-    private let identifier: String = UUID().uuidString
+    typealias SystemVersionResult = (systemName: String, systemVersion: String)
+    final func getOperatingSystemVersion() -> SystemVersionResult {
+        
+        let systemName = UIDevice.current.systemName
+        let systemVersion = UIDevice.current.systemVersion
     
-    // Property Wrapper 필수 구현 Property
-    public var wrappedValue: Optional<Value> {
-        get { UserDefaults.standard.object(forKey: self.forKey) as? Value ?? self.defaultValue }
-        set { UserDefaults.standard.setValue(newValue, forKey: self.forKey) }
+        return SystemVersionResult(systemName, systemVersion)
     }
     
-    // MARK: - Initalize
-    public init(forKey: String, defaultValue: Optional<Value> = nil) {
+    typealias DeviceInformationResult = (deviceName: String, deviceModel: String, localizedModel: String)
+    final func getDeviceInformation() -> DeviceInformationResult {
         
-        #if DEBUG
-            NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
-        #endif
+        let deviceName = UIDevice.current.name
+        let deviceModel = UIDevice.current.model
+        let localizedModel = UIDevice.current.localizedModel
         
-        self.forKey = forKey
-        self.defaultValue = defaultValue
+        return DeviceInformationResult(deviceName, deviceModel, localizedModel)
     }
 }
+#endif

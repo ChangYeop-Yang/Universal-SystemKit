@@ -53,11 +53,6 @@ public extension SKCoreLocation {
         self.manager.requestAlwaysAuthorization()
         self.manager.startUpdatingLocation()
     }
-    
-    @available(macOS 10.14, *)
-    final func requestLocation() {
-        self.manager.requestLocation()
-    }
 }
 
 #if os(macOS)
@@ -86,13 +81,13 @@ public extension SKCoreLocation {
     
     typealias AuthorizationStatusResult = (status: CLAuthorizationStatus, isPermission: Bool)
     @available(macOS 11.0, *)
-    final func getAuthorizationStatus(openPreference: Bool) -> AuthorizationStatusResult {
+    final func getAuthorizationStatus() -> AuthorizationStatusResult {
         
         switch self.manager.authorizationStatus {
         // The user has not chosen whether the app can use location services.
         case CLAuthorizationStatus.notDetermined:
             NSLog("[%@][%@] Location Permission: NotDetermined", SKCoreLocation.label, SKCoreLocation.identifier)
-            return (CLAuthorizationStatus.notDetermined, false)
+            return (CLAuthorizationStatus.notDetermined, true)
         
         // The app is not authorized to use location services.
         case CLAuthorizationStatus.restricted:
