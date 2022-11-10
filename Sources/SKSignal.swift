@@ -25,7 +25,7 @@ import Darwin
 import Dispatch
 import Foundation
 
-public class SKSignal: SKAsyncOperation, SKClass {
+public class SKSignal: SKAsyncOperation {
     
     // MARK: - Typealias
     public typealias SKSignalHandler = @convention(c) (Int32) -> Swift.Void
@@ -33,7 +33,7 @@ public class SKSignal: SKAsyncOperation, SKClass {
     
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKSignal"
-    public static var identifier: String = UUID().uuidString
+    public static var identifier: String = "45F971FC-B05F-4CF5-9927-AD793F461718"
     
     private let result: SKSignalResult
     private var source: Optional<DispatchSourceSignal> = nil
@@ -65,7 +65,9 @@ private extension SKSignal {
         // 현재 작업이 취소 상태가 아닌 경우에는 아래의 취소작업을 하지 않습니다.
         guard self.isCancelled else { return }
         
-        NSLog("[%@][%@] Action, Remove Signal Observe: %@", SKSignal.label, SKSignal.identifier, self.result.signal)
+        #if DEBUG
+            NSLog("[%@][%@] Action, Remove Signal Observe: %@", SKSignal.label, SKSignal.identifier, self.result.signal)
+        #endif
         
         self.source?.cancel()
         self.source = nil

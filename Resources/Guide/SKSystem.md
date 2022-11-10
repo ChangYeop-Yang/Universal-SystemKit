@@ -18,6 +18,10 @@ print(resultA)
 // 현재 구동중인 macOS 운영체제 시스템 버전 (System Version) 정보를 가져옵니다.
 let resultB = SKSystem.shared.getOperatingSystemVersion()
 print(resultB)
+
+// 현재 구동중인 애플리케이션에 대한 `릴리즈 버전 (Release Version` 그리고 `번들 버전 (Bundle Version)` 정보를 가져옵니다.
+let resultC = SKSystem.shared.getApplicationVersion()
+print(resultC)
 ```
 
 # License

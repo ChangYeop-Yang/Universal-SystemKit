@@ -27,7 +27,14 @@ import Foundation
 // MARK: - Extension SKSystem
 public extension SKSystem {
  
-    /// - NOTE: Device 장비에서 사용하고 있는 Battery 정보를 가져올 수 있는 구조체입니다.
+    /**
+        현재 장비에서 사용하고 있는 `전지 (Battery)` 정보 저장하고 있는 구조체입니다.
+     
+        - Authors: `ChangYeop-Yang`
+        - Date: `2022년도 11월 10일 목요일 23:23`
+        - Since: [beltex/SystemKit](https://github.com/beltex/SystemKit)
+        - Returns: `Optional<SKSystemApplicationVersionResult>`
+     */
     struct SKBatteryResult: Codable {
         
         // MARK: Static Properties
@@ -93,7 +100,10 @@ public extension SKSystem {
             self.timeRemainingFormatted = SKBatteryResult.battery.timeRemainingFormatted()
             
             let result: kern_return_t = SKBatteryResult.battery.close()
-            NSLog("[%@][%@] Action, Close Battery: %d", SKSystem.label, SKSystem.identifier, result)
+            
+            #if DEBUG
+                NSLog("[%@][%@] Action, Close Battery: %d", SKSystem.label, SKSystem.identifier, result)
+            #endif
         }
     }
     

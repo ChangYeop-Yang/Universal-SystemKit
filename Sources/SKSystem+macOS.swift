@@ -25,7 +25,7 @@ import Darwin
 import Foundation
 import SystemConfiguration
 
-// MARK: - Public Extension SKSystem
+// MARK: - Public Extension SKSystem With macOS Platform
 public extension SKSystem {
  
     /**

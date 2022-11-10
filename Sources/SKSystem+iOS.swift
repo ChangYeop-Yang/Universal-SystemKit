@@ -24,6 +24,7 @@
 import UIKit
 import Foundation
 
+// MARK: - Public Extension SKSystem With iOS Platform
 public extension SKSystem {
     
     typealias SystemVersionResult = (systemName: String, systemVersion: String)

@@ -30,7 +30,7 @@ public class SKSystem: NSObject, SKClass {
     // MARK: - Object Properties
     public static let shared: SKSystem = SKSystem()
     public static let label: String = "com.SystemKit.SKSystem"
-    public static let identifier: String = UUID().uuidString
+    public static let identifier: String = "1735CFB1-19CC-4581-8CB7-F2DC3E16C678"
 }
 
 // MARK: - Public Extension SKSystem With Universal Platform

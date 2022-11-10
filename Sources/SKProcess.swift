@@ -45,7 +45,9 @@ private extension SKProcess {
     
     final func launch(process: Process) throws {
         
-        NSLog("[%@][%@] Action, Execute Other Process", SKProcess.label, SKProcess.identifier)
+        #if DEBUG
+            NSLog("[%@][%@] Action, Execute Other Process", SKProcess.label, SKProcess.identifier)
+        #endif
         
         // macOS 10.13 미만의 운영체제에서는 launch() 함수를 통하여 실행합니다.
         guard #available(macOS 10.13, *) else {
@@ -86,11 +88,19 @@ public extension SKProcess {
             try launch(process: process)
             
             if waitUntilExit {
-                NSLog("[%@][%@] Process WaitUntilExit", SKProcess.label, SKProcess.identifier)
+                
+                #if DEBUG
+                    NSLog("[%@][%@] Process WaitUntilExit", SKProcess.label, SKProcess.identifier)
+                #endif
+                
                 process.waitUntilExit()
             }
         } catch let error as NSError {
-            NSLog("[%@][%@] Error, %@", SKProcess.label, SKProcess.identifier, error.description)
+            
+            #if DEBUG
+                NSLog("[%@][%@] Error, %@", SKProcess.label, SKProcess.identifier, error.description)
+            #endif
+            
             errorCompletionHandler?(error, process)
             return EOF
         }

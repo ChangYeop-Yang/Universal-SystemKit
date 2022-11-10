@@ -24,7 +24,6 @@
 import Foundation
 import FinderSync
 
-@available(iOS, unavailable)
 public class SKFinderExtension: NSObject, SKClass {
     
     // MARK: - Object Properties
@@ -51,7 +50,9 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func append(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Append Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #if DEBUG
+            NSLog("[%@][%@] Action, Append Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #endif
         
         let arguments: Array<String> = ["-a", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
@@ -60,7 +61,9 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func enable(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Enable Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #if DEBUG
+            NSLog("[%@][%@] Action, Enable Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #endif
         
         let arguments: Array<String> = ["-e", "use", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
@@ -69,7 +72,9 @@ public extension SKFinderExtension {
     @available(macOS 10.12, *)
     final func disable(extensionPath: String, waitUntilExit: Bool) {
         
-        NSLog("[%@][%@] Action, Disable Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #if DEBUG
+            NSLog("[%@][%@] Action, Disable Application Finder Extension", SKFinderExtension.label, SKFinderExtension.identifier)
+        #endif
         
         let arguments: Array<String> = ["-e", "ignore", "-i", extensionPath]
         SKProcess.shared.run(launchPath: self.launchPath, arguments: arguments, waitUntilExit: waitUntilExit)
