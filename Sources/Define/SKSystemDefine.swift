@@ -53,6 +53,8 @@ public enum macOSSystemVersion: String {
 // MARK: - Struct With macOS Platform
 public struct SKSystemMachineSystemResult: Codable {
     
+    // MARK: Struct String Proeprties
+    
     /// Name of the operating system implementation
     public let operatingSystemName: String
     
@@ -67,6 +69,20 @@ public struct SKSystemMachineSystemResult: Codable {
     
     /// Machine hardware platform
     public let machineHardwarePlatform: String
+}
+
+public struct SKSystemMachineUsageMemeoryResult: Codable {
+    
+    // MARK: Struct Float Proeprties
+    public let usage: Float
+    public let total: Float
+}
+
+public struct SKSystemApplicationVersionResult: Codable {
+    
+    // MARK: Struct String Properties
+    public let release: String
+    public let bundle: String
 }
 #endif
 

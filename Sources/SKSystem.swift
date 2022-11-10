@@ -36,25 +36,36 @@ public class SKSystem: NSObject, SKClass {
 // MARK: - Public Extension SKSystem With Universal Platform
 public extension SKSystem {
     
-    typealias ApplicationVersionResult = (releaseVersion: String, bundleVersion: String)
-    final func getApplicationVersion() -> Optional<ApplicationVersionResult> {
+    /**
+        현재 구동중인 애플리케이션에 대한 `릴리즈 버전 (Release Version` 그리고 `번들 버전 (Bundle Version)` 정보를 가져오는 함수입니다.
+     
+        - Authors: `ChangYeop-Yang`
+        - Returns: `Optional<SKSystemApplicationVersionResult>`
+     */
+    final func getApplicationVersion() -> Optional<SKSystemApplicationVersionResult> {
         
         guard let infoDictionary = Bundle.main.infoDictionary else { return nil }
 
         guard let releaseVersion = infoDictionary["CFBundleShortVersionString"] as? String,
               let bundleVersion = infoDictionary["CFBundleVersion"] as? String else { return nil }
     
-        return ApplicationVersionResult(releaseVersion, bundleVersion)
+        return SKSystemApplicationVersionResult(release: releaseVersion, bundle: bundleVersion)
     }
     
-    typealias DeviceMemoryResult = (usage: Float, total: Float)
-    final func getDeviceMemoryUnitMB() -> DeviceMemoryResult {
+    /**
+        현재 장비에서 사용중인 메모리 사용률 그리고 전체 메모리 값을 가져오는 함수입니다.
+     
+        - Authors: `ChangYeop-Yang`
+        - NOTE: Units of measurement `Megabyte (MB)`
+        - Returns: `SKSystemMachineUsageMemeoryResult`
+     */
+    final func getMachineUsageMemory() -> SKSystemMachineUsageMemeoryResult {
         
-        var usageMegaBytes = Float.zero
-        let totalMegaBytes = Float(ProcessInfo.processInfo.physicalMemory) / 1024.0 / 1024.0
+        var usageMegaBytes: Float = Float.zero
+        let totalMegaBytes: Float = Float(ProcessInfo.processInfo.physicalMemory) / 1024.0 / 1024.0
         
-        var info = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
+        var info: mach_task_basic_info = mach_task_basic_info()
+        var count: UInt32 = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
         
         let result: kern_return_t = withUnsafeMutablePointer(to: &info) {
             $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
@@ -66,7 +77,7 @@ public extension SKSystem {
             usageMegaBytes = Float(info.resident_size) / 1024.0 / 1024.0
         }
         
-        return DeviceMemoryResult(usageMegaBytes, totalMegaBytes)
+        return SKSystemMachineUsageMemeoryResult(usage: usageMegaBytes, total: totalMegaBytes)
     }
 }
 #endif
