@@ -40,9 +40,9 @@ public class SKProcessMonitor: SKAsyncOperation {
     
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKProcessMonitor"
+    public static var identifier: String = "A4031B25-241F-4457-9DF4-B711D022C4EA"
     
     private var info: ProcessMonitorInfo
-    public var identifier: String = UUID().uuidString
     
     // MARK: - Initalize
     public init(name: Optional<String> = SKProcessMonitor.label,
