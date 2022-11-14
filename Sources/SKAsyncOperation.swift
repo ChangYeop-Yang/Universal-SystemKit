@@ -27,6 +27,7 @@ open class SKAsyncOperation: Operation {
     
     // MARK: - Enum
     public enum State: String {
+        
         case ready = "Ready"
         case executing = "Executing"
         case finished = "Finished"
@@ -39,6 +40,7 @@ open class SKAsyncOperation: Operation {
     
     // MARK: - Object Properties
     public var state = State.ready {
+        
         // 직접적으로 Operation 작업 상태를 관리하기 위한 Status Variable 생성
         willSet {
             willChangeValue(forKey: newValue.keyPath)
@@ -76,14 +78,20 @@ extension SKAsyncOperation {
         
         self.main()
         
-        NSLog("[SKAsyncOperation] Action, Operation Start: %@", self.state.keyPath)
+        #if DEBUG
+            NSLog("[SKAsyncOperation] Action, Operation Start: %@", self.state.keyPath)
+        #endif
+        
         self.state = State.executing
     }
     
     open override func cancel() {
         super.cancel()
         
-        NSLog("[SKAsyncOperation] Action, Operation Cancel: %@", self.state.keyPath)
+        #if DEBUG
+            NSLog("[SKAsyncOperation] Action, Operation Cancel: %@", self.state.keyPath)
+        #endif
+        
         self.state = State.finished
     }
 }
