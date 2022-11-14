@@ -43,4 +43,10 @@ import Foundation
     // MARK: Required Init Protocol Properties
     init(name: Optional<String>, qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
 }
+
+@objc public protocol SKRequest: SKClass {
+    
+    // MARK: Required Protocol Properties
+    static var targetPath: String { get }
+}
 #endif

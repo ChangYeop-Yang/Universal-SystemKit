@@ -27,12 +27,18 @@ import Foundation
 // MARK: - Enum
 public enum SKProcessMonitorFilterFlag {
     
+    /// a computer process terminates its execution by making an exit system call
     case exit
+    
+    /// fork is an operation whereby a process creates a copy of itself
     case fork
+    
+    /// exec is a functionality of an operating system that runs an executable file in the context of an already existing process, replacing the previous executable
     case exec
     
     // MARK: Enum Properties
     public var define: UInt32 {
+        
         switch self {
         /// process exec'd: `0x20000000`
         case .exec:
