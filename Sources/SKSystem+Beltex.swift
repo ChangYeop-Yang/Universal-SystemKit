@@ -107,7 +107,15 @@ public extension SKSystem {
         }
     }
     
-    struct SKSystemResult: Codable {
+    /**
+        현재 장비에서 사용하고 있는 `처리 장치 (Central/Main processor)` 정보를 저장하고 있는 구조체 입니다.
+     
+         - Authors: `ChangYeop-Yang`
+         - Date: `2022년도 11월 15일 화요일 22:21`
+         - Since: [beltex/SystemKit](https://github.com/beltex/SystemKit)
+         - Returns: `SKSystemControlResult`
+     */
+    struct SKSystemControlResult: Codable {
         
         // MARK: - Static Properties
         private static let processCountInfo = System.processCounts()
@@ -144,8 +152,8 @@ public extension SKSystem {
             
             self.physicalMemory = System.physicalMemory(.gigabyte)
             
-            self.processCount = SKSystem.SKSystemResult.processCountInfo.processCount
-            self.threadCount = SKSystem.SKSystemResult.processCountInfo.threadCount
+            self.processCount = SKSystem.SKSystemControlResult.processCountInfo.processCount
+            self.threadCount = SKSystem.SKSystemControlResult.processCountInfo.threadCount
         }
     }
 }

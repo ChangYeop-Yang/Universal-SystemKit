@@ -27,13 +27,13 @@ import Foundation
 // MARK: - Enum
 public enum SKProcessMonitorFilterFlag {
     
-    /// a computer process terminates its execution by making an exit system call
+    /// - NOTE: [exit - System Call](https://en.wikipedia.org/wiki/Exit_(system_call))
     case exit
     
-    /// fork is an operation whereby a process creates a copy of itself
+    /// - NOTE: [fork - System Call](https://en.wikipedia.org/wiki/Fork_(system_call))
     case fork
     
-    /// exec is a functionality of an operating system that runs an executable file in the context of an already existing process, replacing the previous executable
+    /// - NOTE: [exec - System Call](https://en.wikipedia.org/wiki/Exec_(system_call))
     case exec
     
     // MARK: Enum Properties
