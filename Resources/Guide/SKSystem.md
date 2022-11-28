@@ -22,6 +22,18 @@ print(resultB)
 // 현재 구동중인 애플리케이션에 대한 `릴리즈 버전 (Release Version` 그리고 `번들 버전 (Bundle Version)` 정보를 가져옵니다.
 let resultC = SKSystem.shared.getApplicationVersion()
 print(resultC)
+
+// 현재 장비에서 사용하고 있는 `메모리 (Memory)` 정보를 가져옵니다.
+let resultD = SKSystem.SKSystemMemoryResult()
+print(resultD)
+
+// 현재 장비에서 사용하고 있는 `처리 장치 (Central/Main processor)` 정보를 가져옵니다.
+let resultE = SKSystem.SKSystemControlResult()
+print(resultE)
+
+// 현재 장비에서 사용하고 있는 `전지 (Battery)` 정보를 가져옵니다.
+let resultF = SKSystem.SKBatteryResult()
+print(resultF)
 ```
 
 # License
