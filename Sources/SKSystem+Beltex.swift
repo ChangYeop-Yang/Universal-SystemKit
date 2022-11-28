@@ -24,7 +24,7 @@
 import Beltex
 import Foundation
 
-// MARK: - Extension SKSystem
+// MARK: - Public Extension SKSystem With Beltex
 public extension SKSystem {
  
     /**
@@ -40,12 +40,12 @@ public extension SKSystem {
         // MARK: Static Properties
         private static var battery: Battery = Battery()
         
-        // MARK: - String Properties
+        // MARK: String Properties
         
         /// Same as timeRemaining(), but returns as a human readable time format, as seen in the battery status menu bar.
         public let timeRemainingFormatted: String
         
-        // MARK: - Bool Properties
+        // MARK: Bool Properties
         
         /// Is the machine powered by AC? Plugged into the charger.
         public let poweredAC: Bool
@@ -56,7 +56,7 @@ public extension SKSystem {
         /// Is the battery charging.
         public let charging: Bool
         
-        // MARK: - Double Properties
+        // MARK: Double Properties
         
         /// What is the current charge of the machine? As seen in the battery status menu bar. This is the currentCapacity / maxCapacity.
         public let charge: Double
@@ -117,15 +117,16 @@ public extension SKSystem {
      */
     struct SKSystemControlResult: Codable {
         
-        // MARK: - Static Properties
+        // MARK: Static Properties
+        
         private static let processCountInfo = System.processCounts()
         
-        // MARK: - String Properties
+        // MARK: String Properties
         
         /// Get the model name of this machine. Same as "sysctl hw.model"
         public let modelName: String
         
-        // MARK: - Integer Properties
+        // MARK: Integer Properties
         
         /// Total number of Processes
         public let processCount: Int
@@ -139,10 +140,7 @@ public extension SKSystem {
         /// Number of logical cores on this machine. Will be equal to physicalCores() unless it has hyper-threading, in which case it will be double.
         public let logicalCores: Int
         
-        /// Size of physical memory on this machine: GB
-        public let physicalMemory: Double
-        
-        // MARK: - Initalize
+        // MARK: Initalize
         public init() {
             
             self.modelName = System.modelName()
@@ -150,10 +148,60 @@ public extension SKSystem {
             self.physicalCores = System.physicalCores()
             self.logicalCores = System.logicalCores()
             
-            self.physicalMemory = System.physicalMemory(.gigabyte)
-            
             self.processCount = SKSystem.SKSystemControlResult.processCountInfo.processCount
             self.threadCount = SKSystem.SKSystemControlResult.processCountInfo.threadCount
+        }
+    }
+    
+    /**
+        현재 장비에서 사용하고 있는 `메모리 (Memory)` 정보를 저장하고 있는 구조체 입니다.
+     
+         - Authors: `ChangYeop-Yang`
+         - Date: `2022년도 11월 28일 월요일 22:24`
+         - Since: [beltex/SystemKit](https://github.com/beltex/SystemKit)
+         - Returns: `SKSystemMemoryResult`
+     */
+    struct SKSystemMemoryResult: Codable {
+        
+        // MARK: Double Properties
+        
+        /// Size of physical memory on this machine
+        public let physicalMemorySize: Double
+        
+        public let freeSize: Double
+        
+        public let activeSize: Double
+        
+        public let inActiveSize: Double
+        
+        public let compressedSize: Double
+        
+        public let wiredSize: Double
+        
+        // MARK: Initalize
+        public init(unit: System.Unit = System.Unit.gigabyte) {
+            
+            // System memory usage [Free, Active, In-Active, Wired, Compressed]
+            let usage = System.memoryUsage()
+            
+            self.freeSize = usage.free
+            self.wiredSize = usage.wired
+            self.activeSize = usage.active
+            self.inActiveSize = usage.inactive
+            self.compressedSize = usage.compressed
+            
+            self.physicalMemorySize = System.physicalMemory(unit)
+        }
+        
+        // MARK: Method
+        static func getMemoryUnit(_ value: Double) -> String {
+            
+            if value < 1.0 {
+                let intValue: Int = Int(value * 1000.0)
+                return String(format: "%d MB", intValue)
+            }
+            
+            return String(format: "%.2f GB", value)
         }
     }
 }

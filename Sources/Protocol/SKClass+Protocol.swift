@@ -30,7 +30,7 @@ import Foundation
     static var label: String { get }
     static var identifier: String { get }
     
-    // MARK: Optaionl Protocol Properties
+    // MARK: Optaionl Protocol Method
     @objc optional var implementQueue: DispatchQueue { get set }
     @objc optional var operationQueue: Optional<OperationQueue> { get set }
 }
@@ -40,7 +40,7 @@ import Foundation
     // MARK: Optional Protocol Properties
     @objc optional var timer: Optional<DispatchSourceTimer> { get set }
     
-    // MARK: Required Init Protocol Properties
+    // MARK: Required Initalize
     init(name: Optional<String>, qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
 }
 

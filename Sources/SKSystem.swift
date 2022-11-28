@@ -21,6 +21,7 @@
  */
 
 #if os(macOS) || os(iOS)
+import AppKit
 import Darwin
 import Foundation
 import SystemConfiguration
@@ -35,6 +36,12 @@ public class SKSystem: NSObject, SKClass {
 
 // MARK: - Public Extension SKSystem With Universal Platform
 public extension SKSystem {
+    
+    final func loadViewController<T>(name: String, withIdentifier: String, type: T.Type) -> Optional<T> {
+        
+        let storyboard = NSStoryboard(name: name, bundle: nil)
+        return storyboard.instantiateController(withIdentifier: withIdentifier) as? T
+    }
     
     /**
         현재 구동중인 애플리케이션에 대한 `릴리즈 버전 (Release Version` 그리고 `번들 버전 (Bundle Version)` 정보를 가져오는 함수입니다.
