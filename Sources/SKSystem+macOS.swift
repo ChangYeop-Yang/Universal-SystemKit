@@ -27,32 +27,17 @@ import SystemConfiguration
 
 // MARK: - Public Extension SKSystem With macOS Platform
 public extension SKSystem {
- 
+    
     /**
-        운영체제가 구동 중인 장비에 대한 정보를 가져오는 함수입니다.
+        `Storyboard` 내부에 제작 된 `UIViewController` 또는 `NSViewController`를 가져올 수 있는 함수입니다.
      
         - Authors: `ChangYeop-Yang`
-        - Returns: `Optional<SKSystemMachineSystemResult>`
+        - Returns: `Optional<T>`
      */
-    final func getMachineSystemInfo() -> Optional<SKSystemMachineSystemResult> {
+    final func loadViewController<T>(name: String, withIdentifier: String, type: T.Type) -> Optional<T> {
         
-        let toString: (UnsafeRawBufferPointer) -> Optional<String> = { raw in
-            guard let cString = raw.baseAddress?.assumingMemoryBound(to: CChar.self) else { return nil }
-            return String(cString: cString, encoding: String.Encoding.utf8)
-        }
-        
-        var names: utsname  = utsname()
-        guard Foundation.uname(&names) == Int32.zero else { return nil }
-        
-        let sysname  = withUnsafeBytes(of: &names.sysname, toString) ?? String.init()
-        let nodename = withUnsafeBytes(of: &names.nodename, toString) ?? String.init()
-        let release  = withUnsafeBytes(of: &names.release, toString) ?? String.init()
-        let version  = withUnsafeBytes(of: &names.version, toString) ?? String.init()
-        let machine  = withUnsafeBytes(of: &names.machine, toString) ?? String.init()
-        
-        return SKSystemMachineSystemResult(operatingSystemName: sysname,
-                                           operatingSystemRelease: release, operatingSystemVersion: version,
-                                           machineNetworkNodeName: nodename, machineHardwarePlatform: machine)
+        let storyboard = NSStoryboard(name: name, bundle: nil)
+        return storyboard.instantiateController(withIdentifier: withIdentifier) as? T
     }
     
     /**

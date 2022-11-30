@@ -21,7 +21,6 @@
  */
 
 #if os(macOS) || os(iOS)
-import AppKit
 import Darwin
 import Foundation
 import SystemConfiguration
@@ -38,20 +37,9 @@ public class SKSystem: NSObject, SKClass {
 public extension SKSystem {
     
     /**
-        `Storyboard` 내부에 제작 된 `UIViewController` 또는 `NSViewController`를 가져올 수 있는 함수입니다.
-     
-        - Authors: `ChangYeop-Yang`
-        - Returns: `Optional<T>`
-     */
-    final func loadViewController<T>(name: String, withIdentifier: String, type: T.Type) -> Optional<T> {
-        
-        let storyboard = NSStoryboard(name: name, bundle: nil)
-        return storyboard.instantiateController(withIdentifier: withIdentifier) as? T
-    }
-    
-    /**
         현재 구동중인 애플리케이션에 대한 `릴리즈 버전 (Release Version` 그리고 `번들 버전 (Bundle Version)` 정보를 가져오는 함수입니다.
-     
+
+        - Version: `1.0.0`
         - Authors: `ChangYeop-Yang`
         - Returns: `Optional<SKSystemApplicationVersionResult>`
      */
@@ -68,6 +56,7 @@ public extension SKSystem {
     /**
         현재 장비에서 사용중인 메모리 사용률 그리고 전체 메모리 값을 가져오는 함수입니다.
      
+        - Version: `1.0.0`
         - Authors: `ChangYeop-Yang`
         - NOTE: Units of measurement `Megabyte (MB)`
         - Returns: `SKSystemMachineUsageMemeoryResult`
@@ -94,11 +83,13 @@ public extension SKSystem {
     }
     
     /**
-        현재 사용중인 장비 모델 이름을 가져오는 함수입니다.
+        현재 사용중인 장비 모델 명칭을 가져오는 함수입니다.
      
-         - Authors: `ChangYeop-Yang`
-         - NOTE: Units of measurement `Megabyte (MB)`
-         - Returns: `SKSystemMachineUsageMemeoryResult`
+        - SeeAlso: [Apple Device Database](https://appledb.dev)
+        - Version: `1.0.0`
+        - Authors: `ChangYeop-Yang`
+        - NOTE: 장비 모델 명칭을 가져오고 실제 제품을 판매하기 위한 제품명을 가져오기 위해서는 `getMachineSystemInfo` 함수를 사용하여야합니다.
+        - Returns: `String`
      */
     final func getDeviceModelName() -> String {
         
@@ -115,6 +106,35 @@ public extension SKSystem {
         let cString: UnsafePointer<CChar> = UnsafeRawPointer(pointee).assumingMemoryBound(to: CChar.self)
         
         return String(cString: cString, encoding: String.Encoding.utf8) ?? String.init()
+    }
+    
+    /**
+        현재 사용중인 제품에 대한 제품 정보를 가져오는 함수입니다.
+     
+        - SeeAlso: [Apple Device Database](https://appledb.dev)
+        - Version: `1.0.0`
+        - Authors: `ChangYeop-Yang`
+        - Returns: `Optional<SKSystemMachineSystemResult>`
+     */
+    final func getMachineSystemInfo() -> Optional<SKSystemMachineSystemResult> {
+        
+        let toString: (UnsafeRawBufferPointer) -> Optional<String> = { raw in
+            guard let cString = raw.baseAddress?.assumingMemoryBound(to: CChar.self) else { return nil }
+            return String(cString: cString, encoding: String.Encoding.utf8)
+        }
+        
+        var names: utsname  = utsname()
+        guard Foundation.uname(&names) == Int32.zero else { return nil }
+        
+        let sysname  = withUnsafeBytes(of: &names.sysname, toString) ?? String.init()
+        let nodename = withUnsafeBytes(of: &names.nodename, toString) ?? String.init()
+        let release  = withUnsafeBytes(of: &names.release, toString) ?? String.init()
+        let version  = withUnsafeBytes(of: &names.version, toString) ?? String.init()
+        let machine  = withUnsafeBytes(of: &names.machine, toString) ?? String.init()
+        
+        return SKSystemMachineSystemResult(operatingSystemName: sysname,
+                                           operatingSystemRelease: release, operatingSystemVersion: version,
+                                           machineNetworkNodeName: nodename, machineHardwarePlatform: machine)
     }
 }
 #endif
