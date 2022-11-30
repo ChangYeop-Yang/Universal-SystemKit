@@ -1,5 +1,7 @@
 # 🗂 SKSystem
 
+![Platfirn - Shields.io](https://img.shields.io/badge/Platforms-iOS%20%7C%20macOS-yellowgreen)
+
 `SKSystem`는 iOS 또는 macOS 플렛폼에서 공용적으로 사용할 수 있도록 시스템 정보 (운영체제, 시스템, 메모리, 중앙 처리 장치, 프로젝트 버전 등)을 손쉽게 가져올 수 있습니다. 또한, 플랫폼에 구애받지 않고 공통적으로 사용할 수 있는 기능을 제공합니다.
 
 # Example Source
