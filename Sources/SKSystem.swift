@@ -37,6 +37,12 @@ public class SKSystem: NSObject, SKClass {
 // MARK: - Public Extension SKSystem With Universal Platform
 public extension SKSystem {
     
+    /**
+        `Storyboard` 내부에 제작 된 `UIViewController` 또는 `NSViewController`를 가져올 수 있는 함수입니다.
+     
+        - Authors: `ChangYeop-Yang`
+        - Returns: `Optional<T>`
+     */
     final func loadViewController<T>(name: String, withIdentifier: String, type: T.Type) -> Optional<T> {
         
         let storyboard = NSStoryboard(name: name, bundle: nil)
@@ -85,6 +91,30 @@ public extension SKSystem {
         }
         
         return SKSystemMachineUsageMemeoryResult(usage: usageMegaBytes, total: totalMegaBytes)
+    }
+    
+    /**
+        현재 사용중인 장비 모델 이름을 가져오는 함수입니다.
+     
+         - Authors: `ChangYeop-Yang`
+         - NOTE: Units of measurement `Megabyte (MB)`
+         - Returns: `SKSystemMachineUsageMemeoryResult`
+     */
+    final func getDeviceModelName() -> String {
+        
+        var mib: Array<Int32> = [CTL_HW, HW_MODEL]
+        var size: Int = MemoryLayout<io_name_t>.size
+        let pointee = UnsafeMutablePointer<io_name_t>.allocate(capacity: 1)
+        
+        let result = sysctl(&mib, u_int(mib.count), pointee, &size, nil, Int.zero)
+        
+        #if DEBUG
+            NSLog("[%@][%@] Action, Get Device Model: %d", SystemKit.label, SKSystem.identifier, result)
+        #endif
+        
+        let cString: UnsafePointer<CChar> = UnsafeRawPointer(pointee).assumingMemoryBound(to: CChar.self)
+        
+        return String(cString: cString, encoding: String.Encoding.utf8) ?? String.init()
     }
 }
 #endif

@@ -113,18 +113,15 @@ public extension SKSystem {
          - Authors: `ChangYeop-Yang`
          - Date: `2022년도 11월 15일 화요일 22:21`
          - Since: [beltex/SystemKit](https://github.com/beltex/SystemKit)
-         - Returns: `SKSystemControlResult`
+         - Returns: `SKSystemMainControlResult`
      */
-    struct SKSystemControlResult: Codable {
+    struct SKSystemMainControlResult: Codable {
         
         // MARK: Static Properties
         
         private static let processCountInfo = System.processCounts()
         
-        // MARK: String Properties
-        
-        /// Get the model name of this machine. Same as "sysctl hw.model"
-        public let modelName: String
+        private static let processPowerInfo = System.CPUPowerLimit()
         
         // MARK: Integer Properties
         
@@ -140,16 +137,23 @@ public extension SKSystem {
         /// Number of logical cores on this machine. Will be equal to physicalCores() unless it has hyper-threading, in which case it will be double.
         public let logicalCores: Int
         
+        /// Defines the speed & voltage limits placed on the CPU. Represented as a percentage (0-100) of maximum CPU speed.
+        public let processorSpeed: Double
+        
+        /// Represents the percentage (0-100) of CPU time available. 100% at normal operation. The OS may limit this time for a percentage less than 100%.
+        public let schedulerTime: Double
+        
         // MARK: Initalize
         public init() {
-            
-            self.modelName = System.modelName()
-        
-            self.physicalCores = System.physicalCores()
+
             self.logicalCores = System.logicalCores()
-            
-            self.processCount = SKSystem.SKSystemControlResult.processCountInfo.processCount
-            self.threadCount = SKSystem.SKSystemControlResult.processCountInfo.threadCount
+            self.physicalCores = System.physicalCores()
+
+            self.processorSpeed = SKSystem.SKSystemMainControlResult.processPowerInfo.processorSpeed
+            self.schedulerTime = SKSystem.SKSystemMainControlResult.processPowerInfo.schedulerTime
+
+            self.processCount = SKSystem.SKSystemMainControlResult.processCountInfo.processCount
+            self.threadCount = SKSystem.SKSystemMainControlResult.processCountInfo.threadCount
         }
     }
     

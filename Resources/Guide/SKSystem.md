@@ -28,7 +28,7 @@ let resultD = SKSystem.SKSystemMemoryResult()
 print(resultD)
 
 // 현재 장비에서 사용하고 있는 `처리 장치 (Central/Main processor)` 정보를 가져옵니다.
-let resultE = SKSystem.SKSystemControlResult()
+let resultE = SKSystem.SKSystemMainControlResult()
 print(resultE)
 
 // 현재 장비에서 사용하고 있는 `전지 (Battery)` 정보를 가져옵니다.

@@ -20,8 +20,6 @@
  * THE SOFTWARE.
  */
 
-import Beltex
-
 import Foundation
 
 // MARK: - Enum With macOS Platform
@@ -53,7 +51,7 @@ public enum macOSSystemVersion: String {
 // MARK: - Struct With macOS Platform
 public struct SKSystemMachineSystemResult: Codable {
     
-    // MARK: Struct String Proeprties
+    // MARK: String Proeprties
     
     /// Name of the operating system implementation
     public let operatingSystemName: String
