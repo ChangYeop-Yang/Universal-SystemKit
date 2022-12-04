@@ -75,12 +75,12 @@ public extension SKSystem {
         - Version: `1.0.0`
         - Authors: `ChangYeop-Yang`
         - Parameters:
-            - name: `SKSystemMachineSystemResult.machineHardwarePlatform` 값을 입력받습니다.
+            - identifierModel: `SKSystemMachineSystemResult.machineHardwarePlatform` 값을 입력받습니다.
         - Returns: `Optional<SKSystemMachineSystemResult>`
      */
-    final func getRegularProductName(name: String) -> String {
+    final func getRegularProductName(identifierModel: String) -> String {
 
-        switch name {
+        switch identifierModel {
         // MARK: iPhone 4 Product
         case "iPhone3,1", "iPhone3,2", "iPhone3,3":
             return "iPhone 4"

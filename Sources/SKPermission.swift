@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS)
-import Cocoa
+#if os(iOS) || os(macOS)
 import Foundation
 
 public class SKPermission: SKClass {
@@ -30,30 +29,5 @@ public class SKPermission: SKClass {
     public static let shared: SKPermission = SKPermission()
     public static var label: String = "com.SystemKit.SKPermission"
     public static var identifier: String = UUID().uuidString
-}
-
-// MARK: - Public SKPermission Extension
-public extension SKPermission {
-    
-    @available(macOS 10.15, *)
-    final func isFullDiskAccessPermission() -> Bool {
-        
-        let atPath: String = "/Library/Application Support/com.apple.TCC/TCC.db"
-        return FileManager.default.isReadableFile(atPath: atPath)
-    }
-    
-    @available(macOS 10.12, *)
-    final func managePrivacyPermission(service: SKPermissionServiceName = SKPermissionServiceName.All,
-                                       bundlePath: String) {
-        
-        let arguments: [String] = ["reset", service.rawValue, bundlePath]
-        SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
-    }
-    
-    final func openPreferencePane(path: String) -> Bool {
-        
-        guard let url: URL = URL(string: path) else { return false }
-        return NSWorkspace.shared.open(url)
-    }
 }
 #endif

@@ -21,6 +21,8 @@
  */
 
 #if os(macOS)
+import AppKit
+
 import Darwin
 import Foundation
 import SystemConfiguration
