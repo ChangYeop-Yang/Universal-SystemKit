@@ -33,6 +33,12 @@ private extension SKPermission {
 // MARK: - Public Extension SKPermission
 public extension SKPermission {
     
+    /**
+        - Version: `1.0.0`
+        - Authors: `ChangYeop-Yang`
+        - Requires: Use more than `macOS Catalina (10.15)`
+        - Returns: `Bool`
+     */
     @available(macOS 10.15, *)
     final func isFullDiskAccessPermission() -> Bool {
         
