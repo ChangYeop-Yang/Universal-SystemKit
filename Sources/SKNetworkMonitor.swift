@@ -36,9 +36,11 @@ public class SKNetworkMonitor: SKClass {
     public static var label: String = "com.SystemKit.SKNetworkMonitor"
     public static var identifier: String = "5C6F96D5-C21E-4A48-9AED-15794E19A4E9"
 
-    private let implementQueue: DispatchQueue = DispatchQueue(label: SKNetworkMonitor.label, attributes: .concurrent)
     private let monitor: NWPathMonitor = NWPathMonitor()
     private let pathUpdateHandler: SKNetworkStatusUpdateHandler
+    private let implementQueue: DispatchQueue = DispatchQueue(label: SKNetworkMonitor.label,
+                                                              qos: DispatchQoS.background,
+                                                              attributes: DispatchQueue.Attributes.concurrent)
     
     // MARK: - Initalize
     public init(pathUpdateHandler: @escaping SKNetworkStatusUpdateHandler) {
