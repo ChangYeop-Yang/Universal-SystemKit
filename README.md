@@ -34,6 +34,8 @@ dependencies: [
 
 * [SKAsyncOperation](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKAsyncOperation.md)
 
+* [SKNetworkMonitor](https://dev-dream-world.tistory.com/234)
+
 * [SKFinderExtension](https://dev-dream-world.tistory.com/226?category=1294828)
 
 * [SKPermission](https://dev-dream-world.tistory.com/227?category=1294828)
