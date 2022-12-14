@@ -22,8 +22,8 @@
 
 import Foundation
 
-// MARK: - Enum With Universal Platform
 #if os(macOS) || os(iOS)
+// MARK: - Struct With Universal Platform
 public struct SKSystemMachineUsageMemeoryResult: Codable {
     
     // MARK: Float Proeprties

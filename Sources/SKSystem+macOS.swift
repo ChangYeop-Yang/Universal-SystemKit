@@ -31,18 +31,6 @@ import SystemConfiguration
 public extension SKSystem {
     
     /**
-        `Storyboard` 내부에 제작 된 `UIViewController` 또는 `NSViewController`를 가져올 수 있는 함수입니다.
-     
-        - Authors: `ChangYeop-Yang`
-        - Returns: `Optional<T>`
-     */
-    final func loadViewController<T>(name: String, withIdentifier: String, type: T.Type) -> Optional<T> {
-        
-        let storyboard = NSStoryboard(name: name, bundle: nil)
-        return storyboard.instantiateController(withIdentifier: withIdentifier) as? T
-    }
-    
-    /**
         현재 구동중인 macOS 운영체제 시스템 버전 (System Version) 정보를 가져오는 함수입니다.
      
         - Authors: `ChangYeop-Yang`
