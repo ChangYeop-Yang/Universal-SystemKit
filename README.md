@@ -22,6 +22,12 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 
 Once you have your Swift package set up, adding `SystemKit` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 
+1. From the Xcode menu, click File > Swift Packages > Add Package Dependency.
+
+2. In the dialog that appears, enter the repository URL: https://github.com/microsoft/plcrashreporter.git.
+
+3. In Version, select Up to Next Major and take the default option.
+
 ```Swift
 dependencies: [
     .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", .branch("master"))
