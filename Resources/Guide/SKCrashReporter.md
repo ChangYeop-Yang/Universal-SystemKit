@@ -1,6 +1,6 @@
 # 🗂 SKCrashReporter
 
-`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 구동이되는 애플리케이션이 특정한 이유로 충돌 (Crash) 발생 시 관련 내용들을 파일 저장 또는 충돌 내용을 확인할 수 있는 기능을 제공합니다.
+`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 구동이되는 애플리케이션이 특정한 이유로 충돌 (Crash) 발생 시 관련 내용들을 파일 저장 또는 충돌 내용을 확인할 수 있는 기능을 제공합니다. 충돌이 발생하여 애플리케이션 (Application)이 종료되는 경우에는 종료직전 입력받은 `Callback`으로 `CompletionHandler`을 받으여 애플리케이션 재시작 시 충돌 내용ㅇ 저장 된 `.plcrash` 확장자를 가진 파일이 생성됩니다.
 
 * 해당 기능을 사용하기 위해서는 `Xcode Debug executable` 환경이 아닌 `Release` 모드에서만 구동이 됩니다.
 
@@ -11,11 +11,13 @@
 `SKCrashReporter` 예제 소스코드는 아래와 같습니다.
 
 ```Swift
+// SKCrashReporter Instance를 사용하기 위해서는 충돌파일을 저장하기 위한 폴더 경로 및 파일 이름을 매개변수로 전달합니다.
 let crashReport = SKCrashReporter(crashReportDirectory: "DIRECTORY_REPORT", crashReportFileName: "REPORT_NAME")
 
 // typedef void (*PLCrashReporterPostCrashSignalCallback)(siginfo_t *info, ucontext_t *uap, void *context);
 crashReport.enable(handleSignal: PLCrashReporterPostCrashSignalCallback)
 
+// SKCrashReporter 비활성화를 수행합니다.
 crashReport.disable()
 ```
 
