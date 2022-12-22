@@ -33,8 +33,6 @@ public class SKCrashReporter: SKClass {
     public static var identifier: String = "4552D8B1-1522-4EB0-B02F-95DFC9598169"
 
     public var crashReporter: Optional<PLCrashReporter> = nil
-    private let crashReportFileName: String
-    private let crashReportDirectory: String
     private var signalHandlerType: PLCrashReporterSignalHandlerType {
 
         // 현재 장비의 운영체제 환경에 적합한 PLCrashReporterSignalHandlerType을 설정합니다.
@@ -44,6 +42,8 @@ public class SKCrashReporter: SKClass {
             return PLCrashReporterSignalHandlerType.BSD
         #endif
     }
+    private let crashReportFileName: String
+    private let crashReportDirectory: String
     
     // MARK: - Initalize
     public init(crashReportDirectory: String, crashReportFileName: String) {

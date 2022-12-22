@@ -1,12 +1,22 @@
 # 🗂 SKCrashReporter
 
-`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 공용적으로 사용할 수 있는 `Concurrent OperationQueue`를 효율적으로 사용할 수 있도록 기능을 제공합니다. `SKAsyncOperation`는 상속 (Inheritance)을 통해서 사용할 수 있습니다.
+`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 구동이되는 애플리케이션이 특정한 이유로 충돌 (Crash) 발생 시 관련 내용들을 저장 또는 확인할 수 있는 기능을 제공합니다.
+
+* 해당 기능을 사용하기 위해서는 `Xcode Debug executable` 환경이 아닌 `Release` 모드에서만 구동이 됩니다.
+
+* `SKCrashReporter` 기능은 [PLCrashReporter](https://github.com/microsoft/plcrashreporter) 오픈소스를 사용하여 제공하는 기능입니다. 해당 오픈소스 라이센스는 `Copyright (c) Microsoft Corporation.`를 적용받습니다.
 
 # Example Source
 
 `SKCrashReporter` 예제 소스코드는 아래와 같습니다.
 
 ```Swift
+let crashReport = SKCrashReporter(crashReportDirectory: "DIRECTORY_REPORT", crashReportFileName: "REPORT_NAME")
+
+// typedef void (*PLCrashReporterPostCrashSignalCallback)(siginfo_t *info, ucontext_t *uap, void *context);
+crashReport.enable(handleSignal: PLCrashReporterPostCrashSignalCallback)
+
+crashReport.disable()
 ```
 
 # License
