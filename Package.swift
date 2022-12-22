@@ -24,7 +24,6 @@
  */
 
 import PackageDescription
-import Foundation
 
 #if os(macOS) || os(iOS)
 
@@ -37,27 +36,33 @@ let package = Package(
     name: namePackage,
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: namePackage, targets: ["SystemKit"]),
-        .library(name: FrameworkInfo.Beltex.name, targets: [FrameworkInfo.Beltex.name])
+        .library(name: namePackage, targets: [namePackage, FrameworkInfo.Beltex.name, FrameworkInfo.PLCrashReporter.name])
     ],
     dependencies: dependenciesPackage,
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(name: namePackage, dependencies: dependenciesTarget, path: "Sources"),
-        .binaryTarget(name: FrameworkInfo.Beltex.name, path: FrameworkInfo.Beltex.path)
+        .binaryTarget(name: FrameworkInfo.Beltex.name, path: FrameworkInfo.Beltex.path),
+        .binaryTarget(name: FrameworkInfo.PLCrashReporter.name, path: FrameworkInfo.PLCrashReporter.path)
     ]
 )
 
 // MARK: - Enum
 public enum FrameworkInfo: String, CaseIterable {
     
+    /// [beltex/SystemKit - GitHub](https://github.com/beltex/SystemKit)
     case Beltex = "Beltex"
+    
+    /// [PLCrashReporter - GitHub](https://github.com/microsoft/plcrashreporter)
+    case PLCrashReporter = "CrashReporter"
     
     public var path: String {
         switch self {
         case .Beltex:
             return "Frameworks/Beltex/Beltex.xcframework"
+        case .PLCrashReporter:
+            return "Frameworks/PLCrashReporter/CrashReporter.xcframework"
         }
     }
     
