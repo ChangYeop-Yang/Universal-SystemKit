@@ -48,6 +48,8 @@ dependencies: [
 
 * [SKSignal](https://dev-dream-world.tistory.com/229?category=1294828)
 
+* [SKCrashReporter]()
+
 # License
 
 `SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
