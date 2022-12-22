@@ -36,7 +36,8 @@ let package = Package(
     name: namePackage,
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: namePackage, targets: [namePackage, FrameworkInfo.Beltex.name, FrameworkInfo.PLCrashReporter.name])
+        .library(name: namePackage, targets: [namePackage, FrameworkInfo.PLCrashReporter.name]),
+        .library(name: FrameworkInfo.Beltex.name, targets: [namePackage, FrameworkInfo.Beltex.name])
     ],
     dependencies: dependenciesPackage,
     targets: [
