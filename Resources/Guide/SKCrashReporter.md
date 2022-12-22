@@ -1,6 +1,6 @@
 # 🗂 SKCrashReporter
 
-`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 구동이되는 애플리케이션이 특정한 이유로 충돌 (Crash) 발생 시 관련 내용들을 파일 저장 또는 충돌 내용을 확인할 수 있는 기능을 제공합니다. 충돌이 발생하여 애플리케이션 (Application)이 종료되는 경우에는 종료직전 입력받은 `Callback`으로 `CompletionHandler`을 받으여 애플리케이션 재시작 시 충돌 내용ㅇ 저장 된 `.plcrash` 확장자를 가진 파일이 생성됩니다.
+`SKCrashReporter`는 iOS 또는 macOS 플렛폼에서 구동이되는 애플리케이션이 특정한 이유로 충돌 (Crash) 발생 시 관련 내용들을 파일 저장 또는 충돌 내용을 확인할 수 있는 기능을 제공합니다. 충돌이 발생하여 애플리케이션 (Application)이 종료되는 경우에는 종료직전 입력받은 `Callback`으로 `CompletionHandler`을 받으며 애플리케이션 재시작 시 충돌 내용이 저장 된 `.plcrash` 확장자를 가진 파일이 생성됩니다.
 
 * 해당 기능을 사용하기 위해서는 `Xcode Debug executable` 환경이 아닌 `Release` 모드에서만 구동이 됩니다.
 
