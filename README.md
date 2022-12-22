@@ -26,7 +26,7 @@ Once you have your Swift package set up, adding `SystemKit` as a dependency is a
 
 2. In the dialog that appears, enter the repository URL: https://github.com/ChangYeop-Yang/Universal-SystemKit.git.
 
-3. In Branch, select master and take the default option.
+3. In Branch, Enter text "master".
 
 ```Swift
 dependencies: [
