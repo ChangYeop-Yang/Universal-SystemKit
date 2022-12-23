@@ -153,12 +153,6 @@ public extension SKCrashReporter {
         var callback = PLCrashReporterCallbacks(version: UInt16.zero, context: nil, handleSignal: handleSignal)
         reporter.setCrash(&callback)
 
-        // 이전의 애플리케이션에서 CrashReport가 생성되었는지를 확인합니다.
-        if reporter.hasPendingCrashReport() {
-            NSLog("[%@][%@] Action, Save PLCrashReporter", Self.label, Self.identifier)
-            self.save()
-        }
-
         #if DEBUG
             NSLog("[%@][%@] Action, PLCrashReporter enable", Self.label, Self.identifier)
             reporter.enable()
@@ -168,6 +162,12 @@ public extension SKCrashReporter {
         #endif
 
         self.crashReporter = reporter
+        
+        // 이전의 애플리케이션에서 CrashReport가 생성되었는지를 확인합니다.
+        if reporter.hasPendingCrashReport() {
+            NSLog("[%@][%@] Action, Save PLCrashReporter", Self.label, Self.identifier)
+            self.save()
+        }
     }
 
     /**
