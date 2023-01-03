@@ -48,8 +48,9 @@ let package = Package(
     
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
-        .library(name: namePackage, targets: [namePackage, FrameworkAttribute.PLCrashReporter.name]),
-        .library(name: "Beltex", targets: ["Beltex"])
+        .library(name: namePackage, targets: [namePackage,
+                                              FrameworkAttribute.PLCrashReporter.name,
+                                              FrameworkAttribute.Beltex.name]),
     ],
     
     // The list of package dependencies.
