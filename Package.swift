@@ -23,36 +23,51 @@
  * THE SOFTWARE.
  */
 
-import PackageDescription
-
+// swiftlint:disable all
 #if os(macOS) || os(iOS)
+import PackageDescription
 
 // MARK: - Object Properties
 private let namePackage: String = "SystemKit"
 private let dependenciesTarget: [Target.Dependency] = PackageAttribute.allCases.compactMap { item in item.product }
 private let dependenciesPackage: [Package.Dependency] = PackageAttribute.allCases.compactMap { item in item.package }
 
+// The configuration of a Swift package.
 let package = Package(
+    // The name of the Swift package.
     name: namePackage,
-    products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: namePackage, targets: [namePackage, FrameworkInfo.PLCrashReporter.name]),
-        .library(name: FrameworkInfo.Beltex.name, targets: [namePackage, FrameworkInfo.Beltex.name])
+    
+    // The list of minimum versions for platforms supported by the package.
+    platforms: [
+        // macOS 10.12 (Sierra) 이상의 운영체제부터 사용이 가능합니다.
+        .macOS(SupportedPlatform.MacOSVersion.v10_12),
+        
+        // iOS 10 이상의 운영체제부터 사용이 가능합니다.
+        .iOS(SupportedPlatform.IOSVersion.v10),
     ],
+    
+    // Products define the executables and libraries a package produces, and make them visible to other packages.
+    products: [
+        .library(name: namePackage, targets: [namePackage, FrameworkAttribute.PLCrashReporter.name]),
+        .library(name: "Beltex", targets: ["Beltex"])
+    ],
+    
+    // The list of package dependencies.
     dependencies: dependenciesPackage,
+    
+    // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+    // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(name: namePackage, dependencies: dependenciesTarget, path: "Sources"),
-        .binaryTarget(name: FrameworkInfo.Beltex.name, path: FrameworkInfo.Beltex.path),
-        .binaryTarget(name: FrameworkInfo.PLCrashReporter.name, path: FrameworkInfo.PLCrashReporter.path)
+        .target(name: FrameworkAttribute.Beltex.name, path: FrameworkAttribute.Beltex.path),
+        .binaryTarget(name: FrameworkAttribute.PLCrashReporter.name, path: FrameworkAttribute.PLCrashReporter.path)
     ]
 )
 
 // MARK: - Enum
-public enum FrameworkInfo: String, CaseIterable {
+public enum FrameworkAttribute: String, CaseIterable {
     
-    /// [beltex/SystemKit - GitHub](https://github.com/beltex/SystemKit)
+    /// [Beltex/SystemKit - GitHub](https://github.com/beltex/SystemKit)
     case Beltex = "Beltex"
     
     /// [PLCrashReporter - GitHub](https://github.com/microsoft/plcrashreporter)
@@ -61,7 +76,7 @@ public enum FrameworkInfo: String, CaseIterable {
     public var path: String {
         switch self {
         case .Beltex:
-            return "Frameworks/Beltex/Beltex.xcframework"
+            return "Frameworks/Beltex"
         case .PLCrashReporter:
             return "Frameworks/PLCrashReporter/CrashReporter.xcframework"
         }
@@ -75,9 +90,6 @@ public enum PackageAttribute: String, CaseIterable {
     /// [Apple Collections OpenSource](https://github.com/apple/swift-collections)
     case Collections = "Collections"
     
-    /// [Swift System](https://github.com/apple/swift-system)
-    case SystemPackage = "SystemPackage"
-    
     /// [Swift Algorithm](https://github.com/apple/swift-algorithms)
     case Algorithms = "Algorithms"
     
@@ -85,8 +97,6 @@ public enum PackageAttribute: String, CaseIterable {
         switch self {
         case .Collections:
             return "https://github.com/apple/swift-collections.git"
-        case .SystemPackage:
-            return "https://github.com/apple/swift-system.git"
         case .Algorithms:
             return "https://github.com/apple/swift-algorithms.git"
         }
@@ -96,8 +106,6 @@ public enum PackageAttribute: String, CaseIterable {
         switch self {
         case .Collections:
             return "swift-collections"
-        case .SystemPackage:
-            return "swift-system"
         case .Algorithms:
             return "swift-algorithms"
         }
@@ -107,9 +115,6 @@ public enum PackageAttribute: String, CaseIterable {
         switch self {
         case .Collections:
             let fromVersion = Version(stringLiteral: "1.0.3")
-            return .upToNextMajor(from: fromVersion)
-        case .SystemPackage:
-            let fromVersion = Version(stringLiteral: "1.0.0")
             return .upToNextMajor(from: fromVersion)
         case .Algorithms:
             let fromVersion = Version(stringLiteral: "1.0.0")

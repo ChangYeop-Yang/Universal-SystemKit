@@ -20,6 +20,8 @@
  * THE SOFTWARE.
  */
 
+// swiftlint:disable all
+#if os(iOS) || os(macOS)
 import Foundation
 
 @propertyWrapper
@@ -47,3 +49,4 @@ public struct SKUserDefaults<Value> {
         self.defaultValue = defaultValue
     }
 }
+#endif

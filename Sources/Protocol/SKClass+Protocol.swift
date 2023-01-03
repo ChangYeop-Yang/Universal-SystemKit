@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+// swiftlint:disable all
 #if os(macOS) || os(iOS)
 import Foundation
 

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-/*
+// swiftlint:disable all
 #if os(macOS)
 import Beltex
 import Foundation
@@ -211,4 +211,3 @@ public extension SKSystem {
     }
 }
 #endif
-*/
