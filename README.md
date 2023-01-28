@@ -34,6 +34,12 @@ dependencies: [
 ]
 ```
 
+# Requirements
+
+| Platform | Minimum Swift Version | Installation | Status |
+|:--------:|:---------------------:|:------------:|:------:|
+| iOS 10.0+ / macOS 10.12+ | 5.0 | [Swift Package Manager](#swift-package-manager), [Manual](#manually) | Fully Tested |
+
 # Using SystemKit
 
 `Universal SystemKit` 오픈소스 라이브러리를 사용하는 방법은 아래의 Guide 경로에 기술되어 있습니다. 추가적인 관련 사항은 이슈 생성을 통하여 문의부탁드립니다.
