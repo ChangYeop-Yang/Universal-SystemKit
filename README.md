@@ -2,7 +2,7 @@
 
 ![Swift - Shields.io](https://img.shields.io/badge/Swift-5.3%20%7C%205.4%20%7C%205.5%20%7C%205.6-orange)
 ![Platfirn - Shields.io](https://img.shields.io/badge/Platforms-iOS%20%7C%20macOS-yellowgreen)
-![LinkedIn - Shields.io](https://img.shields.io/badge/Linked--In-창엽--양--3535ab134-informational)
+[![LinkedIn - Shields.io](https://img.shields.io/badge/Linked--In-창엽--양--3535ab134-informational)](https://www.linkedin.com/in/창엽-양-3535ab134/)
 ![Swift Package Manager - Shields.io](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-success)
 ![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)
 
