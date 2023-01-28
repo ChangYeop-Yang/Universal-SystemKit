@@ -12,6 +12,10 @@
 
 `Universal SystemKit` 설치 방법은 [Swift Package Manager](https://www.swift.org/package-manager) 또는 [Github Repository](https://docs.github.com/en/repositories)를 통하여 설치할 수 있으며 자세한 사항은 아래와 같습니다.
 
+## Manually
+
+If you prefer not to use any of the aforementioned dependency managers, you can integrate `Universal SystemKit` into your project manually.
+
 ## Github Repository
 
 You can pull the `Universal SystemKit` Github Repository and include the `Universal SystemKit` to build a dynamic or static library.
