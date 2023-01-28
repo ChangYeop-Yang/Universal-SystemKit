@@ -4,7 +4,7 @@
 ![Platfirn - Shields.io](https://img.shields.io/badge/Platforms-iOS%20%7C%20macOS-yellowgreen)
 [![LinkedIn - Shields.io](https://img.shields.io/badge/Linked--In-창엽--양--3535ab134-informational)](https://www.linkedin.com/in/창엽-양-3535ab134/)
 ![Swift Package Manager - Shields.io](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-success)
-![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)
+[![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/LICENSE)
 
 `Universal SystemKit` 오픈소스 라이브러리는 `macOS`, `iOS` 등의 Apple Platform에서 사용할 수 있는 공용 라이브러리입니다.
 
