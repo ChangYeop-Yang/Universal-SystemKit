@@ -45,7 +45,7 @@ dependencies: [
 
 | Platform | Minimum Swift Version | Installation | Status |
 |:--------:|:---------------------:|:------------:|:------:|
-| iOS 10.0+ / macOS 10.12+ | 5.0 | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | ✅ Fully Tested |
+| iOS 10.0+ / macOS 10.12+ | [5.0](https://www.swift.org/blog/swift-5-released/) | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | ✅ Fully Tested |
 
 # Using SystemKit
 
