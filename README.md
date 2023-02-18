@@ -9,7 +9,7 @@
 ![Github Repository - Shields.io](https://img.shields.io/badge/Github%20Repository-Compatible-success)
 [![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/LICENSE)
 
-`Universal SystemKit` 오픈소스 라이브러리는 `macOS`, `iOS` 등의 Apple Platform에서 사용할 수 있는 공용 라이브러리입니다.
+`Universal SystemKit` is an open-source library that can be used on Apple platforms such as `macOS` and `iOS`. It provides common functionality that can be used across different Apple operating systems.
 
 # Installation
 
