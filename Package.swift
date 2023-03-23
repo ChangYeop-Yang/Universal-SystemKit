@@ -39,18 +39,17 @@ let package = Package(
     
     // The list of minimum versions for platforms supported by the package.
     platforms: [
-        // macOS 10.12 (Sierra) 이상의 운영체제부터 사용이 가능합니다.
-        .macOS(SupportedPlatform.MacOSVersion.v10_12),
+        // macOS 10.13 (High Sierra) 이상의 운영체제부터 사용이 가능합니다.
+        .macOS(SupportedPlatform.MacOSVersion.v10_13),
         
-        // iOS 10 이상의 운영체제부터 사용이 가능합니다.
-        .iOS(SupportedPlatform.IOSVersion.v10),
+        // iOS 11 이상의 운영체제부터 사용이 가능합니다.
+        .iOS(SupportedPlatform.IOSVersion.v11),
     ],
     
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
-        .library(name: namePackage, targets: [namePackage,
-                                              FrameworkAttribute.PLCrashReporter.name,
-                                              FrameworkAttribute.Beltex.name]),
+        .library(name: namePackage, targets: [namePackage]),
+                                              //FrameworkAttribute.PLCrashReporter.name]),
     ],
     
     // The list of package dependencies.
@@ -60,24 +59,18 @@ let package = Package(
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
         .target(name: namePackage, dependencies: dependenciesTarget, path: "Sources"),
-        .target(name: FrameworkAttribute.Beltex.name, path: FrameworkAttribute.Beltex.path),
-        .binaryTarget(name: FrameworkAttribute.PLCrashReporter.name, path: FrameworkAttribute.PLCrashReporter.path)
+        //.binaryTarget(name: FrameworkAttribute.PLCrashReporter.name, path: FrameworkAttribute.PLCrashReporter.path)
     ]
 )
 
 // MARK: - Enum
 public enum FrameworkAttribute: String, CaseIterable {
     
-    /// [Beltex/SystemKit - GitHub](https://github.com/beltex/SystemKit)
-    case Beltex = "Beltex"
-    
     /// [PLCrashReporter - GitHub](https://github.com/microsoft/plcrashreporter)
     case PLCrashReporter = "CrashReporter"
     
     public var path: String {
         switch self {
-        case .Beltex:
-            return "Frameworks/Beltex"
         case .PLCrashReporter:
             return "Frameworks/PLCrashReporter/CrashReporter.xcframework"
         }

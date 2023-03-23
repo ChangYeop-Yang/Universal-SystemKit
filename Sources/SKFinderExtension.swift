@@ -24,12 +24,16 @@
 import Foundation
 import FinderSync
 
+/**
+     - Version: `1.0.0`
+     - Authors: `ChangYeop-Yang`
+ */
 public class SKFinderExtension: NSObject, SKClass {
     
     // MARK: - Object Properties
     public static let shared: SKFinderExtension = SKFinderExtension()
     public static let label: String = "com.SystemKit.SKFinderExtension"
-    public static let identifier: String = UUID().uuidString
+    public static let identifier: String = "18EF2C59-D9A8-4908-8898-1E64C6E116BF"
     
     private let launchPath: String = "/usr/bin/pluginkit"
     
