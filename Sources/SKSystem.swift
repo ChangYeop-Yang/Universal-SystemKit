@@ -119,7 +119,9 @@ public extension SKSystem {
     final func getMachineSystemInfo() -> Optional<SKSystemMachineSystemResult> {
         
         let toString: (UnsafeRawBufferPointer) -> Optional<String> = { raw in
+            
             guard let cString = raw.baseAddress?.assumingMemoryBound(to: CChar.self) else { return nil }
+            
             return String(cString: cString, encoding: String.Encoding.utf8)
         }
         

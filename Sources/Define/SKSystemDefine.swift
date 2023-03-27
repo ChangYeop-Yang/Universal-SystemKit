@@ -63,8 +63,8 @@ public struct SKSystemMachineSystemResult: Codable {
 }
 #endif
 
-// MARK: - Enum With macOS Platform
 #if os(macOS)
+// MARK: - Enum With macOS Platform
 public enum SKTranslatedRosettaResult: Int32 {
     
     case error = -1
@@ -77,21 +77,60 @@ public enum SKTranslatedRosettaResult: Int32 {
 @available(macOS 10.12, *)
 public enum macOSSystemVersion: String {
     
-    case Sierra     = "Sierra"
+    case Sierra = "Sierra"
     
     case HighSierra = "High Sierra"
     
-    case Mojave     = "Mojave"
+    case Mojave = "Mojave"
     
-    case Catalina   = "Catalina"
+    case Catalina = "Catalina"
     
-    case BigSur     = "BigSur"
+    case BigSur = "BigSur"
     
-    case Monterey   = "Monterey"
+    case Monterey = "Monterey"
     
-    case Ventura    = "Ventura"
+    case Ventura = "Ventura"
     
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }
+}
+
+// MARK: - Struct With macOS Platform
+public struct SKDisplayOutputUnitResult: Codable {
+    
+    // MARK: Integer Properties
+    
+    /// The window number of the window’s window device.
+    public let windowNumber: Int
+    
+    /// the bit depth of the window’s raster image (2-bit, 8-bit, and so forth)
+    public var bitsPerSample: Optional<Int> = nil
+    
+    // MARK: Double Properties
+    
+    /// A screen resolution width value.
+    public var frameWidth: Optional<Double> = nil
+    
+    /// A screen resolution height value.
+    public var frameHeight: Optional<Double> = nil
+    
+    /// A raster screen resolution width value.
+    public var rasterWidth: Optional<Double> = nil
+    
+    /// A raster screen resolution height value.
+    public var rasterHeight: Optional<Double> = nil
+    
+    // MARK: String Properties
+    
+    /// The name of the window’s color space.
+    public var colorSpaceName: Optional<String> = nil
+    
+    // MARK: Bool Properties
+    
+    /// The display device is a screen.
+    public var isScreen: Optional<Bool> = nil
+    
+    /// The display device is a printer.
+    public var isPrinter: Optional<Bool> = nil
 }
 #endif
