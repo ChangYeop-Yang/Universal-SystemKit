@@ -2,7 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /*
- * Copyright (c) 2022 Universal SystemKit. All rights reserved.
+ * Copyright (c) 2023 Universal SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,10 @@
 #if os(macOS) || os(iOS)
 import PackageDescription
 
-// MARK: - Object Properties
-private let namePackage: String = "SystemKit"
-
 // The configuration of a Swift package.
 let package = Package(
     // The name of the Swift package.
-    name: namePackage,
+    name: InfoPackage.name,
     
     // The list of minimum versions for platforms supported by the package.
     platforms: [
@@ -46,7 +43,7 @@ let package = Package(
     
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
-        .library(name: namePackage, targets: [namePackage]),
+        .library(name: InfoPackage.name, targets: [InfoPackage.name]),
     ],
     
     // The list of package dependencies.
@@ -56,9 +53,17 @@ let package = Package(
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
         .binaryTarget(name: LocalPackage.PLCrashReporter.name, path: LocalPackage.PLCrashReporter.path),
-        .target(name: namePackage, dependencies: [LocalPackage.PLCrashReporter.target], path: "Sources"),
+        .target(name: InfoPackage.name, dependencies: [LocalPackage.PLCrashReporter.target], path: InfoPackage.path),
     ]
 )
+
+// MARK: - Struct
+public struct InfoPackage {
+    
+    public static let name: String = "SystemKit"
+    
+    public static let path: String = "Sources"
+}
 
 // MARK: - Enum
 public enum LocalPackage: String, CaseIterable {
