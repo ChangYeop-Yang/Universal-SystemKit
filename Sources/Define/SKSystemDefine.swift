@@ -67,10 +67,13 @@ public struct SKSystemMachineSystemResult: Codable {
 // MARK: - Enum With macOS Platform
 public enum SKTranslatedRosettaResult: Int32 {
     
+    /// Error Occurs
     case error = -1
     
+    /// Native Process
     case native = 0
     
+    /// Translated Process
     case translated = 1
 }
 
