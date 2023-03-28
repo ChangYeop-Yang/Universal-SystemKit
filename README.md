@@ -64,8 +64,6 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKProcessMonitor](https://dev-dream-world.tistory.com/230?category=1294828)
 
-* [SKUserDefault](https://dev-dream-world.tistory.com/224?category=1294828)
-
 * [SKSignal](https://dev-dream-world.tistory.com/229?category=1294828)
 
 * [SKCrashReporter](https://dev-dream-world.tistory.com/236)
