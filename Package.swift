@@ -24,7 +24,6 @@
  */
 
 // swiftlint:disable all
-#if os(macOS) || os(iOS)
 import PackageDescription
 
 // The configuration of a Swift package.
@@ -58,7 +57,7 @@ let package = Package(
 #if swift(>=5.6)
 // Add the documentation compiler plugin if possible
 package.dependencies.append(
-    .package(url: RemotePackage.SwiftDocC.path, from: "1.0.0")
+    .package(url: RemotePackage.SwiftDocC.path, RemotePackage.SwiftDocC.from)
 )
 #endif
 
@@ -116,6 +115,13 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         }
     }
     
+    public var from: Range<Version> {
+        switch self {
+        case .SwiftDocC:
+            return .upToNextMajor(from: "1.0.0")
+        }
+    }
+    
     public var target: Target.Dependency {
         switch self {
         case .SwiftDocC:
@@ -126,6 +132,3 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
     
     public var name: String { return self.rawValue }
 }
-#else
-fatalError("[SystemKit] Error, Unsupported Operating System")
-#endif
