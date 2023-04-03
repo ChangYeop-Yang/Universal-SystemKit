@@ -31,7 +31,6 @@ import PackageDescription
 let package = Package(
     // The name of the Swift package.
     name: InfoPackage.name,
-    
     // The list of minimum versions for platforms supported by the package.
     platforms: [
         // macOS 10.13 (High Sierra) 이상의 운영체제부터 사용이 가능합니다.
@@ -40,33 +39,49 @@ let package = Package(
         // iOS 11 이상의 운영체제부터 사용이 가능합니다.
         .iOS(SupportedPlatform.IOSVersion.v11),
     ],
-    
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
         .library(name: InfoPackage.name, targets: [InfoPackage.name]),
     ],
-    
     // The list of package dependencies.
     dependencies: [],
-    
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
         .binaryTarget(name: LocalPackage.PLCrashReporter.name, path: LocalPackage.PLCrashReporter.path),
         .target(name: InfoPackage.name, dependencies: [LocalPackage.PLCrashReporter.target], path: InfoPackage.path),
-    ]
+    ],
+    // The list of Swift versions with which this package is compatible.
+    swiftLanguageVersions: [.v5]
 )
+
+#if swift(>=5.6)
+// Add the documentation compiler plugin if possible
+package.dependencies.append(
+    .package(url: RemotePackage.SwiftDocC.path, from: "1.0.0")
+)
+#endif
 
 // MARK: - Struct
 public struct InfoPackage {
     
+    // MARK: String Properties
     public static let name: String = "SystemKit"
-    
     public static let path: String = "Sources"
+    
+    public static let platforms: [PackageDescription.Platform] = [.iOS, .macOS]
+}
+
+// MARK: - Protocol
+public protocol PackageProtocol {
+
+    var name: String { get }
+    var path: String { get }
+    var target: Target.Dependency { get }
 }
 
 // MARK: - Enum
-public enum LocalPackage: String, CaseIterable {
+public enum LocalPackage: String, CaseIterable, PackageProtocol {
     
     /// [PLCrashReporter - GitHub](https://www.github.com/microsoft/plcrashreporter)
     case PLCrashReporter = "CrashReporter"
@@ -81,8 +96,31 @@ public enum LocalPackage: String, CaseIterable {
     public var target: Target.Dependency {
         switch self {
         case .PLCrashReporter:
-            let platforms: [PackageDescription.Platform] = [.iOS, .macOS]
-            return .target(name: self.name, condition: .when(platforms: platforms))
+            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
+            return .target(name: self.name, condition: condition)
+        }
+    }
+    
+    public var name: String { return self.rawValue }
+}
+
+public enum RemotePackage: String, CaseIterable, PackageProtocol {
+    
+    /// [swift-docc-plugin - GitHub](https://github.com/apple/swift-docc-plugin)
+    case SwiftDocC = "SwiftDocCPlugin"
+    
+    public var path: String {
+        switch self {
+        case .SwiftDocC:
+            return "https://github.com/apple/swift-docc-plugin.git"
+        }
+    }
+    
+    public var target: Target.Dependency {
+        switch self {
+        case .SwiftDocC:
+            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
+            return .target(name: self.name, condition: condition)
         }
     }
     
