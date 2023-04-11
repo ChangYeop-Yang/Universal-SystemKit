@@ -52,7 +52,7 @@ dependencies: [
 
 The method for using the `Universal SystemKit` open-source library is described in the guide path below. For additional related information, please inquire by creating an issue.
 
-* [SKAsyncOperation](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/Resources/Guide/SKAsyncOperation.md)
+* [SKAsyncOperation](#)
 
 * [SKNetworkMonitor](https://dev-dream-world.tistory.com/234)
 
@@ -67,6 +67,8 @@ The method for using the `Universal SystemKit` open-source library is described 
 * [SKSignal](https://dev-dream-world.tistory.com/229?category=1294828)
 
 * [SKCrashReporter](https://dev-dream-world.tistory.com/236)
+
+* [SKDispatchFile](#)
 
 # License
 
