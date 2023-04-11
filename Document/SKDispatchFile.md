@@ -2,7 +2,7 @@
 
 `SKDispatchFile`는 DispatchIO를 기반으로 파일 읽기 및 쓰기 작업에 대한 기능을 제공합니다. `SKDispatchFile`는 파일 잠금(file locking) 매커니즘을 기반으로 구현이 되어있어 쓰레드 안전 (Thread Safety)합니다.
 
-* 파일 잠금(file locking)은 오직 특정한 시간에 한 명의 사용자나 프로세스 접근만을 허용함으로써 컴퓨터 파일에 접근을 제한하는 구조이다.
+* 파일 잠금 (File Locking)은 오직 특정한 시간에 한 명의 사용자나 프로세스 접근만을 허용함으로써 컴퓨터 파일에 접근을 제한하는 구조입니다.
 
 # Example Source
 
