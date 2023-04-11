@@ -41,6 +41,8 @@ import Foundation
     
     // MARK: - Initalize
     public init(qualityOfService qos: DispatchQoS = .default, mode: mode_t = 0o777) {
+        
+        // 파일이나 디렉토리 권한에 관련된 정보를 저장하는 변수입니다.
         self.mode = mode
         self.implementQueue = DispatchQueue(label: SKDispatchFile.label, qos: qos, attributes: .concurrent)
     }
