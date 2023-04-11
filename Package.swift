@@ -29,7 +29,7 @@ import PackageDescription
 // The configuration of a Swift package.
 let package = Package(
     // The name of the Swift package.
-    name: InfoPackage.name,
+    name: InfoPackage.PackageName,
     // The list of minimum versions for platforms supported by the package.
     platforms: [
         // macOS 10.13 (High Sierra) 이상의 운영체제부터 사용이 가능합니다.
@@ -40,15 +40,19 @@ let package = Package(
     ],
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
-        .library(name: InfoPackage.name, targets: [InfoPackage.name]),
+        .library(name: InfoPackage.PackageName, targets: [InfoPackage.PackageName]),
     ],
     // The list of package dependencies.
-    dependencies: [],
+    dependencies: [
+        .package(url: RemotePackage.SwiftLog.path, RemotePackage.SwiftLog.from),
+    ],
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
         .binaryTarget(name: LocalPackage.PLCrashReporter.name, path: LocalPackage.PLCrashReporter.path),
-        .target(name: InfoPackage.name, dependencies: [LocalPackage.PLCrashReporter.target], path: InfoPackage.path),
+        .target(name: InfoPackage.PackageName,
+                dependencies: [LocalPackage.PLCrashReporter.target, RemotePackage.SwiftLog.target],
+                path: InfoPackage.PackagePath),
     ],
     // The list of Swift versions with which this package is compatible.
     swiftLanguageVersions: [.v5]
@@ -65,8 +69,9 @@ package.dependencies.append(
 public struct InfoPackage {
     
     // MARK: String Properties
-    public static let name: String = "SystemKit"
-    public static let path: String = "Sources"
+    public static let PackageName: String = "SystemKit"
+    
+    public static let PackagePath: String = "Sources"
     
     public static let platforms: [PackageDescription.Platform] = [.iOS, .macOS]
 }
@@ -108,10 +113,15 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
     /// [swift-docc-plugin - GitHub](https://github.com/apple/swift-docc-plugin)
     case SwiftDocC = "SwiftDocCPlugin"
     
+    /// [SwiftLog - GitHub](https://github.com/apple/swift-log)
+    case SwiftLog = "swift-log"
+    
     public var path: String {
         switch self {
         case .SwiftDocC:
             return "https://github.com/apple/swift-docc-plugin.git"
+        case .SwiftLog:
+            return "https://github.com/apple/swift-log.git"
         }
     }
     
@@ -119,6 +129,8 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         switch self {
         case .SwiftDocC:
             return .upToNextMajor(from: "1.0.0")
+        case .SwiftLog:
+            return .upToNextMajor(from: "1.1.0")
         }
     }
     
@@ -127,6 +139,9 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         case .SwiftDocC:
             let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
             return .target(name: self.name, condition: condition)
+        case .SwiftLog:
+            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
+            return .product(name: "Logging", package: self.name, condition: condition)
         }
     }
     

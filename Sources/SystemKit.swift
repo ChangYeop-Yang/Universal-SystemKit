@@ -20,9 +20,16 @@
  * THE SOFTWARE.
  */
 
+import Foundation
+
+import Logging
+
+// MARK: - Global Properties
+public let logger: Logger = Logger(label: SystemKit.label)
+
 public struct SystemKit {
     
     // MARK: - Object Properties
-    public static let label: String = "com.ChangYeopYang.SystemKit"
-    public static let version: String = "1.0.0"
+    public static let label: String = "com.SystemKit"
+    public static let version: String = "1.2.0"
 }
