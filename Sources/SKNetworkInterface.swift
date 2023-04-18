@@ -210,7 +210,6 @@ private extension SKNetworkInterface {
         let interfaceName = extractInterfaceName(ifa.ifa_name) ?? String.init()
         let interfaceFamily = extractFamily(ifa.ifa_addr.pointee.sa_family).toString
         
-        // 현재 네트워크 인터페이스에서 넷마스크 (Netmask) 주소를 구합니다.
         let netmask = extractAddress(ifa.ifa_netmask)
         
         let ipAddress = extractAddress(ifa.ifa_addr)
