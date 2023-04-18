@@ -23,7 +23,6 @@
 // swiftlint:disable all
 #if os(iOS) || os(macOS)
 import Darwin
-import IOKit
 import Foundation
 
 import Logging
@@ -42,6 +41,12 @@ import Logging
 // MARK: - Private Extension SKNetworkInterface
 private extension SKNetworkInterface {
     
+    /**
+        네트워크 인터페이스 명칭을 가져오는 함수입니다.
+
+        - Version: `1.0.0`
+        - Returns: `Optional<String>`
+     */
     final func extractInterfaceName(_ ifaName: UnsafeMutablePointer<CChar>) -> Optional<String> {
         
         guard let name = String(cString: ifaName, encoding: .utf8) else {
@@ -52,6 +57,13 @@ private extension SKNetworkInterface {
         return name
     }
     
+    /**
+        이더넷 (Ethernet)의 물리적인 주소 가져오는 함수입니다.
+
+        - NOTE: [MAC Address](https://terms.naver.com/entry.naver?docId=862689&cid=42346&categoryId=42346)
+        - Version: `1.0.0`
+        - Returns: `Optional<String>`
+     */
     final func extractAddressMAC(_ interfaceName: String) -> Optional<String> {
         
         let lengthMACAddress: Int = 6
@@ -94,7 +106,16 @@ private extension SKNetworkInterface {
         return infoData[lower..<upper].map { element in String(format: "%02x", element) }.joined(separator: ":")
     }
     
-    final func extractAddress(_ address: UnsafeMutablePointer<sockaddr>) -> Optional<String> {
+    /**
+        IPv4 주소 또는 IPv6 주소 형태를 가진 IP주소를 가져오는 함수입니다.
+     
+        - NOTE: [IP address](https://terms.naver.com/entry.naver?docId=856811&cid=42346&categoryId=42346)
+        - Version: `1.0.0`
+        - Returns: `Optional<String>`
+     */
+    final func extractAddress(_ sockaddr: UnsafeMutablePointer<sockaddr>?) -> Optional<String> {
+        
+        guard let address = sockaddr else { return nil }
         
         switch address.pointee.sa_family {
         case sa_family_t(AF_INET):
@@ -112,7 +133,7 @@ private extension SKNetworkInterface {
     }
     
     /**
-        총 4바이트 (32비트) 주소 체계를 가지는 인터넷 및 TCP/IP 네트워크에서 활용하는 IPv4 주소를 가져오는 함수입니다.
+        IPv4 주소를 가져오는 함수입니다.
 
         - NOTE: [IPv4](https://terms.naver.com/entry.naver?docId=3586555&cid=59277&categoryId=59278)
         - Version: `1.0.0`
@@ -136,7 +157,7 @@ private extension SKNetworkInterface {
     }
     
     /**
-        IPv4의 주소공간을 4배 확장한 128비트 인터넷 주소 체계인 IPv6를 가져오는 함수입니다.
+        IPv6 주소를 가져오는 함수입니다.
 
         - NOTE: [IPv6](https://terms.naver.com/entry.naver?docId=2070757&cid=42346&categoryId=42346)
         - Version: `1.0.0`
@@ -158,7 +179,13 @@ private extension SKNetworkInterface {
         return String(cString: buffer, encoding: String.Encoding.utf8)
     }
     
-    final func extractFamily(_ family: sa_family_t) -> Family {
+    /**
+         네트워크 인터페이스의 Family 가져오는 함수입니다.
+
+         - Version: `1.0.0`
+         - Returns: `Optional<String>`
+     */
+    final func extractFamily(_ family: sa_family_t) -> SKFamily {
         
         switch Int32(family) {
         case AF_INET:
@@ -170,25 +197,32 @@ private extension SKNetworkInterface {
         }
     }
     
-    final func createInterface(ifa: ifaddrs) -> Interface {
+    final func createInterface(ifa: ifaddrs) -> SKInterface {
+        
+        let ifaFlags = Int32(ifa.ifa_flags)
         
         let interfaceName = extractInterfaceName(ifa.ifa_name) ?? String.init()
-
+        let interfaceFamily = extractFamily(ifa.ifa_addr.pointee.sa_family).toString
+        
+        // 현재 네트워크 인터페이스에서 넷마스크 (Netmask) 주소를 구합니다.
+        let netmask = extractAddress(ifa.ifa_netmask)
+        
         let ipAddress = extractAddress(ifa.ifa_addr)
         let macAddress = extractAddressMAC(interfaceName)
+        let broadcastAddress = extractAddress(ifa.ifa_dstaddr)
         
-        let interfaceFamily = extractFamily(ifa.ifa_addr.pointee.sa_family)
-        
-        return Interface(ipAddress: ipAddress, macAddress: macAddress, interfaceName: interfaceName, interfaceFamily: "interfaceFamily")
+        return SKInterface(ipAddress: ipAddress, macAddress: macAddress, broadcastAddress: broadcastAddress,
+                           netmask: netmask,
+                           interfaceName: interfaceName, interfaceFamily: interfaceFamily, ifaFlags: ifaFlags)
     }
 }
 
 // MARK: - Public Extension SKNetworkInterface
 public extension SKNetworkInterface {
     
-    func allInterfaces() -> Array<Interface> {
+    func allInterfaces() -> Array<SKInterface> {
         
-        var result: Array<Interface> = Array.init()
+        var result: Array<SKInterface> = Array.init()
         
         var ifaddrs: UnsafeMutablePointer<ifaddrs>? = nil
         
