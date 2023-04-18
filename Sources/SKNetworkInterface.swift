@@ -197,6 +197,12 @@ private extension SKNetworkInterface {
         }
     }
     
+    /**
+         입력받은 `ifaddrs` 바탕으로 네트워크 인터페이스 정보를 가져오는 함수입니다.
+
+         - Version: `1.0.0`
+         - Returns: `SKInterface`
+     */
     final func createInterface(ifa: ifaddrs) -> SKInterface {
         
         let ifaFlags = Int32(ifa.ifa_flags)
@@ -220,13 +226,19 @@ private extension SKNetworkInterface {
 // MARK: - Public Extension SKNetworkInterface
 public extension SKNetworkInterface {
     
+    /**
+         현재 사용중인 기기에 대한 모든 네트워크 인터페이스 정보를 가져오는 함수입니다.
+
+         - Version: `1.0.0`
+         - Returns: `Array<SKInterface>`
+     */
     func allInterfaces() -> Array<SKInterface> {
         
         var result: Array<SKInterface> = Array.init()
         
         var ifaddrs: UnsafeMutablePointer<ifaddrs>? = nil
         
-        // 현제 기기에 대한 모든 Network Interface 정보를 가져옵니다.
+        // 현재 기기에 대한 모든 네트워크 인터페이스 정보를 가져옵니다.
         guard getifaddrs(&ifaddrs) == Int32.zero else {
             logger.error("[SKNetworkInterface] Could't obtain network interface through the getifaddrs.")
             return Array.init()
@@ -234,12 +246,10 @@ public extension SKNetworkInterface {
         
         var pointer: UnsafeMutablePointer<ifaddrs>? = ifaddrs
         while pointer != nil {
-            guard let ifa = pointer?.pointee.ifa_addr.pointee else { continue }
             
-            // IPv4 또는 IPv6 형태의 인터페이스를 확인합니다.
-            if pointer != nil {
-                let result = createInterface(ifa: pointer!.pointee)
-                print(result)
+            if let ifa = pointer?.pointee {
+                let newElement: SKInterface = createInterface(ifa: ifa)
+                result.append(newElement)
             }
             
             pointer = pointer?.pointee.ifa_next
