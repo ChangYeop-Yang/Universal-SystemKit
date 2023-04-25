@@ -40,22 +40,21 @@ public let CPU_TYPE_POWERPC64: cpu_type_t = CPU_TYPE_POWERPC | CPU_ARCH_ABI64
 /// Process information
 public struct SKIOProcessInfo {
     
-    let pid: Int
-    let ppid: Int
-    let pgid: Int
-    let uid: Int
-    let command: String
-    let arch: cpu_type_t
-    var status: Int32       // sys/proc.h - SIDL, SRUN, SSLEEP, SSTOP, SZOMB
+    public let pid: Int
+    public let ppid: Int
+    public let pgid: Int
+    public let uid: Int
+    public let command: String
+    public let arch: cpu_type_t
+    public var status: Int32       // sys/proc.h - SIDL, SRUN, SSLEEP, SSTOP, SZOMB
 }
 
 /// Process API
 public struct SKIOProcessAPI {
     
-    // MARK: - Object Properties
     fileprivate static let machHost = mach_host_self()
     
-    // MARK: - Initalize
+    // MARK: Initalize
     public init() { NSLog("[SKIOProcessAPI] Initalize") }
 }
 

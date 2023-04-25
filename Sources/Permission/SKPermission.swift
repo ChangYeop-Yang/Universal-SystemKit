@@ -22,8 +22,14 @@
 
 #if os(macOS)
 import AppKit
-import Foundation
-import ServiceManagement
+
+public class SKPermission: SKClass {
+    
+    // MARK: - Object Properties
+    public static let shared: SKPermission = SKPermission()
+    public static var label: String = "com.SystemKit.SKPermission"
+    public static var identifier: String = "6152CB47-C012-4AB2-8625-90836CCB8541"
+}
 
 // MARK: - Private Extension SKPermission
 private extension SKPermission {

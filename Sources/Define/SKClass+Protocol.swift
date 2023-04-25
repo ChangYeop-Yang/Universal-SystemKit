@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 ChangYeop-Yang. All rights reserved.
+ * Copyright (c) 2023 Universal-SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,21 +33,15 @@ import Foundation
     
     // MARK: Optaionl Protocol Method
     @objc optional var implementQueue: DispatchQueue { get set }
-    @objc optional var operationQueue: Optional<OperationQueue> { get set }
 }
 
 @objc public protocol SKOperation: SKClass {
     
     // MARK: Optional Protocol Properties
+    @objc optional var payload: Optional<Data> { get set }
     @objc optional var timer: Optional<DispatchSourceTimer> { get set }
     
     // MARK: Required Initalize
-    init(name: Optional<String>, qualityOfService: QualityOfService, queuePriority: Operation.QueuePriority)
-}
-
-@objc public protocol SKRequest: SKClass {
-    
-    // MARK: Required Protocol Properties
-    static var targetPath: String { get }
+    init(name: Optional<String>, qualityOfService: QualityOfService)
 }
 #endif
