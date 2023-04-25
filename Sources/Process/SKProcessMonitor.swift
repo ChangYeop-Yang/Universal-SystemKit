@@ -27,17 +27,6 @@ import CoreFoundation
 
 public class SKProcessMonitor: SKAsyncOperation {
     
-    // MARK: - Struct
-    private struct ProcessMonitorInfo {
-        
-        internal let pid: pid_t
-        internal let runLoop: CFRunLoop
-        internal let fflag: SKProcessMonitorFilterFlag
-        internal let handler: CFFileDescriptorCallBack
-        
-        internal var descriptor: Optional<CFFileDescriptor> = nil
-    }
-    
     // MARK: - Object Properties
     public static var label: String = "com.SystemKit.SKProcessMonitor"
     public static var identifier: String = "A4031B25-241F-4457-9DF4-B711D022C4EA"

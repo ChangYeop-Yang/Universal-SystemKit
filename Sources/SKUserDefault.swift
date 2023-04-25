@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Universal-SystemKit. All rights reserved.
+ * Copyright (c) 2023 Universal-SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,49 +20,33 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS)
-import Darwin
+// swiftlint:disable all
+#if os(iOS) || os(macOS)
 import Foundation
 
-// MARK: - Struct
-internal struct ProcessMonitorInfo {
+@propertyWrapper
+public struct SKUserDefaults<Value> {
     
-    internal let pid: pid_t
-    internal let runLoop: CFRunLoop
-    internal let fflag: SKProcessMonitorFilterFlag
-    internal let handler: CFFileDescriptorCallBack
+    // MARK: - Struct Properties
+    private let forKey: String
+    private let defaultValue: Optional<Value>
+    private let identifier: String = UUID().uuidString
     
-    internal var descriptor: Optional<CFFileDescriptor> = nil
-}
-
-// MARK: - Enum
-public enum SKProcessMonitorFilterFlag {
+    // Property Wrapper 필수 구현 Property
+    public var wrappedValue: Optional<Value> {
+        get { UserDefaults.standard.object(forKey: self.forKey) as? Value ?? self.defaultValue }
+        set { UserDefaults.standard.setValue(newValue, forKey: self.forKey) }
+    }
     
-    /// - NOTE: [exit - System Call](https://en.wikipedia.org/wiki/Exit_(system_call))
-    case exit
-    
-    /// - NOTE: [fork - System Call](https://en.wikipedia.org/wiki/Fork_(system_call))
-    case fork
-    
-    /// - NOTE: [exec - System Call](https://en.wikipedia.org/wiki/Exec_(system_call))
-    case exec
-    
-    // MARK: Enum Properties
-    public var define: UInt32 {
+    // MARK: - Initalize
+    public init(forKey: String, defaultValue: Optional<Value> = nil) {
         
-        switch self {
-        /// process exec'd: `0x20000000`
-        case .exec:
-            return UInt32(NOTE_EXEC)
+        #if DEBUG
+            NSLog("[SKUserDefaults][%@] Initalize, SKUserDefaults", self.identifier)
+        #endif
         
-        /// Process Exited: `0x80000000`
-        case .exit:
-            return NOTE_EXIT
-        
-        /// process forked: `0x40000000`
-        case .fork:
-            return UInt32(NOTE_FORK)
-        }
+        self.forKey = forKey
+        self.defaultValue = defaultValue
     }
 }
 #endif

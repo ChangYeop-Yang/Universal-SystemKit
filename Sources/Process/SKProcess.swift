@@ -33,7 +33,7 @@ public class SKProcess: NSObject, SKClass {
     // MARK: - Object Properties
     public static let shared: SKProcess = SKProcess()
     public static let label: String = "com.SystemKit.SKProcess"
-    public static let identifier: String = UUID().uuidString
+    public static let identifier: String = "B275BF0C-3E1B-4897-B6CB-CA3DC7FFD3EB"
     
     // MARK: - Initalize
     private override init() { super.init() }
