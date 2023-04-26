@@ -43,10 +43,12 @@ dependencies: [
 
 # Requirements
 
+The detailed build results for the `Universal-SystemKit` library are as follows.
+
 | Platform | Minimum Swift Version | Installation | Status |
 |:--------:|:---------------------:|:------------:|:------:|
-| iOS 11.0+ | [5.0](https://www.swift.org/blog/swift-5-released/) | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | ✅ Fully Tested |
-| macOS 10.13+ (High Sierra) | [5.0](https://www.swift.org/blog/swift-5-released/) | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | ✅ Fully Tested |
+| iOS 11.0+ | [5.0](https://www.swift.org/blog/swift-5-released/) | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
+| macOS 10.13+ (High Sierra) | [5.0](https://www.swift.org/blog/swift-5-released/) | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
 
 # Using SystemKit
 
