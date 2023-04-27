@@ -44,7 +44,7 @@ let package = Package(
     ],
     // The list of package dependencies.
     dependencies: [
-        .package(url: RemotePackage.SwiftLog.path, RemotePackage.SwiftLog.from),
+        .package(url: RemotePackage.SwiftLog.path, from: RemotePackage.SwiftLog.from),
     ],
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
@@ -61,7 +61,7 @@ let package = Package(
 #if swift(>=5.6)
 // Add the documentation compiler plugin if possible
 package.dependencies.append(
-    .package(url: RemotePackage.SwiftDocC.path, RemotePackage.SwiftDocC.from)
+    .package(url: RemotePackage.SwiftDocC.path, from: RemotePackage.SwiftDocC.from)
 )
 #endif
 
@@ -125,12 +125,14 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         }
     }
     
-    public var from: Range<Version> {
+    public var from: Version {
         switch self {
         case .SwiftDocC:
-            return .upToNextMajor(from: "1.0.0")
+            // https://github.com/apple/swift-docc-plugin/releases/tag/1.2.0
+            return Version(1, 2, 0)
         case .SwiftLog:
-            return .upToNextMajor(from: "1.1.0")
+            // https://github.com/apple/swift-log/releases/tag/1.5.2
+            return Version(1, 5, 2)
         }
     }
     

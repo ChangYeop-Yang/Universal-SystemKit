@@ -87,7 +87,8 @@ private extension SKNetworkInterface {
             return nil
         }
 
-        var buffer: Array<CChar> = [CChar](unsafeUninitializedCapacity: length, initializingWith: { buffer, initializedCount in
+        var buffer: Array<CChar> = [CChar](unsafeUninitializedCapacity: length,
+                                           initializingWith: { buffer, initializedCount in
             for index in size_t.zero..<length { buffer[index] = CChar.zero }
             initializedCount = length
         })
@@ -142,7 +143,7 @@ private extension SKNetworkInterface {
     final func extractAddressIPv4(_ address: UnsafeMutablePointer<sockaddr>) -> Optional<String> {
         
         // getnameinfo 함수를 통하여 입력받은 네트워크 인터페이스의 IPv4 주소를 가져옵니다.
-        let buffer = address.withMemoryRebound(to: sockaddr.self, capacity: 1) { pointer in
+        let buffer = address.withMemoryRebound(to: sockaddr.self, capacity: 1) { pointer -> Array<CChar> in
             
             var hostname = Array<CChar>.init(repeating: CChar.zero, count: Int(NI_MAXHOST))
             
@@ -166,7 +167,7 @@ private extension SKNetworkInterface {
     final func extractAddressIPv6(_ address: UnsafeMutablePointer<sockaddr>) -> Optional<String> {
         
         // inet_ntop 함수를 통하여 입력받은 네트워크 인터페이스의 IPv6 주소를 가져옵니다.
-        let buffer = address.withMemoryRebound(to: sockaddr_in6.self, capacity: 1) { pointer in
+        let buffer = address.withMemoryRebound(to: sockaddr_in6.self, capacity: 1) { pointer -> Array<CChar> in
             
             var addrBuf = Array<CChar>.init(repeating: CChar.zero, count: Int(INET6_ADDRSTRLEN))
             
