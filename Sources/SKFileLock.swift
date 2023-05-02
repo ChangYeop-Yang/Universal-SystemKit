@@ -91,6 +91,12 @@ private extension SKFileLock {
 // MARK: - Public Extension SKFileLock
 public extension SKFileLock {
     
+    /**
+        파일에 대하여 `파일 잠금 (File Locking)`을(를) 수행합니다.
+
+        - Version: `1.0.0`
+        - Returns: `Bool`
+    */
     @discardableResult
     final func lock() -> Bool {
         
@@ -104,6 +110,12 @@ public extension SKFileLock {
         return true
     }
     
+    /**
+        파일에 대하여 `파일 잠금 해제 (File UnLocking)`을(를) 수행합니다.
+
+        - Version: `1.0.0`
+        - Returns: `Bool`
+    */
     @discardableResult
     final func unlock() -> Bool {
         
