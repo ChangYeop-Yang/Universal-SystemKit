@@ -25,6 +25,11 @@ import Darwin
 import Dispatch
 import Foundation
 
+/**
+    - Date: `2022.11.10.`
+    - Version: `1.0.0`
+    - Authors: `ChangYeop-Yang`
+ */
 public class SKSignal: SKAsyncOperation {
     
     // MARK: - Typealias
