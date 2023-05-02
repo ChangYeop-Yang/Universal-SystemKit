@@ -1,6 +1,6 @@
 # 🗂 SKFileLock
 
-`SKFileLock`는 iOS 그리고 macOS 운영체제 환경에서 작동하며 오직 특정 시간에 단일 프로세스 접근만을 허용함으로써 컴퓨터 파일에 접근을 제한하는 기능을 제공합니다. `파일 읽기`, `파일 쓰기`, `파일 내용 수정` 등의 작업에 대하여 사용할 수 있습니다.
+`SKFileLock`는 iOS 그리고 macOS 운영체제 환경에서 작동하며 오직 특정 시간에 단일 프로세스 접근만을 허용함으로써 컴퓨터 파일에 접근을 제한하는 기능을 제공합니다. `파일 읽기 (Read)`, `파일 쓰기 (Write)`, `파일 내용 수정 (Modify)` 등의 작업을 할 수 있습니다.
 
 * [파일 잠금 (File Locking)](https://en.wikipedia.org/wiki/File_locking) → File locking is a mechanism that restricts access to a computer file, or to a region of a file, by allowing only one user or process to modify or delete it at a specific time and to prevent reading of the file while it's being modified or deleted.
 
