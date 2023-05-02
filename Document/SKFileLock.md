@@ -9,6 +9,7 @@
 `SKFileLock` 예제 소스코드는 아래와 같습니다.
 
 ```Swift
+// FileLockMode (.read, .write, update)
 let filePath = "/Users/~/Desktop/file.txt"
 let locker = SKFileLock(filePath: filePath, .read)
 
