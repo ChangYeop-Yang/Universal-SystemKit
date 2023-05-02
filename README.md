@@ -72,7 +72,7 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKCrashReporter](https://dev-dream-world.tistory.com/236)
 
-* [SKDispatchFile](#)
+* [SKFileLock](https://dev-dream-world.tistory.com/244)
 
 # License
 
