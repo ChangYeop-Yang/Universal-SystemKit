@@ -9,7 +9,7 @@
 ![Github Repository - Shields.io](https://img.shields.io/badge/Github%20Repository-Compatible-success)
 [![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/LICENSE)
 
-`Universal SystemKit` is an open-source library that can be used on Apple platforms such as `macOS` and `iOS`. It provides common functionality that can be used across different Apple operating systems.
+The `SystemKit` open-source library can be used on Apple Platforms such as `macOS`, `iOS`, etc., and is a common library that enables convenient and efficient use of device system functions.
 
 # Installation
 
