@@ -32,6 +32,7 @@ public class SKMessagePort: SKClass {
     
     private var messagePort: Optional<CFMessagePort>
     
+    // MARK: - Computed Properties
     public var messagePortStatus: Optional<SKMessagePortStatus> {
         guard let targetPort = self.messagePort else { return nil }
         return SKMessagePortStatus(messagePort: targetPort)
