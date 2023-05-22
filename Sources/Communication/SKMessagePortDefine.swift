@@ -24,10 +24,12 @@ import Foundation
 import CoreFoundation
 
 // MARK: - Typealias
-public typealias MessagePortRequestError = Result<Int32, Error>
+public typealias SKMessagePortRequestError = Result<Int32, Error>
 
-// https://developer.apple.com/documentation/corefoundation/cfmessageport/1561514-cfmessageportsendrequest_error_c
+// MARK: - Enum
 public enum SKMessagePortSendRequestErrorCode: Error {
+    
+    // https://developer.apple.com/documentation/corefoundation/cfmessageport/1561514-cfmessageportsendrequest_error_c
     
     /// The message was successfully sent and, if a reply was expected, a reply was received.
     case success
@@ -68,7 +70,7 @@ public enum SKMessagePortSendRequestErrorCode: Error {
     }
     
     // MARK: Enum Method
-    public static func getMessagePortRequestError(_ errorCode: Int32) -> MessagePortRequestError {
+    public static func getMessagePortRequestError(_ errorCode: Int32) -> SKMessagePortRequestError {
         
         switch errorCode {
         case kCFMessagePortSuccess:
@@ -86,6 +88,27 @@ public enum SKMessagePortSendRequestErrorCode: Error {
         default:
             fatalError("The value of CFMessagePortSendRequest Error Codes is invalid.")
         }
+    }
+}
+
+// MARK: - Struct
+public struct SKMessagePortStatus {
+    
+    public let typeIdentifier: CFTypeID
+    
+    public let portName: String
+    
+    public let isPortVaild: Bool
+    public let isRemotePortVaild: Bool
+    
+    public init(messagePort: CFMessagePort) {
+        
+        self.typeIdentifier = CFMessagePortGetTypeID()
+        
+        self.portName = CFMessagePortGetName(messagePort) as String
+        
+        self.isPortVaild = CFMessagePortIsValid(messagePort)
+        self.isRemotePortVaild = CFMessagePortIsRemote(messagePort)
     }
 }
 #endif
