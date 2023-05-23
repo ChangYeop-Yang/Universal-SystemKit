@@ -130,32 +130,44 @@ public extension SKMessagePort {
         // Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
         CFMessagePortInvalidate(targetPort)
         
-        // 정상적으로 CFMessagePort 객체가 소멸이 되었는 경우에는 false, 소멸되지 않은 경우에는 true를 반환합니다.
-        return CFMessagePortIsValid(targetPort)
+        // 정상적으로 CFMessagePort 객체가 소멸이 되었는 경우에는 true, 소멸되지 않은 경우에는 false를 반환합니다.
+        return !CFMessagePortIsValid(targetPort)
     }
     
-    final func listen(queue: DispatchQueue) {
+    @discardableResult
+    final func listen(queue: DispatchQueue) -> Bool {
         
         NSLog("[SKMessagePort] Performing the listen on the CFMessagePort by DispatchQueue.")
  
         // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else { return }
+        guard let targetPort = getVaildMessagePort() else { return false }
+        
+        // CFMessagePort is not a local port, queue cannot be set.
+        if CFMessagePortIsRemote(targetPort) { return false }
 
         // Schedules callbacks for the specified message port on the specified dispatch queue.
         CFMessagePortSetDispatchQueue(targetPort, queue)
+        
+        return CFMessagePortIsValid(targetPort)
     }
     
-    final func listen(runLoop: RunLoop) {
+    @discardableResult
+    final func listen(runLoop: RunLoop) -> Bool {
         
         NSLog("[SKMessagePort] Performing the listen on the CFMessagePort by CFRunLoop.")
 
         // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else { return }
+        guard let targetPort = getVaildMessagePort() else { return false }
+        
+        // CFMessagePort is not a local port, RunLoop cannot be set.
+        if CFMessagePortIsRemote(targetPort) { return false }
 
         // Adds a CFRunLoopSource object to a run loop mode.
         CFRunLoopAddSource(runLoop.getCFRunLoop(),
                            CFMessagePortCreateRunLoopSource(nil, targetPort, CFIndex.zero),
                            CFRunLoopMode.commonModes)
+        
+        return CFMessagePortIsValid(targetPort)
     }
     
     @discardableResult
