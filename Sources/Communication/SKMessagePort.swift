@@ -39,11 +39,11 @@ public class SKMessagePort: SKClass {
     }
     
     // MARK: - Initalize
-    public init(localPortName: String,
+    public init(localPortName: String, info: UnsafeMutableRawPointer,
                 _ callback: @escaping CFMessagePortCallBack,
                 _ callout: @escaping CFMessagePortInvalidationCallBack) {
         
-        self.messagePort = SKMessagePort.createLocalMessagePort(portName: localPortName, callback, callout)
+        self.messagePort = SKMessagePort.createLocalMessagePort(portName: localPortName, info: info, callback, callout)
     }
     
     public init(remotePortName: String,
@@ -57,14 +57,14 @@ public class SKMessagePort: SKClass {
 private extension SKMessagePort {
     
     /// Returns a local CFMessagePort object.
-    static func createLocalMessagePort(portName: String,
+    static func createLocalMessagePort(portName: String, info: UnsafeMutableRawPointer,
                                        _ callback: @escaping CFMessagePortCallBack,
                                        _ callout: @escaping CFMessagePortInvalidationCallBack) -> Optional<CFMessagePort> {
         
         NSLog("[SKMessagePort] CFMessageLocalPort has been created.")
         
         var context = CFMessagePortContext(version: CFIndex.zero,
-                                           info: nil, retain: nil, release: nil, copyDescription: nil)
+                                           info: info, retain: nil, release: nil, copyDescription: nil)
         
         var shouldFreeInfo: DarwinBoolean = false
         
