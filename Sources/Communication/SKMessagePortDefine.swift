@@ -94,21 +94,26 @@ public enum SKMessagePortSendRequestErrorCode: Error {
 // MARK: - Struct
 public struct SKMessagePortStatus {
     
-    public let typeIdentifier: CFTypeID
+    /// The type identifier for the CFMessagePort opaque type.
+    public var typeIdentifier: CFTypeID = CFMessagePortGetTypeID()
     
+    /// The name with which a CFMessagePort object is registered.
     public let portName: String
     
+    /// A Boolean value that indicates whether a CFMessagePort object is valid and able to send or receive messages.
     public let isPortVaild: Bool
+    
+    /// A Boolean value that indicates whether a CFMessagePort object represents a remote port.
     public let isRemotePortVaild: Bool
     
-    public init(messagePort: CFMessagePort) {
+    // MARK: Initalize
+    public init?(messagePort: CFMessagePort?) {
         
-        self.typeIdentifier = CFMessagePortGetTypeID()
-        
-        self.portName = CFMessagePortGetName(messagePort) as String
-        
-        self.isPortVaild = CFMessagePortIsValid(messagePort)
-        self.isRemotePortVaild = CFMessagePortIsRemote(messagePort)
+        guard let targetPort = messagePort else { return nil }
+                
+        self.portName = CFMessagePortGetName(targetPort) as String
+        self.isPortVaild = CFMessagePortIsValid(targetPort)
+        self.isRemotePortVaild = CFMessagePortIsRemote(targetPort)
     }
 }
 #endif
