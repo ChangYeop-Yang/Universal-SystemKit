@@ -58,6 +58,8 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKUserDefault](https://dev-dream-world.tistory.com/224)
 
+* [SKMessagePort](https://dev-dream-world.tistory.com/247)
+
 * [SKNetworkMonitor](https://dev-dream-world.tistory.com/234)
 
 * [SKFinderExtension](https://dev-dream-world.tistory.com/226?category=1294828)
