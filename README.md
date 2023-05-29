@@ -9,7 +9,7 @@
 ![Github Repository - Shields.io](https://img.shields.io/badge/Github%20Repository-Compatible-success)
 [![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/LICENSE)
 
-The `SystemKit` open-source library can be used on Apple Platforms such as `macOS`, `iOS`, etc., and is a common library that enables convenient and efficient use of device system functions.
+The `SystemKit` open-source library can be used on Apple Platforms such as `macOS`, `iOS`., and is a common library that enables convenient and efficient use of device system functions.
 
 # Installation
 
