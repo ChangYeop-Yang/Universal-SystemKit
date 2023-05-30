@@ -2,6 +2,15 @@
 
 `SKMessagePort`는 iOS 또는 macOS 플렛폼에서 로컬 장비 상에서 다중 쓰레드 및 프로세스들 간에 임의의 데이터를 전달하는 통신 채널을 제공합니다. 즉, 서로 다른 애플리케이션, 또는 애플리케이션과 프레임워크, 또는 서로 다른 프레임워크 사이의 통신을 할 수 있는 기능을 제공합니다.
 
+CFMessagePort는 아래의 주요한 메서드를 기반으로 동작합니다.
+
+* `CFMessagePortCreateLocal`: 로컬 메시지 포트를 생성합니다.
+* `CFMessagePortCreateRemote`: 원격 메시지 포트를 생성합니다.
+* `CFMessagePortSendRequest`: 원격 포트에 메시지를 전송합니다.
+* `CFMessagePortSetInvalidationCallBack`: 로컬 메시지 포트 또는 원격 메시지 포트가 무효화될 때 호출되는 콜백을 설정합니다.
+* `CFMessagePortInvalidate`: 로컬 메시지 포트 또는 원격 메시지 포트를 무효화합니다.
+* `CFMessagePortIsValid`: 로컬 메시지 포트 또는 원격 메시지 포트가 유효한지 확인합니다.
+
 # Example Source
 
 `SKMessagePort` 예제 소스코드는 아래와 같습니다.
