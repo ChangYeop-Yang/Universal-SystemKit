@@ -21,7 +21,7 @@ CFMessagePort는 아래의 주요한 메서드를 기반으로 동작합니다.
 // https://developer.apple.com/documentation/corefoundation/cfmessageportcallback
 let callback: CFMessagePortCallBack = { local, msgid, data, info -> Unmanaged<CFData>? in
             
-    let pointee = info!.assumingMemoryBound(to: ViewController.self).pointee
+    if let pointee = info?.assumingMemoryBound(to: ViewController.self).pointee { ... }
             
     /* here is processing data */
             
