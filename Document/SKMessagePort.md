@@ -44,7 +44,7 @@ local.listen(runLoop: .main)
         
 let remote = SKMessagePort(remotePortName: "com.systemkit.port", callout)
         
-let error = remote.send(messageID: 12345, message: Data(), sendTimeout: 1, recvTimeout: 1)
+let error = remote.send(messageID: 12345, message: Data(...), sendTimeout: 1, recvTimeout: 1)
 print(error)
 
 // 생성 된 CFMessagePort 소멸 작업을 수행합니다.
