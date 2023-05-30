@@ -30,7 +30,7 @@ public class SKMessagePort: SKClass {
     public static var label: String = "com.SystemKit.SKMessagePort"
     public static var identifier: String = "368027F0-C77F-4F81-B352-F92B7B0370DB"
     
-    /// A reference to a message port object.
+    private var pointee: Optional<SKMessagePortContextPointer> = nil
     private var messagePort: Optional<CFMessagePort>
     
     // MARK: - Computed Properties
@@ -39,11 +39,12 @@ public class SKMessagePort: SKClass {
     }
     
     // MARK: - Initalize
-    public init(localPortName: String, info: UnsafeMutableRawPointer,
+    public init(localPortName: String, info: AnyObject,
                 _ callback: @escaping CFMessagePortCallBack,
                 _ callout: @escaping CFMessagePortInvalidationCallBack) {
         
-        self.messagePort = SKMessagePort.createLocalMessagePort(portName: localPortName, info: info,
+        self.pointee = SKMessagePort.createMutablePointer(instance: info)
+        self.messagePort = SKMessagePort.createLocalMessagePort(portName: localPortName, info: self.pointee,
                                                                 callback, callout)
     }
     
@@ -58,14 +59,15 @@ public class SKMessagePort: SKClass {
 private extension SKMessagePort {
     
     /// Returns a local CFMessagePort object.
-    static func createLocalMessagePort(portName: String, info: UnsafeMutableRawPointer,
+    static func createLocalMessagePort(portName: String,
+                                       info: Optional<SKMessagePortContextPointer>,
                                        _ callback: @escaping CFMessagePortCallBack,
                                        _ callout: @escaping CFMessagePortInvalidationCallBack) -> Optional<CFMessagePort> {
         
         logger.info("[SKMessagePort] CFMessageLocalPort has been created.")
         
-        var context = CFMessagePortContext(version: CFIndex.zero,
-                                           info: info, retain: nil, release: nil, copyDescription: nil)
+        var context = CFMessagePortContext(version: CFIndex.zero, info: info,
+                                           retain: nil, release: nil, copyDescription: nil)
         
         var shouldFreeInfo: DarwinBoolean = false
         
@@ -73,9 +75,10 @@ private extension SKMessagePort {
         guard let result = CFMessagePortCreateLocal(nil, portName as CFString,
                                                     callback, &context, &shouldFreeInfo) else {
             logger.error("[SKMessagePort] Failed to create a CFMessageLocalPort object.")
+            info?.deallocate()
             return nil
         }
-        
+    
         // Sets the callback function invoked when a CFMessagePort object is invalidated.
         CFMessagePortSetInvalidationCallBack(result, callout)
         
@@ -98,6 +101,14 @@ private extension SKMessagePort {
         CFMessagePortSetInvalidationCallBack(result, callout)
 
         return result
+    }
+    
+    static func createMutablePointer<T: AnyObject>(instance: T) -> UnsafeMutablePointer<T> {
+        
+        let pointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
+        pointer.initialize(to: instance)
+        
+        return pointer
     }
     
     final func getVaildMessagePort() -> Optional<CFMessagePort> {
@@ -127,6 +138,9 @@ public extension SKMessagePort {
         
         // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
         guard let targetPort = getVaildMessagePort() else { return false }
+        
+        // Deallocates the memory block previously allocated at this pointer.
+        self.pointee?.deallocate()
         
         // Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
         CFMessagePortInvalidate(targetPort)

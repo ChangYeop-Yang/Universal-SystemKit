@@ -24,6 +24,7 @@ import Foundation
 import CoreFoundation
 
 // MARK: - Typealias
+public typealias SKMessagePortContextPointer = UnsafeMutablePointer<AnyObject>
 public typealias SKMessagePortRequestError = Result<Int32, Error>
 
 // MARK: - Enum
