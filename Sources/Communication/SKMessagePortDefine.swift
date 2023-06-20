@@ -24,8 +24,8 @@ import Foundation
 import CoreFoundation
 
 // MARK: - Typealias
-public typealias SKMessagePortContextPointer = UnsafeMutablePointer<AnyObject>
-public typealias SKMessagePortRequestError = Result<Int32, Error>
+public typealias SKMessageLocalPort = (messagePort: CFMessagePort, instance: UnsafeMutablePointer<AnyObject>)
+public typealias SKMessagePortRequestResult = Result<Int32, Error>
 
 // MARK: - Enum
 public enum SKMessagePortSendRequestErrorCode: Error {
@@ -71,7 +71,7 @@ public enum SKMessagePortSendRequestErrorCode: Error {
     }
     
     // MARK: Enum Method
-    public static func getMessagePortRequestError(_ errorCode: Int32) -> SKMessagePortRequestError {
+    public static func getMessagePortRequestError(_ errorCode: Int32) -> SKMessagePortRequestResult {
         
         switch errorCode {
         case kCFMessagePortSuccess:
@@ -89,32 +89,6 @@ public enum SKMessagePortSendRequestErrorCode: Error {
         default:
             fatalError("The value of CFMessagePortSendRequest Error Codes is invalid.")
         }
-    }
-}
-
-// MARK: - Struct
-public struct SKMessagePortStatus {
-    
-    /// The type identifier for the CFMessagePort opaque type.
-    public var typeIdentifier: CFTypeID = CFMessagePortGetTypeID()
-    
-    /// The name with which a CFMessagePort object is registered.
-    public let portName: String
-    
-    /// A Boolean value that indicates whether a CFMessagePort object is valid and able to send or receive messages.
-    public let isPortVaild: Bool
-    
-    /// A Boolean value that indicates whether a CFMessagePort object represents a remote port.
-    public let isRemotePortVaild: Bool
-    
-    // MARK: Initalize
-    public init?(messagePort: CFMessagePort?) {
-        
-        guard let targetPort = messagePort else { return nil }
-                
-        self.portName = CFMessagePortGetName(targetPort) as String
-        self.isPortVaild = CFMessagePortIsValid(targetPort)
-        self.isRemotePortVaild = CFMessagePortIsRemote(targetPort)
     }
 }
 #endif

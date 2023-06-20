@@ -30,178 +30,154 @@ public class SKMessagePort: SKClass {
     public static var label: String = "com.SystemKit.SKMessagePort"
     public static var identifier: String = "368027F0-C77F-4F81-B352-F92B7B0370DB"
     
-    private var pointee: Optional<SKMessagePortContextPointer> = nil
-    private var messagePort: Optional<CFMessagePort>
-    
-    // MARK: - Computed Properties
-    public var messagePortStatus: Optional<SKMessagePortStatus> {
-        return SKMessagePortStatus(messagePort: self.messagePort)
-    }
+    private var portName: CFString
+    private var portAttribute: Optional<SKMessageLocalPort>
+    private var invalidateCallBack: CFMessagePortInvalidationCallBack
     
     // MARK: - Initalize
-    public init(localPortName: String, info: AnyObject,
-                _ callback: @escaping CFMessagePortCallBack,
-                _ callout: @escaping CFMessagePortInvalidationCallBack) {
+    public init(portName: String, _ invalidateCallBack: CFMessagePortInvalidationCallBack) {
         
-        self.pointee = SKMessagePort.createMutablePointer(instance: info)
-        self.messagePort = SKMessagePort.createLocalMessagePort(portName: localPortName, info: self.pointee,
-                                                                callback, callout)
-    }
-    
-    public init(remotePortName: String,
-                _ callout: @escaping CFMessagePortInvalidationCallBack) {
-        
-        self.messagePort = SKMessagePort.createRemoteMessagePort(portName: remotePortName, callout)
+        self.portName = portName as CFString
+        self.portAttribute = nil
+        self.invalidateCallBack = invalidateCallBack
     }
 }
 
 // MARK: - Private Extension SKMessagePort
 private extension SKMessagePort {
     
-    /// Returns a local CFMessagePort object.
-    static func createLocalMessagePort(portName: String,
-                                       info: Optional<SKMessagePortContextPointer>,
-                                       _ callback: @escaping CFMessagePortCallBack,
-                                       _ callout: @escaping CFMessagePortInvalidationCallBack) -> Optional<CFMessagePort> {
-        
-        logger.info("[SKMessagePort] CFMessageLocalPort has been created.")
-        
-        var context = CFMessagePortContext(version: CFIndex.zero, info: info,
-                                           retain: nil, release: nil, copyDescription: nil)
-        
-        var shouldFreeInfo: DarwinBoolean = false
-        
-        // 동일한 프로세스 내에서 메시지를 보낼 때 사용하는 로컬 메시지 포트를 생성합니다.
-        guard let result = CFMessagePortCreateLocal(nil, portName as CFString,
-                                                    callback, &context, &shouldFreeInfo) else {
-            logger.error("[SKMessagePort] Failed to create a CFMessageLocalPort object.")
-            info?.deallocate()
-            return nil
-        }
-    
-        // Sets the callback function invoked when a CFMessagePort object is invalidated.
-        CFMessagePortSetInvalidationCallBack(result, callout)
-        
-        return result
-    }
-    
-    /// Returns a CFMessagePort object connected to a remote port.
-    static func createRemoteMessagePort(portName: String,
-                                        _ callout: @escaping CFMessagePortInvalidationCallBack) -> Optional<CFMessagePort> {
-
-        logger.info("[SKMessagePort] CFMessageRemotePort has been created.")
-
-        // 다른 프로세스로 메시지를 보낼 때 사용하는 원격 메시지 포트를 생성합니다.
-        guard let result = CFMessagePortCreateRemote(nil, portName as CFString) else {
-            logger.error("[SKMessagePort] Failed to create a CFMessageRemotePort object.")
-            return nil
-        }
-
-        // Sets the callback function invoked when a CFMessagePort object is invalidated.
-        CFMessagePortSetInvalidationCallBack(result, callout)
-
-        return result
-    }
-    
-    static func createMutablePointer<T: AnyObject>(instance: T) -> UnsafeMutablePointer<T> {
+    final func createMutablePointer<T: AnyObject>(instance: T) -> UnsafeMutablePointer<T> {
         
         let pointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
+        
         pointer.initialize(to: instance)
         
         return pointer
     }
     
-    final func getVaildMessagePort() -> Optional<CFMessagePort> {
-        
-        guard let targetPort: CFMessagePort = self.messagePort else {
-            logger.error("[SKMessagePort] The CFMessagePort is invalid.")
+    /// Returns a local CFMessagePort object.
+    final func createLocalMessagePort(instance: AnyObject,
+                                      _ callback: @escaping CFMessagePortCallBack) -> Optional<SKMessageLocalPort> {
+
+        let pointer = createMutablePointer(instance: instance)
+
+        var context = CFMessagePortContext(version: CFIndex.zero, info: pointer,
+                                           retain: nil, release: nil, copyDescription: nil)
+
+        var shouldFreeInfo: DarwinBoolean = false
+
+        // 동일한 프로세스 내에서 메시지를 보낼 때 사용하는 로컬 메시지 포트를 생성합니다.
+        guard let localPort = CFMessagePortCreateLocal(kCFAllocatorDefault,
+                                                       self.portName, callback, &context, &shouldFreeInfo) else {
+            logger.error("[SKMessagePort] Failed to create a CFMessageLocalPort object.")
             return nil
         }
+
+        // Sets the callback function invoked when a CFMessagePort object is invalidated.
+        CFMessagePortSetInvalidationCallBack(localPort, self.invalidateCallBack)
         
-        // Returns bool that indicates whether a CFMessagePort is valid and able to send or receive messages.
-        guard CFMessagePortIsValid(targetPort) else {
-            logger.error("[SKMessagePort] The CFMessagePort object is unable to perform normal operations.")
+        // The flag is set to true on failure or if a local port named name already exists, false otherwise.
+        switch shouldFreeInfo.boolValue {
+        case true:
+            logger.error("[SKMessagePort] Could not create CFMessageLocalPort as it already exists.")
+            return nil
+
+        case false:
+            logger.info("[SKMessagePort] CFMessageLocalPort has been created.")
+            return SKMessageLocalPort(localPort, pointer)
+        }
+    }
+    
+    /// Returns a CFMessagePort object connected to a remote port.
+    final func createRemoteMessagePort() -> Optional<CFMessagePort> {
+
+        // 다른 프로세스로 메시지를 보낼 때 사용하는 원격 메시지 포트를 생성합니다.
+        guard let remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, self.portName) else {
+            logger.error("[SKMessagePort] Failed to create a CFMessageRemotePort object.")
             return nil
         }
+
+        // Sets the callback function invoked when a CFMessagePort object is invalidated.
+        CFMessagePortSetInvalidationCallBack(remotePort, self.invalidateCallBack)
         
-        return targetPort
+        logger.info("[SKMessagePort] CFMessageRemotePort has been created.")
+
+        return remotePort
+    }
+    
+    final func invalidate(_ messagePort: CFMessagePort) {
+        
+        logger.info("[SKMessagePort] Performing invalidate on the CFMessagePort.")
+        
+        // Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
+        CFMessagePortInvalidate(messagePort)
     }
 }
 
 // MARK: - Public Extension SKMessagePort
 public extension SKMessagePort {
     
-    @discardableResult
-    final func invalidate() -> Bool {
-        
-        logger.info("[SKMessagePort] Performing invalidate on the CFMessagePort.")
-        
-        // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else { return false }
-        
+    final func invalidate() {
+
+        // CFMessagePort 초기화 작업 대상 존재 여부를 확인합니다.
+        guard let attribuate = self.portAttribute else {
+            logger.error("[SKMessagePort] There are no targets to perform the invalidation.")
+            return
+        }
+
         // Deallocates the memory block previously allocated at this pointer.
-        self.pointee?.deallocate()
-        
+        attribuate.instance.deallocate()
+
         // Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
-        CFMessagePortInvalidate(targetPort)
-        
-        // 정상적으로 CFMessagePort 객체가 소멸이 되었는 경우에는 true, 소멸되지 않은 경우에는 false를 반환합니다.
-        return !CFMessagePortIsValid(targetPort)
+        invalidate(attribuate.messagePort)
     }
     
     @discardableResult
-    final func listen(queue: DispatchQueue) -> Bool {
+    final func listen(dispatch: DispatchQueue,
+                      info: AnyObject, _ callback: @escaping CFMessagePortCallBack) -> Bool {
+ 
+        guard let attribute = createLocalMessagePort(instance: info, callback) else { return false }
+        
+        // CFMessagePort가 활성화 상태가 유지되도록 전역 변수에 저장합니다.
+        self.portAttribute = attribute
+        
+        // Schedules callbacks for the specified message port on the specified dispatch queue.
+        CFMessagePortSetDispatchQueue(attribute.messagePort, dispatch)
         
         logger.info("[SKMessagePort] Performing the listen on the CFMessagePort by DispatchQueue.")
- 
-        // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else { return false }
         
-        // CFMessagePort is not a local port, queue cannot be set.
-        if CFMessagePortIsRemote(targetPort) { return false }
-
-        // Schedules callbacks for the specified message port on the specified dispatch queue.
-        CFMessagePortSetDispatchQueue(targetPort, queue)
-        
-        return CFMessagePortIsValid(targetPort)
-    }
-    
-    @discardableResult
-    final func listen(runLoop: RunLoop) -> Bool {
-        
-        logger.info("[SKMessagePort] Performing the listen on the CFMessagePort by CFRunLoop.")
-
-        // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else { return false }
-        
-        // CFMessagePort is not a local port, RunLoop cannot be set.
-        if CFMessagePortIsRemote(targetPort) { return false }
-
-        // Adds a CFRunLoopSource object to a run loop mode.
-        CFRunLoopAddSource(runLoop.getCFRunLoop(),
-                           CFMessagePortCreateRunLoopSource(nil, targetPort, CFIndex.zero),
-                           CFRunLoopMode.commonModes)
-        
-        return CFMessagePortIsValid(targetPort)
+        return CFMessagePortIsValid(attribute.messagePort)
     }
     
     @discardableResult
     final func send(messageID: Int32, message: Data,
-                    sendTimeout: CFTimeInterval, recvTimeout: CFTimeInterval) -> SKMessagePortRequestError {
-        
-        // CFMessagePort 유효성을 확인하여 CFMessagePort 객체를 가져옵니다.
-        guard let targetPort = getVaildMessagePort() else {
-            return .failure(SKMessagePortSendRequestErrorCode.invalid)
-        }
-        
+                    sendTimeout: CFTimeInterval = CFTimeInterval.zero,
+                    recvTimeout: CFTimeInterval = CFTimeInterval.zero) -> Bool {
+
+        // 데이터 전송을 위하여 CFMessageRemotePort를 생성합니다.
+        guard let remotePort = createRemoteMessagePort() else { return false }
+
+        // 데이터 전송 후 CFMessageRemotePort 소멸작업을 수행합니다.
+        defer { invalidate(remotePort) }
+
         // 전송하고자 하는 데이터가 비어있는 경우에는 전송하지 않습니다.
         if message.isEmpty {
-            return .failure(SKMessagePortSendRequestErrorCode.transportError)
+            logger.error("[SKMessagePort] The data to be transferred is empty.")
+            return false
         }
-        
+
         // Sends a message to a remote CFMessagePort object.
-        let error = CFMessagePortSendRequest(targetPort, messageID, message as CFData, sendTimeout, recvTimeout, nil, nil)
-        return SKMessagePortSendRequestErrorCode.getMessagePortRequestError(error)
+        let error = CFMessagePortSendRequest(remotePort, messageID, message as CFData, sendTimeout, recvTimeout, nil, nil)
+        
+        switch SKMessagePortSendRequestErrorCode.getMessagePortRequestError(error) {
+        case .success:
+            logger.info("[SKMessagePort] \(message.count) Bytes of data has been transferred.")
+            return true
+            
+        case .failure(let error):
+            logger.error("[SKMessagePort] Error occur: \(error.localizedDescription)")
+            return false
+        }
     }
 }
 #endif
