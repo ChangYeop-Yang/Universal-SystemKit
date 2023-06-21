@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#if os(iOS) || os(macOS)
+#if os(iOS) || os(macOS) || os(Linux)
 import Foundation
 import CoreFoundation
 
@@ -35,8 +35,7 @@ public class SKMessagePort: SKClass {
     private var invalidateCallBack: CFMessagePortInvalidationCallBack
     
     // MARK: - Initalize
-    public init(portName: String, _ invalidateCallBack: CFMessagePortInvalidationCallBack) {
-        
+    public init(portName: String, _ invalidateCallBack: @escaping CFMessagePortInvalidationCallBack) {
         self.portName = portName as CFString
         self.portAttribute = nil
         self.invalidateCallBack = invalidateCallBack
@@ -152,10 +151,12 @@ public extension SKMessagePort {
     @discardableResult
     final func send(messageID: Int32, message: Data,
                     sendTimeout: CFTimeInterval = CFTimeInterval.zero,
-                    recvTimeout: CFTimeInterval = CFTimeInterval.zero) -> Bool {
+                    recvTimeout: CFTimeInterval = CFTimeInterval.zero) -> SKMessagePortRequestResult {
 
         // 데이터 전송을 위하여 CFMessageRemotePort를 생성합니다.
-        guard let remotePort = createRemoteMessagePort() else { return false }
+        guard let remotePort = createRemoteMessagePort() else {
+            return .failure(SKMessagePortSendRequestErrorCode.invalid)
+        }
 
         // 데이터 전송 후 CFMessageRemotePort 소멸작업을 수행합니다.
         defer { invalidate(remotePort) }
@@ -163,7 +164,7 @@ public extension SKMessagePort {
         // 전송하고자 하는 데이터가 비어있는 경우에는 전송하지 않습니다.
         if message.isEmpty {
             logger.error("[SKMessagePort] The data to be transferred is empty.")
-            return false
+            return .failure(SKMessagePortSendRequestErrorCode.transportError)
         }
 
         // Sends a message to a remote CFMessagePort object.
@@ -172,11 +173,11 @@ public extension SKMessagePort {
         switch SKMessagePortSendRequestErrorCode.getMessagePortRequestError(error) {
         case .success:
             logger.info("[SKMessagePort] \(message.count) Bytes of data has been transferred.")
-            return true
+            return .success(kCFMessagePortSuccess)
             
         case .failure(let error):
             logger.error("[SKMessagePort] Error occur: \(error.localizedDescription)")
-            return false
+            return .failure(error)
         }
     }
 }

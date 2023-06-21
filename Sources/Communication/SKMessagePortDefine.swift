@@ -25,7 +25,7 @@ import CoreFoundation
 
 // MARK: - Typealias
 public typealias SKMessageLocalPort = (messagePort: CFMessagePort, instance: UnsafeMutablePointer<AnyObject>)
-public typealias SKMessagePortRequestResult = Result<Int32, Error>
+public typealias SKMessagePortRequestResult = Result<Int32, SKMessagePortSendRequestErrorCode>
 
 // MARK: - Enum
 public enum SKMessagePortSendRequestErrorCode: Error {
