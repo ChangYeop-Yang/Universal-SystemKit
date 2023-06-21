@@ -21,7 +21,7 @@ CFMessagePort는 아래의 주요한 메서드를 기반으로 동작합니다.
 // https://developer.apple.com/documentation/corefoundation/cfmessageportcallback
 let callback: CFMessagePortCallBack = { local, msgid, data, info -> Unmanaged<CFData>? in
             
-    if let pointee = info?.assumingMemoryBound(to: ViewController.self).pointee { ... }
+    let pointee = info?.assumingMemoryBound(to: ViewController.self).pointee
             
     /* here is processing data */
             
@@ -30,26 +30,17 @@ let callback: CFMessagePortCallBack = { local, msgid, data, info -> Unmanaged<CF
         
 // https://developer.apple.com/documentation/corefoundation/cfmessageportinvalidationcallback
 let callout: CFMessagePortInvalidationCallBack = { local, info in
-            
-    if let pointee = info?.assumingMemoryBound(to: ViewController.self).pointee { ... } 
-            
+                        
     /* here is processing invaild local port */
 }
-            
-let local = SKMessagePort(localPortName: "com.systemkit.port",
-                          info: self, callback, callout)
         
-// 다른 프로세스 또는 쓰레드로부터 데이터를 수신할 수 있도록 Listen 상태를 수행합니다.
-local.listen(runLoop: .main)
+let messagePort = SKMessagePort(portName: "com.message.port", callout)
         
-let remote = SKMessagePort(remotePortName: "com.systemkit.port", callout)
+messagePort.listen(dispatch: .global(qos: .userInitiated), info: self, callback)
+                
+messagePort.send(messageID: 777, message: "Hello World!".data(using: .utf8)!)
         
-let error = remote.send(messageID: 12345, message: Data(...), sendTimeout: 1, recvTimeout: 1)
-print(error)
-
-// 생성 된 CFMessagePort 소멸 작업을 수행합니다.
-local.invalidate()
-remote.invalidate()
+messagePort.invalidate()
 ```
 
 # License
