@@ -22,16 +22,16 @@
 
 // swiftlint:disable all
 #if os(iOS) || os(macOS) || os(Linux)
+import Dispatch
 import Foundation
 
-@objc public protocol SKClass: AnyObject {
+@objc public protocol SKOperation: SKClass {
     
-    // MARK: Required Protocol Properties
-    static var label: String { get }
-    static var identifier: String { get }
+    // MARK: Optional Protocol Properties
+    @objc optional var payload: Optional<Data> { get set }
+    @objc optional var timer: Optional<DispatchSourceTimer> { get set }
     
-    // MARK: Optaionl Protocol Method
-    @objc optional var implementQueue: DispatchQueue { get set }
-    @objc optional var operationQueue: OperationQueue { get set }
+    // MARK: Required Initalize
+    init(name: Optional<String>, qualityOfService: QualityOfService)
 }
 #endif

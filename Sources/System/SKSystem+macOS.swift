@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Universal-SystemKit. All rights reserved.
+ * Copyright (c) 2023 Universal-SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+// swiftlint:disable all
 #if os(macOS)
 import AppKit
 import Darwin
@@ -27,23 +28,6 @@ import SystemConfiguration
 
 // MARK: - Public Extension SKSystem With macOS Platform
 public extension SKSystem {
-    
-    /**
-        현재 구동중인 macOS 운영체제 시스템 버전 (System Version) 정보를 가져오는 함수입니다.
-     
-        - Authors: `ChangYeop-Yang`
-        - Returns: `OperatingSystemVersion`
-     */
-    final func getOperatingSystemVersion() -> OperatingSystemVersion {
-
-        let result: OperatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
-        
-        #if DEBUG
-            NSLog("[%@][%@] Current OperatingSystem Version: \(result)", SKSystem.label, SKSystem.identifier)
-        #endif
-        
-        return result
-    }
     
     /**
         현재 구동중인 macOS 운영체제 명칭을 가져오는 함수입니다.
@@ -55,7 +39,7 @@ public extension SKSystem {
     @available(macOS 10.12, *)
     final func getOperatingSystemName() -> String {
         
-        let version = getOperatingSystemVersion()
+        let version = ProcessInfo.processInfo.operatingSystemVersion
         
         // macOS Sierra ~ macOS Catalina 운영체제는 Minor Version까지 확인
         let lowerVersion: () -> String = {
@@ -90,6 +74,9 @@ public extension SKSystem {
         // Above macOS Ventura (13.0)
         case 13:
             return macOSSystemVersion.Ventura.name
+        // Above macOS Sonoma (14.0)
+        case 14:
+            return macOSSystemVersion.Sonoma.name
         // macOS 10.12 미만의 운영체제이거나 아직 알려지지 않은 운영체제
         default:
             return "UNKNOWN"
@@ -118,7 +105,7 @@ public extension SKSystem {
 
         UserDefaults.standard.setValue(result as String, forKey: forKey)
 
-        // MARK: https://developer.apple.com/library/archive/qa/qa1133/_index.html
+        // https://developer.apple.com/library/archive/qa/qa1133/_index.html
         return result as String
     }
     
@@ -279,6 +266,43 @@ public extension SKSystem {
         }
         
         return result
+    }
+    
+    /**
+        `PreferencePane` 경로를 입력받아서 `시스템 환경설정 (System Preference)` 창을 켭니다.
+
+        - NOTE: `@discardableResult`
+        - Parameters:
+            - preferencePane: `PreferencePane` 경로를 입력받는 변수
+        - Returns: `Bool`
+     */
+    @discardableResult
+    final func openPreferencePane(preferencePane: String) -> Bool {
+        
+        logger.debug("[SKSystem] Move to System Preferences based on \(preferencePane) PreferencePane.")
+        
+        guard let url = URL(string: preferencePane) else {
+            logger.error("[SKSystem] This is an invalid PreferencePane.")
+            return false
+        }
+        
+        return NSWorkspace.shared.open(url)
+    }
+    
+    /**
+        `tccutil` 명령어를 통하여 입력 된 애플리케이션 권한을 초기화 작업을 수행합니다.
+
+        - Requires: Use more than `macOS Sierra (10.12)`
+        - Parameters:
+            - service: `SKPermissionServiceName` 입력받는 변수
+            - bundlePath: Application Bundle Path를 입력받는 변수
+        - Returns: `Bool`
+     */
+    @available(macOS 10.12, *)
+    final func managePrivacyPermission(service: SKPermissionServiceName, bundlePath: String) {
+                
+        let arguments: [String] = ["reset", service.rawValue, bundlePath]
+        SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
     }
 }
 #endif

@@ -31,5 +31,5 @@ public struct SystemKit {
     
     // MARK: - Object Properties
     public static let label: String = "com.SystemKit"
-    public static let version: String = "2.2.4"
+    public static let version: String = "2.3.0"
 }

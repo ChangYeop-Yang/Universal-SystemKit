@@ -80,19 +80,29 @@ public enum SKTranslatedRosettaResult: Int32 {
 @available(macOS 10.12, *)
 public enum macOSSystemVersion: String {
     
+    /// macOS 10.12 (Sierra)
     case Sierra = "Sierra"
     
+    /// macOS 10.13 (High Sierra)
     case HighSierra = "High Sierra"
     
+    /// macOS 10.14 (Mojave)
     case Mojave = "Mojave"
     
+    /// macOS 10.15 (Catalina)
     case Catalina = "Catalina"
     
+    /// macOS 11 (BigSur)
     case BigSur = "BigSur"
     
+    /// macOS 12 (Monterey)
     case Monterey = "Monterey"
     
+    /// macOS 13 (Ventura)
     case Ventura = "Ventura"
+    
+    /// macOS 14 (Sonoma)
+    case Sonoma = "Sonoma"
     
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }

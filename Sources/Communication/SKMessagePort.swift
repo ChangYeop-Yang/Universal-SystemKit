@@ -104,11 +104,11 @@ private extension SKMessagePort {
         return remotePort
     }
     
+    /// Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
     final func invalidate(_ messagePort: CFMessagePort) {
         
         logger.info("[SKMessagePort] Performing invalidate on the CFMessagePort.")
         
-        // Invalidates a CFMessagePort object, stopping it from receiving or sending any more messages.
         CFMessagePortInvalidate(messagePort)
     }
 }

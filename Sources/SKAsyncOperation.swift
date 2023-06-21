@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS) || os(iOS)
+#if  os(iOS) || os(macOS) || os(Linux)
 import Foundation
 
 open class SKAsyncOperation: Operation {
