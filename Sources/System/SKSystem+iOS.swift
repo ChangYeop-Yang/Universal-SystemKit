@@ -22,7 +22,7 @@
 
 #if os(iOS)
 import UIKit
-import Foundation
+import CoreTelephony
 
 // MARK: - Public Extension SKSystem With iOS Platform
 public extension SKSystem {
@@ -177,6 +177,32 @@ public extension SKSystem {
             NSLog("[%@][%@] Error, Unknown IPhone Deivce Name", SKSystem.label, SKSystem.identifier)
             return String.init()
         }
+    }
+    
+    /**
+        현재 iPhone 디바이스에 연결 된 이동 통신 접속 방법을 가져오는 함수입니다.
+
+        - Version: `1.0.0`
+        - Authors: `ChangYeop-Yang`
+        - Returns: `Array<SKRadioAccessTechnology>`
+     */
+    typealias SKRadioAccessTechnology = (serviceIdentifier: String, radioAccessTechnology: String)
+    @available(iOS 12.0, *)
+    final func getCurrentRadioAccessTechnology() -> Array<SKRadioAccessTechnology> {
+
+        var result: Array<SKRadioAccessTechnology> = Array.init()
+                
+        guard let service = CTTelephonyNetworkInfo().serviceCurrentRadioAccessTechnology else {
+            logger.error("[SKNetworkTelephony] Failed to retrieve radio access technology.")
+            return result
+        }
+        
+        for (key, value) in service {
+            let newElement = SKRadioAccessTechnology(serviceIdentifier: key, radioAccessTechnology: value)
+            result.append(newElement)
+        }
+        
+        return result
     }
 }
 #endif
