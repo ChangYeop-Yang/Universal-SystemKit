@@ -20,13 +20,12 @@
  * THE SOFTWARE.
  */
 
-#if os(macOS)
-import Cocoa
+#if os(iOS) || os(macOS)
 import Foundation
 
 // MARK: - Enum
 public enum SKPermissionServiceName: String, CaseIterable {
-    
+
     case All = "All"
     
     case AddressBook = "kTCCServiceAddressBook"
@@ -55,7 +54,11 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case PostEvent = "kTCCServicePostEvent"
     case ListenEvent = "kTCCServiceListenEvent"
     case DeveloperTool = "kTCCServiceDeveloperTool"
+    case HomeKit = "kTCCServiceHomeKit"
+    case SocialService = "kTCCServiceSocial"
+    case TVProvider = "kTCCServiceTVProvider"
     
+    /* These seem to be carry-overs from macOS */
     case SystemPolicyFullDiskAccess = "kTCCServiceSystemPolicyAllFiles"
     case SystemPolicyDeveloperFiles = "kTCCServiceSystemPolicyDeveloperFiles"
     case SystemPolicyRemovableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
@@ -65,106 +68,7 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case SystemPolicyDocumentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
     case SystemPolicySysAdminFiles = "kTCCServiceSystemPolicySysAdminFiles"
     
-    // MARK: Enum Computed Properties
-    public var name: String { self.rawValue }
-}
-
-public enum SKDefaultPreferencePane: String, CaseIterable {
-    
-    case Battery = "x-apple.systempreferences:com.apple.preference.battery"
-    case Password = "x-apple.systempreferences:com.apple.preferences.password"
-    case Notifications = "x-apple.systempreferences:com.apple.preference.notifications"
-    case SoftwareUpdate = "x-apple.systempreferences:com.apple.preferences.softwareupdate?client=softwareupdateapp"
-    case FamilySharingPrefPane = "x-apple.systempreferences:com.apple.preferences.FamilySharingPrefPane"
-    case AppleID = "x-apple.systempreferences:com.apple.preferences.AppleIDPrefPane"
-    case Wallet = "x-apple.systempreferences:com.apple.preferences.wallet"
-    case Profile = "x-apple.systempreferences:com.apple.preferences.configurationprofiles"
-    case Screentime = "x-apple.systempreferences:com.apple.preference.screentime"
-    
-    // MARK: macOS Ventura (Version 13.*)
-    case LoginItems = "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
-    case DesktopScreenEffect = "x-apple.systempreferences:com.apple.preference.desktopscreeneffect"
-}
-
-public enum SKAccessibilityPreferencePane: String, CaseIterable  {
-
-    case Display = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_Display"
-    case Zoom = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_Zoom"
-    case VoiceOver = "x-apple.systempreferences:com.apple.preference.universalaccess?Seeing_VoiceOver"
-    case Descriptions = "x-apple.systempreferences:com.apple.preference.universalaccess?Media_Descriptions"
-    case Captions = "x-apple.systempreferences:com.apple.preference.universalaccess?Captioning"
-    case Audio = "x-apple.systempreferences:com.apple.preference.universalaccess?Hearing"
-    case Keyboard = "x-apple.systempreferences:com.apple.preference.universalaccess?Keyboard"
-    case Mouse = "x-apple.systempreferences:com.apple.preference.universalaccess?Mouse"
-    case Switch = "x-apple.systempreferences:com.apple.preference.universalaccess?Switch"
-    case Dictation = "x-apple.systempreferences:com.apple.preference.universalaccess?SpeakableItems"
-}
-
-public enum SKSharingPreferencePane: String, CaseIterable {
-    
-    case Main = "x-apple.systempreferences:com.apple.preferences.sharing"
-    
-    case ShareScreen = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ScreenSharing"
-    case SharePrint = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PrinterSharing"
-    case ShareFile = "x-apple.systempreferences:com.apple.preferences.sharing?Services_PersonalFileSharing"
-    case ShareInternet = "x-apple.systempreferences:com.apple.preferences.sharing?Internet"
-    case ShareBluetooth = "x-apple.systempreferences:com.apple.preferences.sharing?Services_BluetoothSharing"
-    
-    case RemoteLogin = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
-    case RemoteAppleEvents = "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteAppleEvent"
-    case RemoteManagement = "x-apple.systempreferences:com.apple.preferences.sharing?Services_ARDService"
-}
-
-public enum SKDictationSpeechPreferencePane: String, CaseIterable {
-    
-    case Dictation = "x-apple.systempreferences:com.apple.preference.speech?Dictation"
-    case TextToSpeech = "x-apple.systempreferences:com.apple.preference.speech?TTS"
-}
-
-public enum SKSecurityPrivacyPreferencePane: String, CaseIterable {
-    
-    case Main = "x-apple.systempreferences:com.apple.preference.security"
-    
-    case General = "x-apple.systempreferences:com.apple.preference.security?General"
-    case FileVault = "x-apple.systempreferences:com.apple.preference.security?FDE"
-    case Firewall = "x-apple.systempreferences:com.apple.preference.security?Firewall"
-    case Advanced = "x-apple.systempreferences:com.apple.preference.security?Advanced"
-    case Privacy = "x-apple.systempreferences:com.apple.preference.security?Privacy"
-    
-    case PrivacyAccessibility = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
-    case PrivacyAssistive = "x-apple.systempreferences:com.apple.preference.security?Privacy_Assistive"
-    case PrivacyLocationServices = "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices"
-    case PrivacyContacts = "x-apple.systempreferences:com.apple.preference.security?Privacy_Contacts"
-    case PrivacyDiagnosticsUsage = "x-apple.systempreferences:com.apple.preference.security?Privacy_Diagnostics"
-    case PrivacyCalendars = "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars"
-    case PrivacyReminders = "x-apple.systempreferences:com.apple.preference.security?Privacy_Reminders"
-    case PrivacyTencentWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_TencentWeibo"
-    case PrivacyAutomation = "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation"
-    case PrivacyAdvertising = "x-apple.systempreferences:com.apple.preference.security?Privacy_Advertising"
-    
-    case PrivacyFacebook = "x-apple.systempreferences:com.apple.preference.security?Privacy_Facebook"
-    case PrivacyLinkedIn = "x-apple.systempreferences:com.apple.preference.security?Privacy_LinkedIn"
-    case PrivacyTwitter = "x-apple.systempreferences:com.apple.preference.security?Privacy_Twitter"
-    case PrivacyWeibo = "x-apple.systempreferences:com.apple.preference.security?Privacy_Weibo"
-    
-    case PrivacyFullDiskAccess = "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-    
-    // MARK: macOS Catalina (Version: 10.15)
-    case PrivacyDevTools = "x-apple.systempreferences:com.apple.preference.security?Privacy_DevTools"
-    case PrivacyDesktopFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DesktopFolder"
-    case PrivacyDocumentsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DocumentsFolder"
-    case PrivacyDownloadsFolder = "x-apple.systempreferences:com.apple.preference.security?Privacy_DownloadsFolder"
-    case PrivacyNetworkVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_NetworkVolume"
-    case PrivacyRemovableVolume = "x-apple.systempreferences:com.apple.preference.security?Privacy_RemovableVolume"
-    case PrivacyInputMonitoring = "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
-    case PrivacyScreenCapture = "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
-}
-#endif
-
-#if os(iOS)
-// MARK: - Enum
-public enum SKPermissionServiceName: String, CaseIterable {
-    
+    /* These seem to be carry-overs from iOS */
     case LiverPool = "kTCCServiceLiverpool"
     case Ubiquity = "kTCCServiceUbiquity"
     case ShareKit = "kTCCServiceShareKit"
@@ -173,5 +77,8 @@ public enum SKPermissionServiceName: String, CaseIterable {
     case FaceBook = "kTCCServiceFacebook"
     case SinaWeibo = "kTCCServiceSinaWeibo"
     case TencentWeibo = "kTCCServiceTencentWeibo"
+    
+    // MARK: Enum Computed Properties
+    public var name: String { self.rawValue }
 }
 #endif
