@@ -34,6 +34,10 @@ print(resultE)
 // 현재 장비에서 사용하고 있는 `전지 (Battery)` 정보를 가져옵니다.
 let resultF = SKSystem.SKBatteryResult()
 print(resultF)
+
+// 현재 iPhone 디바이스가 네트워크에 연결 된 기술 타입 정보를 가져옵니다.
+let result = SKSystem.shared.getCurrentRadioAccessTechnology()
+print(result)
 ```
 
 # License
