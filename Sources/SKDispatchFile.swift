@@ -21,7 +21,7 @@
  */
 
 // swiftlint:disable all
-#if os(iOS) || os(macOS)
+#if os(iOS) || os(macOS) || os(Linux)
 import Darwin
 import Dispatch
 import Foundation

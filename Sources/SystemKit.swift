@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+// swiftlint:disable all
 import Foundation
 
 import Logging
