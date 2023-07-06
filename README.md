@@ -41,7 +41,7 @@ dependencies: [
 ]
 ```
 
-3-2. In Branch, Enter text "master".
+3-2. In Branch, Enter text "Version(2, 3, 0)".
 
 ```Swift
 dependencies: [
