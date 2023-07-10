@@ -17,11 +17,11 @@ The installation method for Universal SystemKit can be done through the [Swift P
 
 ### Manually
 
-If you prefer not to use any of the aforementioned dependency managers, you can integrate `Universal SystemKit` into your project manually.
+If you prefer not to use any of the aforementioned dependency managers, you can integrate `SystemKit` into your project manually.
 
 ### Github Repository
 
-You can pull the `Universal SystemKit` Github Repository and include the `Universal SystemKit` to build a dynamic or static library.
+You can pull the `SystemKit` Github Repository and include the `SystemKit` to build a dynamic or static library.
 
 ### Swift Package Manager
 
