@@ -21,7 +21,7 @@
  */
 
 // swiftlint:disable all
-#if os(iOS) || os(macOS) || os(Linux)
+#if os(iOS) || os(macOS)
 import Foundation
 
 import CrashReporter

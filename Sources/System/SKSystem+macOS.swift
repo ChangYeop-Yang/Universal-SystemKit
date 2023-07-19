@@ -304,5 +304,34 @@ public extension SKSystem {
         let arguments: [String] = ["reset", service.rawValue, bundlePath]
         SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
     }
+    
+    final func verifyCodeSignature(ofPath filePath: String) -> Bool {
+                
+        let process = Process()
+                
+        switch URL(fileURLWithPath: filePath).pathExtension {
+        // 코드 서명을 검증하는 대상이 pkg 파일인 경우
+        case "pkg":
+            process.launchPath = "/usr/sbin/pkgutil"
+            process.arguments = ["--check-signature", filePath]
+            
+        // 코드 서명을 검증하는 대상이 app 파일인 경우
+        case "app":
+            process.launchPath = "/usr/bin/codesign"
+            process.arguments = ["--verify", "-R=anchor apple generic", filePath]
+            
+        default:
+            return false
+        }
+        
+        do {
+            try process.run()
+            process.waitUntilExit()
+            return process.terminationStatus == Int32.zero
+        } catch let error as NSError {
+            logger.error("[SKSystem] An error occurred while running the process: \(error.description)")
+            return false
+        }
+    }
 }
 #endif
