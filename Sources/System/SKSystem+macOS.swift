@@ -305,22 +305,30 @@ public extension SKSystem {
         SKProcess.shared.run(launchPath: "/usr/bin/tccutil", arguments: arguments)
     }
     
+    /**
+        `.pkg` 또는 `.app` 확장자를 가진 파일에 대하여 코드 서명을 검증하는 함수입니다.
+
+        - Parameters:
+            - ofPath: 코드 서명 (Code Signing) 검증 작업을 수행 할 파일 경로를 입력받는 변수
+        - Returns: `Bool`
+     */
     final func verifyCodeSignature(ofPath filePath: String) -> Bool {
                 
         let process = Process()
                 
         switch URL(fileURLWithPath: filePath).pathExtension {
-        // 코드 서명을 검증하는 대상이 pkg 파일인 경우
+        // 코드 서명을 검증하는 대상이 .pkg 확장자를 가진 파일인 경우
         case "pkg":
             process.launchPath = "/usr/sbin/pkgutil"
             process.arguments = ["--check-signature", filePath]
             
-        // 코드 서명을 검증하는 대상이 app 파일인 경우
+        // 코드 서명을 검증하는 대상이 .app 확장자를 가진 파일인 경우
         case "app":
             process.launchPath = "/usr/bin/codesign"
             process.arguments = ["--verify", "-R=anchor apple generic", filePath]
             
         default:
+            logger.error("[SKSystem] The file with an extension that cannot be verified for code signing.")
             return false
         }
         
