@@ -18,7 +18,8 @@ if let rawData = "PASSWORD".data(using: .utf8) {
             
     // AES 암호화를 수행합니다.
     let encrypted = SKSecurity.shared().encrypt(key, .AES256, iv, rawData)
-                
+
+    // AES 복호화를 수행합니다.   
     let decrypted = SKSecurity.shared().decrypt(key, .AES256, iv, encrypted)
     print(String(data: decrypted, encoding: .utf8))
 }
