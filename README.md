@@ -86,7 +86,7 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKDispatchFile](https://dev-dream-world.tistory.com/246)
 
-* [SKSecurity](#)
+* [SKSecurity](https://dev-dream-world.tistory.com/262)
 
 # License
 
