@@ -1,6 +1,6 @@
 # 🗂 SKSecurity
 
-`SKSignal`는 `macOS` 운영체제에서 쓰이는 제한된 형태의 프로세스 간 통신을 위해서 사용하는 `신호 (Signal)`을 손쉽게 Handling 할 수 있도록 기능을 제공합니다. `신호 (Signal)` 관련하여 추가적인 정보는 [POSIX Signal](https://en.wikipedia.org/wiki/Signal_(IPC))에서 확인할 수 있습니다.
+`SKSecurity`는 고급 암호화 표준(Advanced Encryption Standard, AES)를 기반으로 입력받은 데이터를 `AES-128`, `AES-192`, `AES-256`들의 대칭키 (Symmetric) 크기를 바탕으로 암호화 또는 복호화 작업을 수행할 수 있습니다. 또한, CBC (Cipher Block Chaining mode) 기반으로 동작하기에 초기화 백터 값이 필요합니다.
 
 # Example Source
 
