@@ -86,6 +86,8 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKDispatchFile](https://dev-dream-world.tistory.com/246)
 
+* [SKSecurity](#)
+
 # License
 
 `SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
