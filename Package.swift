@@ -52,7 +52,13 @@ let package = Package(
         .binaryTarget(name: LocalPackage.PLCrashReporter.name, path: LocalPackage.PLCrashReporter.path),
         .target(name: InfoPackage.PackageName,
                 dependencies: [LocalPackage.PLCrashReporter.target, RemotePackage.SwiftLog.target],
-                path: InfoPackage.PackagePath),
+                path: InfoPackage.PackagePath,
+                sources: ["Cryptor/SKSecurity.mm"],
+                publicHeadersPath: ".",
+                cSettings: [
+                    .headerSearchPath(".")
+                ]
+        ),
     ],
     // The list of Swift versions with which this package is compatible.
     swiftLanguageVersions: [.v5]
