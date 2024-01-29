@@ -1,6 +1,16 @@
 # 🗂 SKSecurity
 
-`SKSecurity`는 고급 암호화 표준(Advanced Encryption Standard, AES)를 기반으로 입력받은 데이터를 `AES-128`, `AES-192`, `AES-256`들의 대칭키 (Symmetric) 크기를 바탕으로 암호화 또는 복호화 작업을 수행할 수 있습니다. 또한, CBC (Cipher Block Chaining mode) 기반으로 동작하기에 초기화 백터 값이 필요합니다.
+`SKSecurity`는 고급 암호화 표준 (Advanced Encryption Standard, AES)를 기반으로 입력받은 데이터를 `AES-128`, `AES-192`, `AES-256`들의 대칭키 (Symmetric) 크기를 바탕으로 암호화 또는 복호화 작업을 수행할 수 있습니다. 또한, CBC (Cipher Block Chaining mode) 기반으로 동작하기에 초기화 백터 값이 필요합니다.
+
+* AES (Advanced Encryption Standard) 암호화 기법에 대한 자세한 설명은 [Advanced Encryption Standard](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 확인 부탁드립니다.
+
+고급 암호화 표준 (Advanced Encryption Standard, AES) 키의 크기 제약 조건은 아래를 반드시 지켜야 합니다.
+
+* An AES 128-bit key can be expressed as a hexadecimal string with 32 characters. It will require 24 characters in base64.
+
+* An AES 192-bit key can be expressed as a hexadecimal string with 48 characters. It will require 32 characters in base64.
+
+* An AES 256-bit key can be expressed as a hexadecimal string with 64 characters. It will require 44 characters in base64.
 
 # Example Source
 
