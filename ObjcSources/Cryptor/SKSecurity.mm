@@ -43,7 +43,7 @@
                                     : (nonnull const NSString *) target {
     
     char * pointee = (char *) malloc(length);
-        
+    
     // write zeroes to a byte string
     bzero(pointee, length);
     
@@ -101,12 +101,12 @@
     @synchronized (self) {
         
         // Creating an cryption key buffer
-        const size_t keyLength = keySize + 0x01;
+        const size_t keyLength = keySize;
         const char * keyPointee = [self copyPointer: keyLength
                                                    : key];
             
         // Creating an initialization vector buffer
-        const size_t ivLength = kCCBlockSizeAES128 + 0x01;
+        const size_t ivLength = kCCBlockSizeAES128;
         const char * ivPointee = [self copyPointer: ivLength
                                                   : iv];
         
