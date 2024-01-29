@@ -2,7 +2,11 @@
 
 `SKSecurity`는 고급 암호화 표준 (Advanced Encryption Standard, AES)를 기반으로 입력받은 데이터를 `AES-128`, `AES-192`, `AES-256`들의 대칭키 (Symmetric) 크기를 바탕으로 암호화 또는 복호화 작업을 수행할 수 있습니다. 또한, CBC (Cipher Block Chaining mode) 기반으로 동작하기에 초기화 백터 값이 필요합니다.
 
+</br>
+
 * AES (Advanced Encryption Standard) 암호화 기법에 대한 자세한 설명은 [Advanced Encryption Standard](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 확인 부탁드립니다.
+
+</br>
 
 고급 암호화 표준 (Advanced Encryption Standard, AES) 키의 크기 제약 조건은 아래를 반드시 지켜야 합니다.
 
