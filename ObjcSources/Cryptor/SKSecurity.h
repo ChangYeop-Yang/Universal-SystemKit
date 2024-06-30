@@ -49,10 +49,10 @@ typedef NS_ENUM(NSInteger, SKSecurityCryptType) {
 
 @interface SKSecurity : NSObject
 
-#pragma mark - Define Properties
+#pragma mark - Define Public Properties
 + (instancetype) shared;
 
-#pragma mark - Define Instance Method
+#pragma mark - Define Public Instance Method
 - (nonnull NSData *) encrypt: (nonnull NSString *) key
                             : (const SKSecurityAESType) keyType
                             : (nonnull NSString *) iv

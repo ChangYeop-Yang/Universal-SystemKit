@@ -22,6 +22,24 @@
 
 #import "SKSecurity.h"
 
+@interface SKSecurity()
+
+#pragma mark - Define Private Instance Method
+- (nonnull const char *) copyPointer: (const size_t) length
+                                    : (nonnull const NSString *) target;
+
+- (nullable NSData *) getDataByStatus: (CCCryptorStatus) status
+                                     : (nonnull void *) dataWithBytes
+                                     : (size_t) length;
+
+- (nullable NSData *) crypt: (const NSString *) key
+                           : (const SKSecurityAESType) keySize
+                           : (const NSString *) iv
+                           : (const NSData *) data
+                           : (const CCOperation) operation;
+
+@end
+
 @implementation SKSecurity
 
 #pragma mark - Public Instance Method
@@ -39,25 +57,26 @@
 }
 
 #pragma mark - Private Instance Method
-- (nonnull const char *) copyPointer: (const size_t) length
-                                    : (nonnull const NSString *) target {
-    
+- (const char *) copyPointer: (const size_t) length
+                            : (const NSString *) target {
+
     char * pointee = (char *) malloc(length);
-    
+
     // write zeroes to a byte string
     bzero(pointee, length);
-    
+
     // Converts the string to a given encoding and stores it in a buffer.
     [target getCString: pointee maxLength: length encoding: NSUTF8StringEncoding];
-    
+
     return pointee;
 }
 
-- (nullable NSData *) getDataByStatus: (CCCryptorStatus) status
-                                     : (nonnull void *) dataWithBytes
-                                     : (size_t) length {
+- (NSData *) getDataByStatus: (CCCryptorStatus) status
+                            : (void *) dataWithBytes
+                            : (size_t) length {
     
     switch (status) {
+            
         case kCCSuccess:
             NSLog(@"[SKSecurity] Operation completed normally");
             return [NSData dataWithBytes: dataWithBytes length: length];
@@ -97,22 +116,22 @@
                   : (const NSString *) iv
                   : (const NSData *) data
                   : (const CCOperation) operation {
-    
+
     @synchronized (self) {
-        
+
         // Creating an cryption key buffer
         const size_t keyLength = keySize;
         const char * keyPointee = [self copyPointer: keyLength
                                                    : key];
-            
+
         // Creating an initialization vector buffer
         const size_t ivLength = kCCBlockSizeAES128;
         const char * ivPointee = [self copyPointer: ivLength
                                                   : iv];
-        
+
         const size_t blockLength = data.length + kCCBlockSizeAES128;
         void * block = (void *) malloc(blockLength);
-        
+
         // Performing Encryption or Decryption Operation
         size_t bytesCrypted = 0;
         const CCCryptorStatus status = CCCrypt(operation, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
@@ -121,10 +140,16 @@
                                                data.bytes, data.length,
                                                block, blockLength,
                                                &bytesCrypted);
-        
-        return [self getDataByStatus: status
-                                    : block
-                                    : bytesCrypted];
+
+        NSData * result = [self getDataByStatus: status
+                                               : block
+                                               : bytesCrypted];
+
+        // Deallocates or frees a memory block.
+        free(block);
+        block = NULL;
+
+        return result;
     }
 }
 
@@ -134,13 +159,16 @@
                     : (const NSString *) iv
                     : (NSData *) data {
     
-    NSLog(@"[SKSecurity] Performing Encryption Operation");
-    
-    return [self crypt: key
-                      : keyType
-                      : iv
-                      : data
-                      : ::Encrypt];
+    @autoreleasepool {
+        
+        NSLog(@"[SKSecurity] Performing Encryption Operation");
+        
+        return [self crypt: key
+                          : keyType
+                          : iv
+                          : data
+                          : ::Encrypt];
+    }
 }
 
 - (NSData *) decrypt: (const NSString *) key
@@ -148,34 +176,42 @@
                     : (const NSString *) iv
                     : (NSData *) data {
     
-    NSLog(@"[SKSecurity] Performing Decryption Operation");
-   
-    return [self crypt: key
-                      : keyType
-                      : iv
-                      : data
-                      : ::Decrypt];
+    @autoreleasepool {
+        
+        NSLog(@"[SKSecurity] Performing Decryption Operation");
+       
+        return [self crypt: key
+                          : keyType
+                          : iv
+                          : data
+                          : ::Decrypt];
+    }
 }
 
 - (NSString *) createInitializationVector {
     
-    const NSArray * components = [NSUUID.UUID.UUIDString componentsSeparatedByString: @"-"];
-    
-    NSMutableString * stringValue = [[NSMutableString alloc] init];
-    
-    for (NSString * element in components) {
-        [stringValue appendString: element];
+    @autoreleasepool {
+        
+        const NSArray * components = [NSUUID.UUID.UUIDString componentsSeparatedByString: @"-"];
+        
+        NSMutableString * stringValue = [[NSMutableString alloc] init];
+        
+        for (NSString * element in components) {
+            [stringValue appendString: element];
+        }
+        
+        NSMutableString * result = [[NSMutableString alloc] init];
+        
+        for (int index = 0; index < 16; index++) {
+            
+            NSUInteger characterAtIndex = arc4random() % stringValue.length;
+            const unichar character = [stringValue characterAtIndex: characterAtIndex];
+            [result appendFormat: @"%C", character];
+        }
+        
+        // The IV (Initialization Vector) must have a length of 16 bytes
+        return result;
     }
-    
-    NSMutableString * result = [[NSMutableString alloc] init];
-    for (int index = 0; index < 16; index++) {
-        NSUInteger characterAtIndex = arc4random() % stringValue.length;
-        const unichar character = [stringValue characterAtIndex: characterAtIndex];
-        [result appendFormat: @"%C", character];
-    }
-    
-    // The IV (Initialization Vector) must have a length of 16 bytes
-    return result;
 }
 
 @end
