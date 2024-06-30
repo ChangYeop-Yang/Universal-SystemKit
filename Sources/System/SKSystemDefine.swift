@@ -104,6 +104,9 @@ public enum macOSSystemVersion: String {
     /// macOS 14 (Sonoma)
     case Sonoma = "Sonoma"
     
+    /// macOS 15 (Sequoia)
+    case Sequoia = "Sequoia"
+    
     // MARK: Enum Computed Properties
     public var name: String { return String(format: "macOS %@", self.rawValue) }
 }

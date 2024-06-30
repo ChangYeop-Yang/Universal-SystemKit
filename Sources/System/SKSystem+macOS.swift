@@ -77,6 +77,9 @@ public extension SKSystem {
         // Above macOS Sonoma (14.0)
         case 14:
             return macOSSystemVersion.Sonoma.name
+            // Above macOS Sequoia (15.0)
+        case 15:
+            return macOSSystemVersion.Sequoia.name
         // macOS 10.12 미만의 운영체제이거나 아직 알려지지 않은 운영체제
         default:
             return "UNKNOWN"
