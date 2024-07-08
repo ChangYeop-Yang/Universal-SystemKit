@@ -45,10 +45,6 @@ private extension SKProcess {
     
     final func launch(process: Process) throws {
         
-        #if DEBUG
-            NSLog("[%@][%@] Action, Execute Other Process", SKProcess.label, SKProcess.identifier)
-        #endif
-        
         // macOS 10.13 미만의 운영체제에서는 launch() 함수를 통하여 실행합니다.
         guard #available(macOS 10.13, *) else {
             process.launch()
@@ -57,6 +53,18 @@ private extension SKProcess {
         
         // macOS 10.13 이상의 운영체제에서는 run() 함수를 통하여 실행합니다.
         try process.run()
+    }
+    
+    final func closePipe(_ pipe: Optional<Pipe>) {
+        
+        // If the PIPE is not used, the close operation is not performed
+        guard let target = pipe else { return }
+        
+        // The writing file handle close
+        try? target.fileHandleForWriting.close()
+        
+        // The reading file handle close
+        try? target.fileHandleForReading.close()
     }
 }
 
@@ -67,9 +75,9 @@ public extension SKProcess {
     @discardableResult
     final func run(launchPath: String,
                    arguments: Array<String>,
-                   standardInput: Optional<Any> = nil,
-                   standardOutput: Optional<Any> = nil,
-                   standardError: Optional<Any> = nil,
+                   standardInput: Optional<Pipe> = nil,
+                   standardOutput: Optional<Pipe> = nil,
+                   standardError: Optional<Pipe> = nil,
                    waitUntilExit: Bool = false,
                    qualityOfService: QualityOfService = .default,
                    terminationHandler: Optional<SKProcessTerminationHandler> = nil,
@@ -87,20 +95,12 @@ public extension SKProcess {
         do {
             try launch(process: process)
             
-            if waitUntilExit {
-                
-                #if DEBUG
-                    NSLog("[%@][%@] Process WaitUntilExit", SKProcess.label, SKProcess.identifier)
-                #endif
-                
-                process.waitUntilExit()
-            }
+            if waitUntilExit { process.waitUntilExit() }
+            
+            // Closing the PIPE used in the operation
+            [standardInput, standardOutput, standardError].forEach(closePipe)
+            
         } catch let error as NSError {
-            
-            #if DEBUG
-                NSLog("[%@][%@] Error, %@", SKProcess.label, SKProcess.identifier, error.description)
-            #endif
-            
             errorCompletionHandler?(error, process)
             return EOF
         }
