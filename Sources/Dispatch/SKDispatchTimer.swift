@@ -65,7 +65,7 @@ private extension SKDispatchTimer {
     }
     
     final func deinitalize() {
-                
+        
         self.timer?.setEventHandler(handler: nil)
         
         // if the DispatchSourceTimer state is Cancelled, the cancel will not be performed

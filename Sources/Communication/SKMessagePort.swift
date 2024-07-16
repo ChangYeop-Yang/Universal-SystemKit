@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-#if os(iOS) || os(macOS) || os(Linux)
 import Foundation
 import CoreFoundation
 
@@ -181,4 +180,3 @@ public extension SKMessagePort {
         }
     }
 }
-#endif

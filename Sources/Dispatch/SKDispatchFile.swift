@@ -20,8 +20,6 @@
  * THE SOFTWARE.
  */
 
-// swiftlint:disable all
-#if os(iOS) || os(macOS) || os(Linux)
 import Darwin
 import Dispatch
 import Foundation
@@ -187,4 +185,3 @@ public extension SKDispatchFile {
         }
     }
 }
-#endif
