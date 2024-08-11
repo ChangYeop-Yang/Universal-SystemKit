@@ -50,13 +50,13 @@ let package = Package(
     dependencies: [
         .package(url: RemotePackage.SwiftLog.path, from: RemotePackage.SwiftLog.from),
         .package(url: RemotePackage.SwiftHTTPTypes.path, from: RemotePackage.SwiftHTTPTypes.from),
+        .package(url: RemotePackage.PLCrashReporter.path, from: RemotePackage.PLCrashReporter.from),
     ],
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages this package depends on.
     targets: [
-        .binaryTarget(name: LocalPackage.PLCrashReporter.name, path: LocalPackage.PLCrashReporter.path),
         .target(name: InfoPackage.PackageName,
-                dependencies: [LocalPackage.PLCrashReporter.target, RemotePackage.SwiftLog.target, RemotePackage.SwiftHTTPTypes.target],
+                dependencies: [RemotePackage.SwiftLog.target, RemotePackage.SwiftHTTPTypes.target, RemotePackage.PLCrashReporter.target],
                 path: InfoPackage.PackagePath),
         .target(name: InfoPackage.PackageObjcName, 
                 path: InfoPackage.PackageObjcPath, 
@@ -101,29 +101,6 @@ public protocol PackageProtocol {
 }
 
 // MARK: - Enum
-public enum LocalPackage: String, CaseIterable, PackageProtocol {
-    
-    /// [PLCrashReporter - GitHub](https://www.github.com/microsoft/plcrashreporter)
-    case PLCrashReporter = "CrashReporter"
-    
-    public var path: String {
-        switch self {
-        case .PLCrashReporter:
-            return "Frameworks/CrashReporter.xcframework"
-        }
-    }
-    
-    public var target: Target.Dependency {
-        switch self {
-        case .PLCrashReporter:
-            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
-            return .target(name: self.name, condition: condition)
-        }
-    }
-    
-    public var name: String { return self.rawValue }
-}
-
 public enum RemotePackage: String, CaseIterable, PackageProtocol {
     
     /// 🌎 [Swift-docc-plugin - GitHub](https://github.com/apple/swift-docc-plugin)
@@ -135,6 +112,9 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
     /// 🌎 [Swift-HTTP-Types- GitHub](https://github.com/apple/swift-http-types)
     case SwiftHTTPTypes = "swift-http-types"
     
+    /// 🌎 [PLCrashReporter - GitHub](https://github.com/microsoft/plcrashreporter)
+    case PLCrashReporter = "PLCrashReporter"
+    
     public var path: String {
         
         switch self {
@@ -144,6 +124,8 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
             return "https://github.com/apple/swift-log.git"
         case .SwiftHTTPTypes:
             return "https://github.com/apple/swift-http-types.git"
+        case .PLCrashReporter:
+            return "https://github.com/microsoft/plcrashreporter.git"
         }
     }
     
@@ -151,14 +133,17 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         
         switch self {
         case .SwiftDocC:
-            // https://github.com/apple/swift-docc-plugin/releases/tag/1.2.0
-            return Version(1, 2, 0)
+            // https://github.com/apple/swift-docc-plugin/releases/tag/1.3.0
+            return Version(1, 3, 0)
         case .SwiftLog:
-            // https://github.com/apple/swift-log/releases/tag/1.5.4
-            return Version(1, 5, 4)
+            // https://github.com/apple/swift-log/releases/tag/1.6.1
+            return Version(1, 6, 1)
         case .SwiftHTTPTypes:
-            // https://github.com/apple/swift-http-types/releases/tag/1.0.3
-            return Version(1, 0, 3)
+            // https://github.com/apple/swift-http-types/releases/tag/1.3.0
+            return Version(1, 3, 0)
+        case .PLCrashReporter:
+            // https://github.com/microsoft/plcrashreporter/releases/tag/1.11.2
+            return Version(1, 11, 2)
         }
     }
     
@@ -174,6 +159,9 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
         case .SwiftHTTPTypes:
             let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
             return .product(name: "HTTPTypes", package: self.name, condition: condition)
+        case .PLCrashReporter:
+            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
+            return .product(name: "CrashReporter", package: self.name, condition: condition)
         }
     }
     

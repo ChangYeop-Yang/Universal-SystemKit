@@ -25,25 +25,13 @@ import Foundation
 // MARK: - Public Extension String
 public extension String {
     
-    var kCFString: CFString { 
-        
-        return self as CFString
-    }
+    var kCFString: CFString { return self as CFString }
     
-    var kCString: UnsafePointer<CChar>? {
-        
-        return (self as NSString).cString(using: String.Encoding.utf8.rawValue)
-    }
+    var kCString: UnsafePointer<CChar>? { return (self as NSString).cString(using: String.Encoding.utf8.rawValue) }
     
-    var base64EncodedString: String? { 
-        
-        return self.data(using: .utf8)?.base64EncodedString()
-    }
+    var base64EncodedString: String? { return self.data(using: .utf8)?.base64EncodedString() }
     
-    var base64EncodedData: Data? {
-        
-        return self.data(using: .utf8)?.base64EncodedData()
-    }
+    var base64EncodedData: Data? { return self.data(using: .utf8)?.base64EncodedData() }
     
     var base64DecodedString: String? {
         
@@ -52,8 +40,9 @@ public extension String {
         return String(data: rawData, encoding: .utf8)
     }
     
-    var base64DecodedData: Data? {
-        
-        return Data(base64Encoded: self)
-    }
+    var base64DecodedData: Data? { return Data(base64Encoded: self) }
+    
+    var kNSNotificationName: NSNotification.Name { return NSNotification.Name(self) }
+    
+    var kNotificationName: Notification.Name { return Notification.Name(self) }
 }
