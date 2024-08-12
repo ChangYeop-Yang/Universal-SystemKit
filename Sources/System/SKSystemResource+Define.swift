@@ -57,13 +57,22 @@ public struct SKCPUResourceInfo: Codable {
     /// Using Total CPU `[% Percentage]`
     public let value: Double
     
-    /// The percentage of CPU capability that’s being used by processes that belong to macOS.
+    /// The percentage of CPU capability that’s being used by processes that belong to macOS. `[% Percentage]`
     public let systemValue: Double
     
-    /// The percentage of CPU capability that’s being used by apps you opened, or by the processes opened by those apps.
+    /// The percentage of CPU capability that’s being used by apps you opened, or by the processes opened by those apps. `[% Percentage]`
     public let userValue: Double
     
-    /// The percentage of CPU capability that’s not being used.
+    /// The percentage of CPU capability that’s not being used. `[% Percentage]`
     public let idleValue: Double
+}
+
+public struct SKDiskSpaceResult: Codable {
+    
+    public let totalSpace: Int64
+    
+    public let freeSpace: Int64
+    
+    public let usedSpace: Int64
 }
 #endif

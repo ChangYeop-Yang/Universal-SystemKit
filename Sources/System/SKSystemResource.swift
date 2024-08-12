@@ -21,11 +21,12 @@
  */
 
 #if os(macOS)
+import Darwin
 import Foundation
 
 public class SKSystemResource: NSObject {
     
     // MARK: - Object Properties
-    
+    public var loadPrevious: host_cpu_load_info = host_cpu_load_info()
 }
 #endif

@@ -27,9 +27,26 @@ import Foundation
 // MARK: - Private Extension SKSystemResource
 private extension SKSystemResource {
     
-    final func getStatistics64() -> vm_statistics64 {
+    final func getHostStatisticsWithCPU() -> host_cpu_load_info {
         
-        var size: mach_msg_type_number_t = UInt32(MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)
+        var size = mach_msg_type_number_t(MemoryLayout<host_cpu_load_info_data_t>.size / MemoryLayout<integer_t>.size)
+        
+        let capacity = Int(size)
+        
+        let hostInfo = host_cpu_load_info_t.allocate(capacity: 1)
+        let _ = hostInfo.withMemoryRebound(to: integer_t.self, capacity: capacity) { (pointer) -> kern_return_t in
+            return host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, pointer, &size)
+        }
+        
+        let data = hostInfo.move()
+        hostInfo.deallocate()
+        
+        return data
+    }
+    
+    final func getStatisticsWithMemory() -> vm_statistics64 {
+        
+        var size = mach_msg_type_number_t(MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)
         
         let capacity = Int(size)
         
@@ -48,11 +65,62 @@ private extension SKSystemResource {
 // MARK: - Public Extension SKSystemResource
 public extension SKSystemResource {
     
+    final func getSystemVolumeDiskSpace() -> SKDiskSpaceResult? {
+        
+        do {
+            
+            let forPath = NSHomeDirectory()
+            
+            let attributes = try FileManager.default.attributesOfFileSystem(forPath: forPath)
+            
+            guard let totalSpace = attributes[FileAttributeKey.systemSize] as? NSNumber else { return nil }
+            
+            guard let freeSpace = attributes[FileAttributeKey.systemFreeSize] as? NSNumber else { return nil }
+            
+            let totalSpaceGB = ByteCountFormatter.string(fromByteCount: totalSpace.int64Value,
+                                                         countStyle: .decimal)
+            let freeSpaceGB = ByteCountFormatter.string(fromByteCount: freeSpace.int64Value,
+                                                        countStyle: .decimal)
+            let usedSpaceGB = ByteCountFormatter.string(fromByteCount: totalSpace.int64Value - freeSpace.int64Value,
+                                                        countStyle: .decimal)
+
+            return SKDiskSpaceResult(totalSpace: totalSpace.int64Value,
+                                     freeSpace: freeSpace.int64Value,
+                                     usedSpace: totalSpace.int64Value - freeSpace.int64Value)
+            
+        } catch let error as NSError {
+            print("Error retrieving file system info: \(error.description)")
+            return nil
+        }
+    }
+    
+    final func getSystemCPUResource(type: SKResourceDataUnitType = .gigaByte) -> SKCPUResourceInfo {
+        
+        let load = getHostStatisticsWithCPU()
+        
+        let userDiff = Double(load.cpu_ticks.0 - self.loadPrevious.cpu_ticks.0)
+        let sysDiff  = Double(load.cpu_ticks.1 - self.loadPrevious.cpu_ticks.1)
+        let idleDiff = Double(load.cpu_ticks.2 - self.loadPrevious.cpu_ticks.2)
+        let niceDiff = Double(load.cpu_ticks.3 - self.loadPrevious.cpu_ticks.3)
+        
+        self.loadPrevious = load
+
+        let totalTicks = sysDiff + userDiff + idleDiff + niceDiff
+        let sys  = (100.0 * sysDiff / totalTicks)
+        let user = (100.0 * userDiff / totalTicks)
+        let idle = (100.0 * idleDiff / totalTicks)
+        
+        return SKCPUResourceInfo(value: min(99.9, (sys + user).round2dp),
+                                 systemValue: sys.round2dp,
+                                 userValue: user.round2dp,
+                                 idleValue: idle.round2dp)
+    }
+    
     final func getSystemMemoryResource(type: SKResourceDataUnitType = .gigaByte) -> SKMemoryResourceInfo {
         
         let maximumMemory = Double(ProcessInfo.processInfo.physicalMemory) / type.rawValue
         
-        let load = getStatistics64()
+        let load = getStatisticsWithMemory()
         let unit = Double(vm_kernel_page_size) / type.rawValue
         
         let active = Double(load.active_count) * unit
