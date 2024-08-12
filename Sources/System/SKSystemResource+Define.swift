@@ -51,4 +51,19 @@ public struct SKMemoryResourceInfo: Codable {
     /// The amount of memory that has been compressed to make more RAM available
     public let compressedValue: Double
 }
+
+public struct SKCPUResourceInfo: Codable {
+    
+    /// Using Total CPU `[% Percentage]`
+    public let value: Double
+    
+    /// The percentage of CPU capability that’s being used by processes that belong to macOS.
+    public let systemValue: Double
+    
+    /// The percentage of CPU capability that’s being used by apps you opened, or by the processes opened by those apps.
+    public let userValue: Double
+    
+    /// The percentage of CPU capability that’s not being used.
+    public let idleValue: Double
+}
 #endif
