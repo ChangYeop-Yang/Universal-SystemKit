@@ -57,8 +57,9 @@ let package = Package(
     targets: [
         .target(name: InfoPackage.PackageName,
                 dependencies: [RemotePackage.SwiftLog.target, RemotePackage.SwiftHTTPTypes.target, RemotePackage.PLCrashReporter.target],
-                path: InfoPackage.PackagePath),
-        .target(name: InfoPackage.PackageObjcName, 
+                path: InfoPackage.PackagePath,
+                resources: [.process("PrivacyInfo.xcprivacy")]),
+        .target(name: InfoPackage.PackageObjcName,
                 path: InfoPackage.PackageObjcPath, 
                 sources: ["Cryptor/SKSecurity.mm"],
                 publicHeadersPath: ".",
