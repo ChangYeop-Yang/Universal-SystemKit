@@ -23,6 +23,11 @@
 #if os(macOS)
 import Foundation
 
+// MARK: - Typealias
+public typealias SKMemorySystemResourceResult = Result<SKMemoryResourceInfo, Error>
+public typealias SKCPUSystemResourceResult = Result<SKCPUResourceInfo, Error>
+public typealias SKDiskSystemResourceResult = Result<SKDiskSpaceResult, Error>
+
 // MARK: - Enum
 public enum SKResourceDataUnitType: Double {
     
