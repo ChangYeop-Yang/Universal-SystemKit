@@ -65,7 +65,7 @@ private extension SKSystemResource {
 // MARK: - Public Extension SKSystemResource
 public extension SKSystemResource {
     
-    final func getSystemVolumeDiskSpace() -> SKDiskSpaceResult? {
+    final func getSystemVolumeDiskSpace() -> Optional<SKDiskSpaceResult> {
         
         do {
             
@@ -89,21 +89,21 @@ public extension SKSystemResource {
                                      usedSpace: totalSpace.int64Value - freeSpace.int64Value)
             
         } catch let error as NSError {
-            print("Error retrieving file system info: \(error.description)")
+            logger.error("[SKSystemResource] retrieving file system info: \(error.description)")
             return nil
         }
     }
     
-    final func getSystemCPUResource(type: SKResourceDataUnitType = .gigaByte) -> SKCPUResourceInfo {
-        
+    final func getSystemCPUResource(type: SKResourceDataUnit = .gigaByte) -> SKCPUResourceInfo {
+
         let load = getHostStatisticsWithCPU()
         
-        let userDiff = Double(load.cpu_ticks.0 - self.loadPrevious.cpu_ticks.0)
-        let sysDiff  = Double(load.cpu_ticks.1 - self.loadPrevious.cpu_ticks.1)
-        let idleDiff = Double(load.cpu_ticks.2 - self.loadPrevious.cpu_ticks.2)
-        let niceDiff = Double(load.cpu_ticks.3 - self.loadPrevious.cpu_ticks.3)
+        let userDiff = Double(load.cpu_ticks.0 - self.previousSystemResource.cpu_ticks.0)
+        let sysDiff  = Double(load.cpu_ticks.1 - self.previousSystemResource.cpu_ticks.1)
+        let idleDiff = Double(load.cpu_ticks.2 - self.previousSystemResource.cpu_ticks.2)
+        let niceDiff = Double(load.cpu_ticks.3 - self.previousSystemResource.cpu_ticks.3)
         
-        self.loadPrevious = load
+        self.previousSystemResource = load
 
         let totalTicks = sysDiff + userDiff + idleDiff + niceDiff
         let sys  = (100.0 * sysDiff / totalTicks)
@@ -116,7 +116,7 @@ public extension SKSystemResource {
                                  idleValue: idle.round2dp)
     }
     
-    final func getSystemMemoryResource(type: SKResourceDataUnitType = .gigaByte) -> SKMemoryResourceInfo {
+    final func getSystemMemoryResource(type: SKResourceDataUnit = .gigaByte) -> SKMemoryResourceInfo {
         
         let maximumMemory = Double(ProcessInfo.processInfo.physicalMemory) / type.rawValue
         

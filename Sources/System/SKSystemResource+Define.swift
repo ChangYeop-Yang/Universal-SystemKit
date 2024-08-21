@@ -23,21 +23,6 @@
 #if os(macOS)
 import Foundation
 
-// MARK: - Typealias
-public typealias SKMemorySystemResourceResult = Result<SKMemoryResourceInfo, Error>
-public typealias SKCPUSystemResourceResult = Result<SKCPUResourceInfo, Error>
-public typealias SKDiskSystemResourceResult = Result<SKDiskSpaceResult, Error>
-
-// MARK: - Enum
-public enum SKResourceDataUnitType: Double {
-    
-    case byte = 1 // 1 Byte
-    case kiloByte = 1024 // 1024 Byte
-    case megaByte = 1_048_576 // 1024 * 1024 Byte
-    case gigaByte = 1_073_741_824 // 1024 * 1024 * 1024 Byte
-    case teraBtye = 1_099_511_627_776 // 1024 * 1024 * 1024 * 1024 Byte
-}
-
 // MARK: - Struct
 public struct SKMemoryResourceInfo: Codable {
     

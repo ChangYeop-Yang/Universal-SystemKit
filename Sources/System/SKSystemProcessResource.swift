@@ -21,17 +21,14 @@
  */
 
 #if os(macOS)
-import Darwin
 import Foundation
 
-public class SKSystemResource: SKClass {
+public class SKSystemProcessResource: SKClass {
     
     // MARK: - Object Properties
     public static let label: String = "com.SystemKit.SKSystemResource"
-    public static let identifier: String = "0DEE36A9-02C6-4CEE-9FA7-A8CB6A4093A6"
-    public static let shared: SKSystemResource = SKSystemResource()
-    
-    public var previousSystemResource: host_cpu_load_info = host_cpu_load_info()
+    public static let identifier: String = "D6217410-E762-478B-A97F-D5E8EC05D0CA"
+    public static let shared: SKSystemProcessResource = SKSystemProcessResource()
     
     // MARK: - Initalize
     private init() { /* Initalize */ }

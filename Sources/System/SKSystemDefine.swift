@@ -23,6 +23,17 @@
 import Foundation
 
 #if os(macOS) || os(iOS)
+
+// MARK: Enum With Universal Platform
+public enum SKResourceDataUnit: Double {
+    
+    case byte = 1 // 1 Byte
+    case kiloByte = 1024 // 1024 Byte
+    case megaByte = 1_048_576 // 1024 * 1024 Byte
+    case gigaByte = 1_073_741_824 // 1024 * 1024 * 1024 Byte
+    case teraBtye = 1_099_511_627_776 // 1024 * 1024 * 1024 * 1024 Byte
+}
+
 // MARK: - Struct With Universal Platform
 public struct SKSystemMachineUsageMemeoryResult: Codable {
     
