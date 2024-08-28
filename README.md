@@ -41,11 +41,11 @@ dependencies: [
 ]
 ```
 
-3-2. In Branch, Enter text "Version(2, 3, 1)".
+3-2. In Branch, Enter text "Version(2, 4, 0)".
 
 ```Swift
 dependencies: [
-    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", from: Version(2, 3, 1))
+    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", from: Version(2, 4, 0))
 ]
 ```
 
