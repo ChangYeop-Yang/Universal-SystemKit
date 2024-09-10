@@ -92,7 +92,6 @@ private extension SKDispatchFileMonitor {
         
         // Cleaning up objects used in FileSystemEvent
         self.handler = nil
-        self.source.cancel()
         close(self.source.handle)
         
         NotificationCenter.default.post(name: SKDispatchFileMonitor.name, object: nil)
