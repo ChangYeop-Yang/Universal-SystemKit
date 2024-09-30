@@ -88,7 +88,7 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 * [SKSecurity](https://dev-dream-world.tistory.com/262)
 
-* [SKDispatchFileMonitor](https://dev-dream-world.tistory.com/275)
+* [SKDispatchFileMonitor](https://dev-dream-world.tistory.com/275) → `SKDispatchFileMonitor` provides a common interface for monitoring file events on both iOS and macOS platforms.
 
 # License
 
