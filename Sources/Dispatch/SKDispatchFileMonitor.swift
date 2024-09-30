@@ -60,7 +60,7 @@ private extension SKDispatchFileMonitor {
         let fileDescriptor = open(filePath, O_EVTONLY | F_NOCACHE)
         
         // Failed to create FileDescriptor
-        if fileDescriptor < 0 { return nil }
+        if fileDescriptor < Int32.zero { return nil }
         
         return fileDescriptor
     }
@@ -70,11 +70,7 @@ private extension SKDispatchFileMonitor {
 
         let queue = DispatchQueue(label: SKDispatchFileMonitor.label, qos: .background, attributes: .concurrent)
         
-        do { return DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: eventMask, queue: queue) }
-        catch let error as NSError {
-            logger.error("[SKDispatchFileMonitor] Failed to create file-system events: \(error.description)")
-            return nil
-        }
+        return DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: eventMask, queue: queue)
     }
     
     final func occurEventHandler() {
