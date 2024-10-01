@@ -74,9 +74,9 @@ private extension SKDispatchTimer {
         self.handler = nil
     }
     
-    final func withLock(_ handler: SKDispatchTimerHandler) {
+    final func withLock(_ handler: @escaping SKDispatchTimerHandler) {
 
-        self.implementQueue.sync { handler() }
+        self.implementQueue.async(flags: .barrier) { handler() }
     }
 }
 
