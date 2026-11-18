@@ -1,0 +1,95 @@
+name: "🔒 Security Workflow: Scan Source Code for Security Issues"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  swift:
+    name: 🔍 Scan Swift with CodeQL
+    runs-on: macos-26
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      # CodeQL tracing supports Xcode 26 and Swift 6.3.
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - name: 📋 Show analysis plan
+        run: |
+          printf '%s\n' \
+            '1. Check out the source code and check the Xcode and Swift versions.' \
+            '2. Set up CodeQL for Swift.' \
+            '3. Build SystemKit for macOS so CodeQL can collect source information.' \
+            '4. Run the security checks, send the results to GitHub Code Scanning, and save the build logs.'
+      - name: 📥 Check out source
+        id: checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: 🔧 Check Xcode and Swift versions
+        run: |
+          bash .github/scripts/log-ci-step.sh "Check Xcode and Swift versions" toolchain.log \
+            bash -ec 'xcodebuild -version; swift --version'
+      - name: ⚙️ Set up CodeQL for Swift
+        uses: github/codeql-action/init@v4
+        with:
+          languages: swift
+          build-mode: manual
+          queries: security-extended
+      - name: 🐦 Build SystemKit for analysis
+        run: |
+          bash .github/scripts/log-ci-step.sh "Build SystemKit for analysis" swift-build.log \
+            swift build --target SystemKit -v
+      - name: 🔎 Analyze Swift and publish results
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:swift"
+      - name: 📦 Upload Swift build logs
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: codeql-swift-build-logs
+          path: ${{ runner.temp }}/systemkit-logs/
+          if-no-files-found: error
+
+  objective-cpp:
+    name: 🩺 Scan Objective-C++ with Xcode
+    runs-on: macos-26
+    timeout-minutes: 25
+    steps:
+      - name: 📋 Show analysis plan
+        run: |
+          printf '%s\n' \
+            '1. Check out the source code.' \
+            '2. Run the Xcode static analyzer on SystemKit_Objc for macOS.' \
+            '3. Save the analysis log and the Xcode result bundle.'
+      - name: 📥 Check out source
+        id: checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: 🩺 Analyze SystemKit_Objc
+        run: |
+          bash .github/scripts/log-ci-step.sh "Analyze SystemKit_Objc" objective-cpp-analysis.log \
+            xcodebuild analyze -scheme SystemKit_Objc -destination 'generic/platform=macOS' \
+              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" \
+              -resultBundlePath "$RUNNER_TEMP/systemkit-logs/SystemKit_Objc.xcresult" \
+              CODE_SIGNING_ALLOWED=NO
+      - name: 📦 Upload Objective-C++ analysis results
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: objective-cpp-analysis
+          path: ${{ runner.temp }}/systemkit-logs/
+          if-no-files-found: error

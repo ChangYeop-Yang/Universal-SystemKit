@@ -1,4 +1,4 @@
-name: 🐦 Swift Workflow
+name: "🐦 Swift Workflow: Build the Swift Package"
 
 on:
   push:

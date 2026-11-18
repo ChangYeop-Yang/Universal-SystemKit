@@ -1,4 +1,4 @@
-name: 🍎 Apple Platform Builds Workflow
+name: "🍎 Apple Platform Builds Workflow: Build for Five Apple Platforms"
 
 on:
   push:

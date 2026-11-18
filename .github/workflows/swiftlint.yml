@@ -1,4 +1,4 @@
-name: 🧹 SwiftLint Workflow
+name: "🧹 SwiftLint Workflow: Check Swift Code Style"
 
 on:
   push:
