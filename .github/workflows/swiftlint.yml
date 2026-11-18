@@ -4,18 +4,23 @@ name: "🧹 SwiftLint Workflow: Check Swift Code Style"
 
 # Review style in pull requests to main and check the code after it reaches main.
 # Use the Run workflow button to check the code again without a new commit.
+
 on:
   push:
     branches: [main]
+
   pull_request:
     branches: [main]
+
   workflow_dispatch:
 
 # The job reads the repository and reports style findings in GitHub Actions.
+
 permissions:
   contents: read
 
 # Use US English for the command output stored in the lint logs.
+
 env:
   LC_ALL: en_US.UTF-8
   SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
@@ -23,9 +28,12 @@ env:
 jobs:
   lint:
     name: 🔎 Check Swift source
+
     # Use the Swift tools and Homebrew on the hosted macOS runner.
+
     runs-on: macos-26
     timeout-minutes: 15
+
     steps:
       - name: 📋 Show lint plan
         id: plan
@@ -36,24 +44,31 @@ jobs:
             '2. Install SwiftLint and print its version.' \
             '3. Check Package.swift and Sources. Report style issues as warnings.' \
             '4. Upload the lint logs and write a summary of the step results.'
+
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
+
       # Record the installed version because Homebrew can update SwiftLint.
+
       - name: 📦 Install SwiftLint
         id: install
         run: |
           bash .github/scripts/log-ci-step.sh "Install SwiftLint" swiftlint-install.log \
             bash -ec 'brew install swiftlint; swiftlint version'
+
       # Check the package manifest and library sources. Report style findings
       # as warnings so they do not fail the job. Use the GitHub Actions reporter
       # to show file names and line numbers with the findings.
+
       - name: 🧹 Run SwiftLint
         id: lint
         run: |
           bash .github/scripts/log-ci-step.sh "Run SwiftLint" swiftlint.log \
             swiftlint lint --lenient --reporter github-actions-logging Package.swift Sources
+
       # Save both logs when available, even if installation or linting fails.
+
       - name: 📦 Upload lint logs
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -62,7 +77,9 @@ jobs:
           name: swiftlint-logs
           path: ${{ runner.temp }}/systemkit-logs/
           if-no-files-found: error
+
       # Report installation and linting separately so a skipped check is visible.
+
       - name: 📝 Write lint summary
         if: ${{ always() }}
         run: |

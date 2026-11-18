@@ -4,18 +4,23 @@ name: "🐦 Swift Workflow: Build the Swift Package"
 
 # Check the package on pull requests to main and on pushes to main.
 # Use the Run workflow button to start a build without making a change.
+
 on:
   push:
     branches: [main]
+
   pull_request:
     branches: [main]
+
   workflow_dispatch:
 
 # The job only needs to read the repository to build the package.
+
 permissions:
   contents: read
 
 # Use US English for the command output stored in the build logs.
+
 env:
   LC_ALL: en_US.UTF-8
   SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
@@ -23,9 +28,12 @@ env:
 jobs:
   build:
     name: 🏗️ Build with SwiftPM
+
     # Swift Package Manager uses the Apple tools and SDK on the macOS runner.
+
     runs-on: macos-26
     timeout-minutes: 20
+
     steps:
       - name: 📋 Show build plan
         id: plan
@@ -36,22 +44,29 @@ jobs:
             '2. Check the Xcode and Swift versions.' \
             '3. Build the package with Swift Package Manager and record the full output.' \
             '4. Upload the build log and write a summary of the step results.'
+
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
+
       # Record the tools used in this run to help explain changes in build results.
+
       - name: 🔍 Check Xcode and Swift versions
         id: toolchain
         run: |
           bash .github/scripts/log-ci-step.sh "Check Xcode and Swift versions" toolchain.log \
             bash -ec 'uname -sm; xcodebuild -version; swift --version'
+
       # Check the command line build on macOS with Swift Package Manager.
       # The helper saves the detailed output and returns a failure if the build fails.
+
       - name: 🔨 Build Swift package
         id: build
         run: |
           bash .github/scripts/log-ci-step.sh "Build Swift package" swift-build.log swift build -v
+
       # Keep the tool and build logs available when a step fails after checkout.
+
       - name: 📦 Upload build logs
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -60,7 +75,9 @@ jobs:
           name: swift-build-logs
           path: ${{ runner.temp }}/systemkit-logs/
           if-no-files-found: error
+
       # Show which steps passed, failed, or were skipped in the run summary.
+
       - name: 📝 Write build summary
         if: ${{ always() }}
         run: |

@@ -1,8 +1,10 @@
 # Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
 
 version: 1
+
 builder:
   configs:
     - documentation_targets: [SystemKit]
+
 metadata:
   authors: “ChangYeop-Yang”
