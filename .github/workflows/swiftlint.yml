@@ -4,7 +4,6 @@ name: "🧹 SwiftLint Workflow: Check Swift Code Style"
 
 # Review style in pull requests to main and check the code after it reaches main.
 # Use the Run workflow button to check the code again without a new commit.
-
 on:
   push:
     branches: [main]
@@ -15,12 +14,10 @@ on:
   workflow_dispatch:
 
 # The job reads the repository and reports style findings in GitHub Actions.
-
 permissions:
   contents: read
 
 # Use US English for the command output stored in the lint logs.
-
 env:
   LC_ALL: en_US.UTF-8
   SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
@@ -30,7 +27,6 @@ jobs:
     name: 🔎 Check Swift source
 
     # Use the Swift tools and Homebrew on the hosted macOS runner.
-
     runs-on: macos-26
     timeout-minutes: 15
 
@@ -50,7 +46,6 @@ jobs:
         uses: actions/checkout@v6
 
       # Record the installed version because Homebrew can update SwiftLint.
-
       - name: 📦 Install SwiftLint
         id: install
         run: |
@@ -60,7 +55,6 @@ jobs:
       # Check the package manifest and library sources. Report style findings
       # as warnings so they do not fail the job. Use the GitHub Actions reporter
       # to show file names and line numbers with the findings.
-
       - name: 🧹 Run SwiftLint
         id: lint
         run: |
@@ -68,7 +62,6 @@ jobs:
             swiftlint lint --lenient --reporter github-actions-logging Package.swift Sources
 
       # Save both logs when available, even if installation or linting fails.
-
       - name: 📦 Upload lint logs
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -79,7 +72,6 @@ jobs:
           if-no-files-found: error
 
       # Report installation and linting separately so a skipped check is visible.
-
       - name: 📝 Write lint summary
         if: ${{ always() }}
         run: |

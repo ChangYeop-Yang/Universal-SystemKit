@@ -4,7 +4,6 @@ name: "📚 API Reference Workflow: Report SDKs and API Documentation"
 
 # Generate a fresh report when the report setup or package requirements change on main.
 # Use the Run workflow button when you need a report without a code change.
-
 on:
   push:
     branches: [main]
@@ -16,12 +15,10 @@ on:
   workflow_dispatch:
 
 # The job only needs to read the repository to run the report script.
-
 permissions:
   contents: read
 
 # Use US English for command output in the report.
-
 env:
   LC_ALL: en_US.UTF-8
   SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
@@ -31,7 +28,6 @@ jobs:
     name: 📝 Generate API reference report
 
     # Use macOS so the script can read the installed Xcode version and Apple SDKs.
-
     runs-on: macos-26
     timeout-minutes: 10
 
@@ -50,14 +46,12 @@ jobs:
         uses: actions/checkout@v6
         with:
           # The report script does not need the checkout token.
-
           persist-credentials: false
 
       # The script reads the minimum OS versions from the Swift package manifest.
       # Store the optional Context7 key as a repository secret in the Actions settings.
       # If the key is missing, the script tries the lookup without a key.
       # If a lookup fails, the report still shows the SDKs and official links.
-
       - name: 🔎 Collect API reference information
         id: collect
         env:
@@ -65,7 +59,6 @@ jobs:
         run: python3 .github/scripts/api-reference-report.py
 
       # Keep this file path in sync with the report script.
-
       - name: 📦 Upload text report
         id: report
         uses: actions/upload-artifact@v7
@@ -75,7 +68,6 @@ jobs:
           if-no-files-found: error
 
       # Include the lookup details when the script creates them.
-
       - name: 📝 Write API reference summary
         if: ${{ always() }}
         run: |

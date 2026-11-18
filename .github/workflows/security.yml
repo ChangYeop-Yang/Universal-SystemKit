@@ -4,7 +4,6 @@ name: "🔒 Security Workflow: Scan Source Code for Security Issues"
 
 # Run both checks for pull requests to main and for changes that reach main.
 # Use the Run workflow button to scan the code on demand.
-
 on:
   push:
     branches: [main]
@@ -16,12 +15,10 @@ on:
 
 # Jobs can read the source by default. Only CodeQL needs permission to publish
 # findings to GitHub Code Scanning.
-
 permissions:
   contents: read
 
 # Use US English for the build and analysis logs.
-
 env:
   LC_ALL: en_US.UTF-8
   SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
@@ -31,7 +28,6 @@ jobs:
     name: 🔍 Scan Swift with CodeQL
 
     # CodeQL needs a macOS runner to collect information during the Swift build.
-
     runs-on: macos-26
     timeout-minutes: 30
 
@@ -42,7 +38,6 @@ jobs:
     env:
       # CodeQL tracing supports Xcode 26 and Swift 6.3.
       # Check CodeQL support and the runner image before changing this path.
-
       DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
 
     steps:
@@ -61,11 +56,9 @@ jobs:
         uses: actions/checkout@v6
         with:
           # The build does not need the checkout token after fetching the source.
-
           persist-credentials: false
 
       # Record the selected tools before CodeQL starts collecting build data.
-
       - name: 🔧 Check Xcode and Swift versions
         id: toolchain
         run: |
@@ -74,7 +67,6 @@ jobs:
 
       # Manual build mode lets CodeQL collect data from the next build step.
       # The extended query set adds security checks to the standard set.
-
       - name: ⚙️ Set up CodeQL for Swift
         id: codeql_init
         uses: github/codeql-action/init@v4
@@ -84,7 +76,6 @@ jobs:
           queries: security-extended
 
       # Build the Swift library after setup so CodeQL can record this build.
-
       - name: 🐦 Build SystemKit for analysis
         id: build
         run: |
@@ -92,7 +83,6 @@ jobs:
             swift build --target SystemKit -v
 
       # Keep the category stable so GitHub groups the results across runs.
-
       - name: 🔎 Analyze Swift and publish results
         id: codeql_analyze
         uses: github/codeql-action/analyze@v4
@@ -100,7 +90,6 @@ jobs:
           category: "/language:swift"
 
       # Save the tool and build logs even when a later step fails.
-
       - name: 📦 Upload Swift build logs
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -111,7 +100,6 @@ jobs:
           if-no-files-found: error
 
       # Show the outcome of each step after the job tries to save the logs.
-
       - name: 📝 Write CodeQL summary
         if: ${{ always() }}
         run: |
@@ -137,7 +125,6 @@ jobs:
 
   # CodeQL does not support Objective-C++. Use the Xcode static analyzer
   # for the macOS Objective-C++ target.
-
   objective-cpp:
     name: 🩺 Scan Objective-C++ with Xcode
     runs-on: macos-26
@@ -157,11 +144,9 @@ jobs:
         uses: actions/checkout@v6
         with:
           # The analyzer does not need the checkout token.
-
           persist-credentials: false
 
       # Save the result bundle with the log so findings can be opened in Xcode.
-
       - name: 🩺 Analyze SystemKit_Objc
         id: analyze
         run: |
@@ -172,7 +157,6 @@ jobs:
               CODE_SIGNING_ALLOWED=NO
 
       # Keep any files produced before a failure, including the analysis log.
-
       - name: 📦 Upload Objective-C++ analysis results
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -183,7 +167,6 @@ jobs:
           if-no-files-found: error
 
       # Show the outcome of each step after the job tries to save the results.
-
       - name: 📝 Write Xcode analysis summary
         if: ${{ always() }}
         run: |
