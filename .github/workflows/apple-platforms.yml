@@ -33,6 +33,18 @@ jobs:
           - platform: watchOS
             destination: generic/platform=watchOS Simulator
     steps:
+      - name: 📋 Show build plan
+        env:
+          PLATFORM: ${{ matrix.platform }}
+          DESTINATION: ${{ matrix.destination }}
+        run: |
+          printf 'This job builds the libraries for %s.\n' "$PLATFORM"
+          printf 'Build destination: %s\n' "$DESTINATION"
+          printf '%s\n' \
+            '1. Check out the source code.' \
+            '2. Check the Xcode and Swift versions and list the installed SDKs.' \
+            '3. Build SystemKit and SystemKit_Objc in separate steps.' \
+            '4. Upload the build logs and write a summary of the step results.'
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6

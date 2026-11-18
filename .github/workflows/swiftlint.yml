@@ -19,6 +19,14 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 15
     steps:
+      - name: 📋 Show lint plan
+        run: |
+          printf '%s\n' \
+            'This job checks the style of the Swift source code.' \
+            '1. Check out the source code.' \
+            '2. Install SwiftLint and print its version.' \
+            '3. Check Package.swift and Sources. Report style issues as warnings.' \
+            '4. Upload the lint logs and write a summary of the step results.'
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6

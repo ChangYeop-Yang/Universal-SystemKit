@@ -19,6 +19,14 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 20
     steps:
+      - name: 📋 Show build plan
+        run: |
+          printf '%s\n' \
+            'This job builds the Swift package on macOS.' \
+            '1. Check out the source code.' \
+            '2. Check the Xcode and Swift versions.' \
+            '3. Build the package with Swift Package Manager and record the full output.' \
+            '4. Upload the build log and write a summary of the step results.'
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
