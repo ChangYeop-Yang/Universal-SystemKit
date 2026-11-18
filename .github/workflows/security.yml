@@ -1,3 +1,5 @@
+# Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
+
 name: "🔒 Security Workflow: Scan Source Code for Security Issues"
 
 # Run both checks for pull requests to main and for changes that reach main.

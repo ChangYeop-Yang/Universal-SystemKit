@@ -1,3 +1,5 @@
+# Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
+
 name: "🍎 Apple Platform Builds Workflow: Build for Apple Platforms"
 
 # Build pull requests that target main and run the same checks on pushes to main.

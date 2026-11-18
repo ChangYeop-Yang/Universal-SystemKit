@@ -1,3 +1,5 @@
+# Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
+
 name: "📚 API Reference Workflow: Report SDKs and API Documentation"
 
 # Generate a fresh report when the report setup or package requirements change on main.

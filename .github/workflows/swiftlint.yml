@@ -1,3 +1,5 @@
+# Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
+
 name: "🧹 SwiftLint Workflow: Check Swift Code Style"
 
 # Review style in pull requests to main and check the code after it reaches main.

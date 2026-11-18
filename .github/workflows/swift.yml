@@ -1,3 +1,5 @@
+# Copyright (c) 2026 ChangYeop-Yang. All rights reserved.
+
 name: "🐦 Swift Workflow: Build the Swift Package"
 
 # Check the package on pull requests to main and on pushes to main.
