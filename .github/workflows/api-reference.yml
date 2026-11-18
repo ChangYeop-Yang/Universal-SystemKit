@@ -7,8 +7,6 @@ on:
       - .github/workflows/api-reference.yml
       - .github/scripts/api-reference-report.py
       - Package.swift
-  schedule:
-    - cron: "23 1 * * 1"
   workflow_dispatch:
 
 permissions:
