@@ -1,4 +1,4 @@
-name: 🍎 Apple Platform Builds
+name: 🍎 Apple Platform Builds Workflow
 
 on:
   push:
