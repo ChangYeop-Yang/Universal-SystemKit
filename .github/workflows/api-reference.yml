@@ -18,6 +18,7 @@ permissions:
 # Use US English for command output in the report.
 env:
   LC_ALL: en_US.UTF-8
+  SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
 
 jobs:
   report:
@@ -27,13 +28,15 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 📋 Show report plan
+        id: plan
         run: |
           printf '%s\n' \
             '1. Check out the source code.' \
             '2. List the installed Apple SDKs and package deployment targets.' \
             '3. Look up Swift and SwiftLog documentation with Context7.' \
-            '4. Publish the run summary and upload the text report.'
+            '4. Upload the text report and publish the run summary.'
       - name: 📥 Check out source
+        id: checkout
         uses: actions/checkout@v6
         with:
           # The report script does not need the checkout token.
@@ -43,14 +46,39 @@ jobs:
       # If the key is missing, the script tries the lookup without a key.
       # If a lookup fails, the report still shows the SDKs and official links.
       - name: 🔎 Collect API reference information
+        id: collect
         env:
           CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
         run: python3 .github/scripts/api-reference-report.py
-      # The run summary shows the lookup status. The download includes the full report.
       # Keep this file path in sync with the report script.
       - name: 📦 Upload text report
+        id: report
         uses: actions/upload-artifact@v7
         with:
           name: api-reference-report
           path: ${{ runner.temp }}/api-reference-report/api-reference-report.txt
           if-no-files-found: error
+      # Include the lookup details when the script creates them.
+      - name: 📝 Write API reference summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## 📚 API reference report
+
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
+
+          | Step | Result |
+          | --- | --- |
+          | Show report plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Collect API reference information | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.collect.outcome || 'skipped'] }} |
+          | Upload text report | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.report.outcome || 'skipped'] }} |
+
+          ${{ steps.report.outputs.artifact-url && format('📦 [Download the API reference report]({0})', steps.report.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
+          SUMMARY
+
+          details="$RUNNER_TEMP/api-reference-report/context7-summary.md"
+          if [[ -f "$details" ]]; then
+            printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            cat "$details" >> "$GITHUB_STEP_SUMMARY"
+          fi

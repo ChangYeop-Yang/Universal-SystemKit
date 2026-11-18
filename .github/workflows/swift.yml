@@ -16,6 +16,7 @@ permissions:
 # Use US English for the command output stored in the build logs.
 env:
   LC_ALL: en_US.UTF-8
+  SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
 
 jobs:
   build:
@@ -25,6 +26,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: 📋 Show build plan
+        id: plan
         run: |
           printf '%s\n' \
             'This job builds the Swift package on macOS.' \
@@ -61,12 +63,17 @@ jobs:
         if: ${{ always() }}
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
-          ## Swift package build results
+          ## 🐦 Swift package build
+
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
 
           | Step | Result |
           | --- | --- |
-          | Check out source | ${{ steps.checkout.outcome }} |
-          | Check Xcode and Swift versions | ${{ steps.toolchain.outcome }} |
-          | Build Swift package | ${{ steps.build.outcome }} |
-          | Upload build logs | ${{ steps.logs.outcome }} |
+          | Show build plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Check Xcode and Swift versions | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.toolchain.outcome || 'skipped'] }} |
+          | Build Swift package | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.build.outcome || 'skipped'] }} |
+          | Upload build logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
+
+          ${{ steps.logs.outputs.artifact-url && format('📦 [Download build logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
           SUMMARY

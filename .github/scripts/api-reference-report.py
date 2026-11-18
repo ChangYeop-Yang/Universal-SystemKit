@@ -1,4 +1,4 @@
-"""Write a plain-text API reference report and a GitHub Actions summary."""
+"""Write the API reference report and the Context7 details for the job summary."""
 
 import json
 import os
@@ -76,7 +76,7 @@ def main():
     lines.extend(["", "Apple SDK release notes", "https://developer.apple.com/documentation/xcode-release-notes"])
 
     summary = [
-        "## API reference report",
+        "### 📖 Context7 documentation",
         "",
         f"Generated {generated_at}",
         "",
@@ -89,15 +89,11 @@ def main():
         lines.extend(["", title, f"Official reference: {upstream}", f"Context7 lookup: {status}"])
         if excerpt:
             lines.extend([f"Context7 query: {query}", "", excerpt])
-        summary.append(f"| [{title}]({upstream}) | {status} |")
+        icon = "✅" if excerpt else "⚠️"
+        summary.append(f"| [{title}]({upstream}) | {icon} {status} |")
 
-    summary.extend([
-        "",
-        "Download the **api-reference-report** artifact for the text report, installed SDKs, and package deployment targets.",
-    ])
     (report_dir / "api-reference-report.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary_file:
-        summary_file.write("\n".join(summary) + "\n")
+    (report_dir / "context7-summary.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

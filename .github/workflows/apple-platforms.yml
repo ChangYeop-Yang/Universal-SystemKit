@@ -16,6 +16,7 @@ permissions:
 # Use US English so the build messages are easy to compare across platforms.
 env:
   LC_ALL: en_US.UTF-8
+  SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
 
 jobs:
   build:
@@ -42,6 +43,7 @@ jobs:
             destination: generic/platform=watchOS Simulator
     steps:
       - name: 📋 Show build plan
+        id: plan
         env:
           PLATFORM: ${{ matrix.platform }}
           DESTINATION: ${{ matrix.destination }}
@@ -98,15 +100,20 @@ jobs:
         if: ${{ always() }}
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
-          ## ${{ matrix.platform }} build results
+          ## 🍎 ${{ matrix.platform }} build
 
-          Destination: `${{ matrix.destination }}`
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
+
+          **Destination** `${{ matrix.destination }}`
 
           | Step | Result |
           | --- | --- |
-          | Check out source | ${{ steps.checkout.outcome }} |
-          | Check Xcode and installed SDKs | ${{ steps.toolchain.outcome }} |
-          | Build SystemKit | ${{ steps.swift_build.outcome }} |
-          | Build SystemKit_Objc | ${{ steps.objc_build.outcome }} |
-          | Upload build logs | ${{ steps.logs.outcome }} |
+          | Show build plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Check Xcode and installed SDKs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.toolchain.outcome || 'skipped'] }} |
+          | Build SystemKit | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.swift_build.outcome || 'skipped'] }} |
+          | Build SystemKit_Objc | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.objc_build.outcome || 'skipped'] }} |
+          | Upload build logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
+
+          ${{ steps.logs.outputs.artifact-url && format('📦 [Download build logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
           SUMMARY

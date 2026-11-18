@@ -16,6 +16,7 @@ permissions:
 # Use US English for the command output stored in the lint logs.
 env:
   LC_ALL: en_US.UTF-8
+  SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
 
 jobs:
   lint:
@@ -25,6 +26,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📋 Show lint plan
+        id: plan
         run: |
           printf '%s\n' \
             'This job checks the style of the Swift source code.' \
@@ -63,14 +65,19 @@ jobs:
         if: ${{ always() }}
         run: |
           cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
-          ## SwiftLint results
+          ## 🧹 SwiftLint
 
-          SwiftLint reports style issues as warnings with file names and line numbers.
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
 
           | Step | Result |
           | --- | --- |
-          | Check out source | ${{ steps.checkout.outcome }} |
-          | Install SwiftLint | ${{ steps.install.outcome }} |
-          | Run SwiftLint | ${{ steps.lint.outcome }} |
-          | Upload lint logs | ${{ steps.logs.outcome }} |
+          | Show lint plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Install SwiftLint | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.install.outcome || 'skipped'] }} |
+          | Run SwiftLint | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.lint.outcome || 'skipped'] }} |
+          | Upload lint logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
+
+          ℹ️ SwiftLint reports style issues as warnings with file names and line numbers.
+
+          ${{ steps.logs.outputs.artifact-url && format('📦 [Download lint logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
           SUMMARY

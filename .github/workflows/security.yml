@@ -17,6 +17,7 @@ permissions:
 # Use US English for the build and analysis logs.
 env:
   LC_ALL: en_US.UTF-8
+  SUMMARY_RESULTS: '{"success":"✅ Passed","failure":"❌ Failed","skipped":"⏭️ Skipped","cancelled":"🛑 Canceled"}'
 
 jobs:
   swift:
@@ -33,12 +34,14 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
     steps:
       - name: 📋 Show analysis plan
+        id: plan
         run: |
           printf '%s\n' \
             '1. Check out the source code and check the Xcode and Swift versions.' \
             '2. Set up CodeQL for Swift.' \
             '3. Build SystemKit for macOS so CodeQL can collect source information.' \
-            '4. Run the security checks, send the results to GitHub Code Scanning, and save the build logs.'
+            '4. Run the security checks and send the results to GitHub Code Scanning.' \
+            '5. Save the build logs and write a summary of the step results.'
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
@@ -47,12 +50,14 @@ jobs:
           persist-credentials: false
       # Record the selected tools before CodeQL starts collecting build data.
       - name: 🔧 Check Xcode and Swift versions
+        id: toolchain
         run: |
           bash .github/scripts/log-ci-step.sh "Check Xcode and Swift versions" toolchain.log \
             bash -ec 'xcodebuild -version; swift --version'
       # Manual build mode lets CodeQL collect data from the next build step.
       # The extended query set adds security checks to the standard set.
       - name: ⚙️ Set up CodeQL for Swift
+        id: codeql_init
         uses: github/codeql-action/init@v4
         with:
           languages: swift
@@ -60,22 +65,48 @@ jobs:
           queries: security-extended
       # Build the Swift library after setup so CodeQL can record this build.
       - name: 🐦 Build SystemKit for analysis
+        id: build
         run: |
           bash .github/scripts/log-ci-step.sh "Build SystemKit for analysis" swift-build.log \
             swift build --target SystemKit -v
       # Keep the category stable so GitHub groups the results across runs.
       - name: 🔎 Analyze Swift and publish results
+        id: codeql_analyze
         uses: github/codeql-action/analyze@v4
         with:
           category: "/language:swift"
       # Save the tool and build logs even when a later step fails.
       - name: 📦 Upload Swift build logs
+        id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
         uses: actions/upload-artifact@v7
         with:
           name: codeql-swift-build-logs
           path: ${{ runner.temp }}/systemkit-logs/
           if-no-files-found: error
+      # Show the outcome of each step after the job tries to save the logs.
+      - name: 📝 Write CodeQL summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## 🔍 Swift security analysis
+
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
+
+          | Step | Result |
+          | --- | --- |
+          | Show analysis plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Check Xcode and Swift versions | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.toolchain.outcome || 'skipped'] }} |
+          | Set up CodeQL | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.codeql_init.outcome || 'skipped'] }} |
+          | Build SystemKit | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.build.outcome || 'skipped'] }} |
+          | Analyze Swift and publish results | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.codeql_analyze.outcome || 'skipped'] }} |
+          | Upload build logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
+
+          ${{ steps.logs.outputs.artifact-url && format('📦 [Download build logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
+
+          ℹ️ Review reported findings in [GitHub Code Scanning](${{ github.server_url }}/${{ github.repository }}/security/code-scanning).
+          SUMMARY
 
   # CodeQL does not support Objective-C++. Use the Xcode static analyzer
   # for the macOS Objective-C++ target.
@@ -85,11 +116,12 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: 📋 Show analysis plan
+        id: plan
         run: |
           printf '%s\n' \
             '1. Check out the source code.' \
             '2. Run the Xcode static analyzer on SystemKit_Objc for macOS.' \
-            '3. Save the analysis log and the Xcode result bundle.'
+            '3. Save the analysis log and Xcode result bundle, then write a summary.'
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
@@ -98,6 +130,7 @@ jobs:
           persist-credentials: false
       # Save the result bundle with the log so findings can be opened in Xcode.
       - name: 🩺 Analyze SystemKit_Objc
+        id: analyze
         run: |
           bash .github/scripts/log-ci-step.sh "Analyze SystemKit_Objc" objective-cpp-analysis.log \
             xcodebuild analyze -scheme SystemKit_Objc -destination 'generic/platform=macOS' \
@@ -106,9 +139,28 @@ jobs:
               CODE_SIGNING_ALLOWED=NO
       # Keep any files produced before a failure, including the analysis log.
       - name: 📦 Upload Objective-C++ analysis results
+        id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
         uses: actions/upload-artifact@v7
         with:
           name: objective-cpp-analysis
           path: ${{ runner.temp }}/systemkit-logs/
           if-no-files-found: error
+      # Show the outcome of each step after the job tries to save the results.
+      - name: 📝 Write Xcode analysis summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## 🩺 Objective-C++ security analysis
+
+          **Job result** ${{ fromJSON(env.SUMMARY_RESULTS)[job.status] }}
+
+          | Step | Result |
+          | --- | --- |
+          | Show analysis plan | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.plan.outcome || 'skipped'] }} |
+          | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
+          | Analyze SystemKit_Objc | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.analyze.outcome || 'skipped'] }} |
+          | Upload analysis results | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
+
+          ${{ steps.logs.outputs.artifact-url && format('📦 [Download Xcode analysis files]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
+          SUMMARY
