@@ -13,10 +13,8 @@ permissions:
 jobs:
   build:
     name: Build for ${{ matrix.platform }}
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 25
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
     strategy:
       fail-fast: false
       matrix:
@@ -32,13 +30,21 @@ jobs:
           - platform: watchOS
             destination: generic/platform=watchOS Simulator
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build Swift and Objective-C libraries
         env:
           DESTINATION: ${{ matrix.destination }}
         run: |
           xcodebuild -version
           for scheme in SystemKit SystemKit_Objc; do
-            xcodebuild build -scheme "$scheme" -destination "$DESTINATION" \
-              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+            log="$RUNNER_TEMP/$scheme.log"
+            if ! xcodebuild build -scheme "$scheme" -destination "$DESTINATION" \
+              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO > "$log" 2>&1; then
+              cat "$log"
+              error=$(awk '/[Ee]rror:/{print; exit}' "$log")
+              error=${error//%/%25}
+              echo "::error::${scheme}: ${error:-xcodebuild failed. See the job log.}"
+              exit 1
+            fi
+            cat "$log"
           done
