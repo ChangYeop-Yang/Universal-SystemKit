@@ -1,5 +1,7 @@
 name: "🍎 Apple Platform Builds Workflow: Build for Apple Platforms"
 
+# Build pull requests that target main and run the same checks on pushes to main.
+# Use the Run workflow button to repeat the builds on demand.
 on:
   push:
     branches: [main]
@@ -7,20 +9,26 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The jobs only need to read the repository to build the package.
 permissions:
   contents: read
 
+# Use US English so the build messages are easy to compare across platforms.
 env:
   LC_ALL: en_US.UTF-8
 
 jobs:
   build:
     name: 🏗️ Build for ${{ matrix.platform }}
+    # Use the default Xcode and platform SDKs on the hosted macOS runner.
     runs-on: macos-26
     timeout-minutes: 25
     strategy:
+      # Let the other platform builds finish when one platform fails.
       fail-fast: false
       matrix:
+        # Run one job per platform. Generic simulator destinations avoid
+        # depending on a specific device model or starting a simulator.
         include:
           - platform: macOS
             destination: generic/platform=macOS
@@ -48,11 +56,14 @@ jobs:
       - name: 📥 Check out source
         id: checkout
         uses: actions/checkout@v6
+      # Record the runner, tool versions, and SDKs to help trace build changes.
       - name: 🔍 Check Xcode and installed SDKs
         id: toolchain
         run: |
           bash .github/scripts/log-ci-step.sh "Check Xcode and installed SDKs" toolchain.log \
             bash -ec 'uname -sm; xcodebuild -version; swift --version; xcodebuild -showsdks'
+      # Build each library in its own step so the summary identifies which one failed.
+      # Code signing is off because these are build checks for macOS and simulators.
       - name: 🐦 Build SystemKit
         id: swift_build
         env:
@@ -61,6 +72,8 @@ jobs:
           bash .github/scripts/log-ci-step.sh "Build SystemKit" SystemKit.log \
             xcodebuild build -scheme SystemKit -destination "$DESTINATION" \
               -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+      # Try the second library even if the Swift build fails, as long as the
+      # tools are ready and the job has not been canceled.
       - name: 🧱 Build SystemKit_Objc
         id: objc_build
         if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
@@ -70,6 +83,8 @@ jobs:
           bash .github/scripts/log-ci-step.sh "Build SystemKit_Objc" SystemKit_Objc.log \
             xcodebuild build -scheme SystemKit_Objc -destination "$DESTINATION" \
               -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+      # Save logs even after a build failure. Use a different name for each
+      # platform so jobs in the same run do not share an artifact name.
       - name: 📦 Upload build logs
         id: logs
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
@@ -78,6 +93,7 @@ jobs:
           name: apple-build-logs-${{ matrix.platform }}
           path: ${{ runner.temp }}/systemkit-logs/
           if-no-files-found: error
+      # Show the status of each step, including failures and skipped steps.
       - name: 📝 Write build summary
         if: ${{ always() }}
         run: |
