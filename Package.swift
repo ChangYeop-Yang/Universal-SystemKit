@@ -1,4 +1,4 @@
-// swift-tools-version: 5.4
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /*
@@ -37,6 +37,9 @@ let package = Package(
         
         // iOS 13 이상의 운영체제부터 사용이 가능합니다.
         .iOS(SupportedPlatform.IOSVersion.v13),
+        .tvOS(.v13),
+        .watchOS(.v6),
+        .visionOS(.v1),
     ],
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     products: [
@@ -155,8 +158,7 @@ public enum RemotePackage: String, CaseIterable, PackageProtocol {
             let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
             return .target(name: self.name, condition: condition)
         case .SwiftLog:
-            let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
-            return .product(name: "Logging", package: self.name, condition: condition)
+            return .product(name: "Logging", package: self.name)
         case .SwiftHTTPTypes:
             let condition = TargetDependencyCondition.when(platforms: InfoPackage.platforms)
             return .product(name: "HTTPTypes", package: self.name, condition: condition)

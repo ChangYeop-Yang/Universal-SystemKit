@@ -21,7 +21,7 @@
  */
 
 // swiftlint:disable all
-#if os(iOS) || os(macOS) || os(Linux)
+#if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux)
 import Foundation
 
 @objc public protocol SKClass: AnyObject {

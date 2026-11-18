@@ -1,0 +1,44 @@
+name: Apple Platform Builds
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build for ${{ matrix.platform }}
+    runs-on: macos-15
+    timeout-minutes: 25
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macOS
+            destination: generic/platform=macOS
+          - platform: iOS
+            destination: generic/platform=iOS Simulator
+          - platform: visionOS
+            destination: generic/platform=visionOS Simulator
+          - platform: tvOS
+            destination: generic/platform=tvOS Simulator
+          - platform: watchOS
+            destination: generic/platform=watchOS Simulator
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Swift and Objective-C libraries
+        env:
+          DESTINATION: ${{ matrix.destination }}
+        run: |
+          xcodebuild -version
+          for scheme in SystemKit SystemKit_Objc; do
+            xcodebuild build -scheme "$scheme" -destination "$DESTINATION" \
+              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+          done
