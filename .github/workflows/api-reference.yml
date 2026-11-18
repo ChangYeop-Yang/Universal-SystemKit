@@ -1,0 +1,46 @@
+name: "📚 API Reference Workflow: Report SDKs and API Documentation"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/api-reference.yml
+      - .github/scripts/api-reference-report.py
+      - Package.swift
+  schedule:
+    - cron: "23 1 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  report:
+    name: 📝 Generate API reference report
+    runs-on: macos-26
+    timeout-minutes: 10
+    steps:
+      - name: 📋 Show report plan
+        run: |
+          printf '%s\n' \
+            '1. Check out the source code.' \
+            '2. List the installed Apple SDKs and package deployment targets.' \
+            '3. Look up Swift and SwiftLog documentation with Context7.' \
+            '4. Publish the run summary and upload the text report.'
+      - name: 📥 Check out source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: 🔎 Collect API reference information
+        env:
+          CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
+        run: python3 .github/scripts/api-reference-report.py
+      - name: 📦 Upload text report
+        uses: actions/upload-artifact@v7
+        with:
+          name: api-reference-report
+          path: ${{ runner.temp }}/api-reference-report/api-reference-report.txt
+          if-no-files-found: error
