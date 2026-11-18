@@ -1,4 +1,4 @@
-name: Swift
+name: 🐦 Swift
 
 on:
   push:
@@ -10,14 +10,45 @@ on:
 permissions:
   contents: read
 
+env:
+  LC_ALL: en_US.UTF-8
+
 jobs:
   build:
+    name: 🏗️ Build with SwiftPM
     runs-on: macos-26
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
-      - name: Build Swift package
+      - name: 📥 Check out source
+        id: checkout
+        uses: actions/checkout@v6
+      - name: 🔍 Check Xcode and Swift versions
+        id: toolchain
         run: |
-          xcodebuild -version
-          swift --version
-          swift build -v
+          bash .github/scripts/log-ci-step.sh "Check Xcode and Swift versions" toolchain.log \
+            bash -ec 'uname -sm; xcodebuild -version; swift --version'
+      - name: 🔨 Build Swift package
+        id: build
+        run: |
+          bash .github/scripts/log-ci-step.sh "Build Swift package" swift-build.log swift build -v
+      - name: 📦 Upload build logs
+        id: logs
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: swift-build-logs
+          path: ${{ runner.temp }}/systemkit-logs/
+          if-no-files-found: error
+      - name: 📝 Write build summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## Swift package build results
+
+          | Step | Result |
+          | --- | --- |
+          | Check out source | ${{ steps.checkout.outcome }} |
+          | Check Xcode and Swift versions | ${{ steps.toolchain.outcome }} |
+          | Build Swift package | ${{ steps.build.outcome }} |
+          | Upload build logs | ${{ steps.logs.outcome }} |
+          SUMMARY

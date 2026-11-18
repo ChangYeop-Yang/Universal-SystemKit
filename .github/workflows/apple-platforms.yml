@@ -1,4 +1,4 @@
-name: Apple Platform Builds
+name: 🍎 Apple Platform Builds
 
 on:
   push:
@@ -10,9 +10,12 @@ on:
 permissions:
   contents: read
 
+env:
+  LC_ALL: en_US.UTF-8
+
 jobs:
   build:
-    name: Build for ${{ matrix.platform }}
+    name: 🏗️ Build for ${{ matrix.platform }}
     runs-on: macos-26
     timeout-minutes: 25
     strategy:
@@ -30,21 +33,52 @@ jobs:
           - platform: watchOS
             destination: generic/platform=watchOS Simulator
     steps:
-      - uses: actions/checkout@v6
-      - name: Build Swift and Objective-C libraries
+      - name: 📥 Check out source
+        id: checkout
+        uses: actions/checkout@v6
+      - name: 🔍 Check Xcode and installed SDKs
+        id: toolchain
+        run: |
+          bash .github/scripts/log-ci-step.sh "Check Xcode and installed SDKs" toolchain.log \
+            bash -ec 'uname -sm; xcodebuild -version; swift --version; xcodebuild -showsdks'
+      - name: 🐦 Build SystemKit
+        id: swift_build
         env:
           DESTINATION: ${{ matrix.destination }}
         run: |
-          xcodebuild -version
-          for scheme in SystemKit SystemKit_Objc; do
-            log="$RUNNER_TEMP/$scheme.log"
-            if ! xcodebuild build -scheme "$scheme" -destination "$DESTINATION" \
-              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO > "$log" 2>&1; then
-              cat "$log"
-              error=$(awk '/[Ee]rror:/{print; exit}' "$log")
-              error=${error//%/%25}
-              echo "::error::${scheme}: ${error:-xcodebuild failed. See the job log.}"
-              exit 1
-            fi
-            cat "$log"
-          done
+          bash .github/scripts/log-ci-step.sh "Build SystemKit" SystemKit.log \
+            xcodebuild build -scheme SystemKit -destination "$DESTINATION" \
+              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+      - name: 🧱 Build SystemKit_Objc
+        id: objc_build
+        if: ${{ !cancelled() && steps.toolchain.outcome == 'success' }}
+        env:
+          DESTINATION: ${{ matrix.destination }}
+        run: |
+          bash .github/scripts/log-ci-step.sh "Build SystemKit_Objc" SystemKit_Objc.log \
+            xcodebuild build -scheme SystemKit_Objc -destination "$DESTINATION" \
+              -derivedDataPath "$RUNNER_TEMP/Universal-SystemKit" CODE_SIGNING_ALLOWED=NO
+      - name: 📦 Upload build logs
+        id: logs
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: apple-build-logs-${{ matrix.platform }}
+          path: ${{ runner.temp }}/systemkit-logs/
+          if-no-files-found: error
+      - name: 📝 Write build summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## ${{ matrix.platform }} build results
+
+          Destination: `${{ matrix.destination }}`
+
+          | Step | Result |
+          | --- | --- |
+          | Check out source | ${{ steps.checkout.outcome }} |
+          | Check Xcode and installed SDKs | ${{ steps.toolchain.outcome }} |
+          | Build SystemKit | ${{ steps.swift_build.outcome }} |
+          | Build SystemKit_Objc | ${{ steps.objc_build.outcome }} |
+          | Upload build logs | ${{ steps.logs.outcome }} |
+          SUMMARY

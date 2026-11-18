@@ -1,0 +1,57 @@
+name: 🧹 SwiftLint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  lint:
+    name: 🔎 Check Swift source
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Check out source
+        id: checkout
+        uses: actions/checkout@v6
+      - name: 📦 Install SwiftLint
+        id: install
+        run: |
+          bash .github/scripts/log-ci-step.sh "Install SwiftLint" swiftlint-install.log \
+            bash -ec 'brew install swiftlint; swiftlint version'
+      - name: 🧹 Run SwiftLint
+        id: lint
+        run: |
+          bash .github/scripts/log-ci-step.sh "Run SwiftLint" swiftlint.log \
+            swiftlint lint --lenient --reporter github-actions-logging Package.swift Sources
+      - name: 📦 Upload lint logs
+        id: logs
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: swiftlint-logs
+          path: ${{ runner.temp }}/systemkit-logs/
+          if-no-files-found: error
+      - name: 📝 Write lint summary
+        if: ${{ always() }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          ## SwiftLint results
+
+          SwiftLint reports style issues as warnings with file names and line numbers.
+
+          | Step | Result |
+          | --- | --- |
+          | Check out source | ${{ steps.checkout.outcome }} |
+          | Install SwiftLint | ${{ steps.install.outcome }} |
+          | Run SwiftLint | ${{ steps.lint.outcome }} |
+          | Upload lint logs | ${{ steps.logs.outcome }} |
+          SUMMARY
