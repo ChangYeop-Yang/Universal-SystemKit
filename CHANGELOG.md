@@ -2,8 +2,6 @@
 
 [![Latest release](https://img.shields.io/github/v/release/ChangYeop-Yang/Universal-SystemKit?label=Latest%20release)](https://github.com/ChangYeop-Yang/Universal-SystemKit/releases/latest)
 
-Copyright © 2026 Universal SystemKit. All rights reserved.
-
 This file lists notable changes to Universal SystemKit. The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). Release dates come from GitHub Releases.
 
 ## [Unreleased]
@@ -27,6 +25,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 - Updated the development rules to require a changelog update after all work and checks for each task are complete. [Development rules](AGENTS.md)
 - Added nine rules to the development guide for explaining assumptions and choices, keeping changes focused, and defining and running checks before marking work complete. [Development rules](AGENTS.md#-plan-and-scope-changes)
 - Required a standard copyright notice in source files and documentation, with the year set to the current year when a file is written or updated. [Development rules](AGENTS.md#-write-for-readers)
+- Moved copyright notices to a footer in the development guide and changelog, with a direct link to the MIT license. [Development rules](AGENTS.md#-write-for-readers)
 
 ## [2.4.0] - 2024-08-18
 
@@ -148,3 +147,9 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 [2.1.0]: https://github.com/ChangYeop-Yang/Universal-SystemKit/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/ChangYeop-Yang/Universal-SystemKit/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/ChangYeop-Yang/Universal-SystemKit/releases/tag/1.0.0
+
+---
+
+> **Copyright © 2026 Universal SystemKit.** All rights reserved.
+>
+> [MIT License](LICENSE)

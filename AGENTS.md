@@ -3,8 +3,6 @@
 [![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange)](Package.swift)
 [![Swift build status](https://img.shields.io/github/actions/workflow/status/ChangYeop-Yang/Universal-SystemKit/swift.yml?branch=main&label=Swift%20build)](https://github.com/ChangYeop-Yang/Universal-SystemKit/actions/workflows/swift.yml)
 
-Copyright © 2026 Universal SystemKit. All rights reserved.
-
 These rules apply throughout the repository, including the SystemKit Swift library, the SystemKit_Objc library, and their build workflows.
 
 ## 🔒 Change this guide
@@ -19,7 +17,8 @@ Stop work immediately if an operation would seriously damage the project, includ
 
 ## 📝 Write for readers
 
-- Include the copyright notice shown at the top of this guide in every project source file and document you write or update. Use a comment in source code and a visible line in documentation. Set the year to the current calendar year whenever you write or update the file.
+- Include the copyright notice shown at the end of this guide in every project source file and document you write or update. Set the year to the current calendar year whenever you write or update the file. Use a comment in source code and place the notice at the very end of documentation.
+- In Markdown documents, put a horizontal rule above the notice and use a blockquote for the footer. Bold the first sentence and put a relative link to the repository's MIT license in a separate paragraph within the same blockquote.
 - Write every README.md below the repository root in US English. The root README.md is exempt from this language rule.
 - Write all source code comments in US English. Use common, TOEIC-level words in comments and English README files. Keep exact API names and technical terms when readers need them.
 - Proofread documentation and comments for spelling, grammar, and meaning. Use natural sentences that a teammate can follow. Remove repeated phrases, filler, and stock wording associated with AI-generated text.
@@ -60,3 +59,9 @@ Stop work immediately if an operation would seriously damage the project, includ
 3. Verify the Apple platform builds affected by the change. When a fix changes behavior, run a check that would have caught the original problem. Check behavior that depends on device hardware or system permissions on a supported device when one is available, and report what you verified. For package product or public API changes, also check the SwiftPM consumer step. It builds and runs a separate release executable that imports both libraries. [Swift workflow](.github/workflows/swift.yml) and [Apple platform builds](.github/workflows/apple-platforms.yml)
 4. Remove all temporary files and directories created by your task. Check their paths and ownership before cleanup. Preserve existing user files, project sources, and documentation. Review the final diff and `git status --short` for unexpected changes.
 5. Update `CHANGELOG.md` at the end of every task. Wait until all work and checks are complete, then record the final changes under `Unreleased`.
+
+---
+
+> **Copyright © 2026 Universal SystemKit.** All rights reserved.
+>
+> [MIT License](LICENSE)
