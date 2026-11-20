@@ -39,7 +39,8 @@ jobs:
             '1. Check out the source code.' \
             '2. Check the Xcode and Swift versions.' \
             '3. Build the package with Swift Package Manager and record the full output.' \
-            '4. Upload the build log and write a summary of the step results.'
+            '4. Build and run a small program that uses both package libraries.' \
+            '5. Upload the logs and write a summary of the step results.'
 
       - name: 📥 Check out source
         id: checkout
@@ -58,6 +59,14 @@ jobs:
         id: build
         run: |
           bash .github/scripts/log-ci-step.sh "Build Swift package" swift-build.log swift build -v
+
+      # Build and run a separate package in release mode to check that users can
+      # import and link both library products from outside this repository.
+      - name: 🧪 Test Swift package as a dependency
+        id: smoke_test
+        run: |
+          bash .github/scripts/log-ci-step.sh "Test Swift package as a dependency" swift-consumer.log \
+            bash .github/scripts/smoke-test-swift-package.sh
 
       # Keep the tool and build logs available when a step fails after checkout.
       - name: 📦 Upload build logs
@@ -84,6 +93,7 @@ jobs:
           | Check out source | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.checkout.outcome || 'skipped'] }} |
           | Check Xcode and Swift versions | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.toolchain.outcome || 'skipped'] }} |
           | Build Swift package | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.build.outcome || 'skipped'] }} |
+          | Test Swift package as a dependency | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.smoke_test.outcome || 'skipped'] }} |
           | Upload build logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
 
           ${{ steps.logs.outputs.artifact-url && format('📦 [Download build logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}
