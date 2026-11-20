@@ -20,6 +20,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 ### Changed
 
 - Replaced the sample security policy with private reporting instructions, a first response within seven calendar days, and guidance on affected versions, sensitive evidence, and public disclosure. [Security policy](SECURITY.md)
+- Added a copyable private report template and an update checklist to the security policy. GitHub alerts highlight the reporting address, response time, and guidance on removing sensitive data. [Security policy](SECURITY.md)
 - Raised the SwiftPM tools version from 5.4 to 5.9. Update the Swift toolchain before resolving this revision if your project still uses an older version.
 - Added device names for iPhone 15, iPhone 15 Plus, iPhone 15 Pro, and iPhone 15 Pro Max to the model lookup.
 - `SKDispatchTimer` now queues control changes asynchronously. Calls such as `suspend()`, `reschedule(interval:_:)`, and `cancel()` can return before the change takes effect.

@@ -2,7 +2,10 @@
 
 [![Private security contact by email](https://img.shields.io/badge/Security_contact-Email-blue)](mailto:yeop9657@naver.com)
 
-**Report a suspected vulnerability privately to [yeop9657@naver.com](mailto:yeop9657@naver.com). A maintainer will reply within 7 calendar days of receiving your report.** A short description of what you observed is enough to start. You can send more information in the same thread later.
+> [!IMPORTANT]
+> **Report privately by email.** [yeop9657@naver.com](mailto:yeop9657@naver.com)
+>
+> A maintainer will reply **within 7 calendar days** of receiving your report. A short description of what you observed is enough to start. You can add details in the same thread later.
 
 ## 📬 Choose a private channel
 
@@ -27,6 +30,8 @@ Reports are welcome for any version. Fix availability for each release depends o
 
 ## 📝 What to include
 
+Use sample data from systems you own or have permission to test.
+
 | Detail | Information that helps the maintainer |
 | --- | --- |
 | Summary and impact | What happened, what you expected, and which data, permissions, or package users could be affected. Distinguish what you observed from what you suspect. |
@@ -35,7 +40,26 @@ Reports are welcome for any version. Fix availability for each release depends o
 | Evidence | A short description from your own test environment and the smallest relevant, redacted log excerpt. For a workflow issue, include a run ID and step name if available. |
 | Current exposure | Say whether an affected release is public, a credential may be exposed, or you have observed harm. If you know a temporary way to reduce the impact, mention its limits. |
 
-Use sample data and systems you own or have permission to test. Omit passwords, tokens, signing keys, personal identifiers, and customer records. Crop screenshots and remove private paths from logs. If a real credential was exposed, notify its owner privately so they can revoke or rotate it. Identify the credential by its purpose in the report and keep its value private.
+> [!WARNING]
+> **Remove secrets and personal data before sending evidence.** Omit passwords, tokens, signing keys, personal identifiers, and customer records. Crop screenshots and remove private paths from logs. If a credential was exposed, identify it by its purpose and notify its owner privately so they can revoke or rotate it.
+
+<details>
+<summary>Copy a template for your private report</summary>
+
+Fill in the fields you know.
+
+```text
+Subject: [Universal SystemKit security] Short description
+
+Affected product and version or commit:
+Platform, OS, and relevant settings:
+Expected behavior:
+Observed behavior and possible impact:
+Evidence with sensitive data removed:
+Known exposure or temporary mitigation:
+```
+
+</details>
 
 ## 🔎 What happens after a report
 
@@ -46,7 +70,10 @@ Use sample data and systems you own or have permission to test. Omit passwords, 
 
 ## 📢 Find fixes and check your application
 
-Check published advisories and release notes for the fixed tag or mitigation. Compare the affected range with the revision recorded in your app's `Package.resolved`. After updating the dependency, verify the resolved version and rebuild the affected app target. If a fixed version is still unavailable, follow the mitigation in the notice and check it for updates. [Security advisories](https://github.com/ChangYeop-Yang/Universal-SystemKit/security/advisories) · [Releases](https://github.com/ChangYeop-Yang/Universal-SystemKit/releases)
+- [ ] Find the affected versions and any fixed tag or mitigation. [Security advisories](https://github.com/ChangYeop-Yang/Universal-SystemKit/security/advisories) · [Releases](https://github.com/ChangYeop-Yang/Universal-SystemKit/releases)
+- [ ] Compare the affected range with the version or revision in your app's `Package.resolved`.
+- [ ] If a fix is available, update the dependency, confirm the resolved version, and rebuild the affected app target.
+- [ ] If a fix is pending, apply the mitigation in the notice when available and check for updates.
 
 ---
 
