@@ -39,6 +39,15 @@ Other contributors must propose changes to `AGENTS.md` in a pull request. A repo
 - **Follow the existing style.** Match the names, layout, and conventions used in the surrounding code and follow the project's SwiftLint rules.
 - **Define success and verify it.** Set clear checks before making changes. For work with several steps, pair each step with a check. Reproduce bugs before fixing them when possible, then repeat the same check. Fix issues found during verification and rerun the affected checks. Report any check you could not run.
 
+## 🤖 Work with Codex
+
+| Situation | Codex guidance |
+| --- | --- |
+| Starting a session | Start in the package root for work across both products. Codex collects project instructions from the repository root down to its working directory. Within each directory, a nonempty `AGENTS.override.md` takes precedence over `AGENTS.md`. Before editing a deeper directory, check it for instructions that apply there. [Instruction discovery](https://developers.openai.com/codex/guides/agents-md) |
+| A command needs more access | In the interactive CLI, use `/status` to inspect the session configuration. If a required command exceeds the active sandbox permissions, use the configured approval process and explain what access that command needs. [Sandbox and approvals](https://developers.openai.com/codex/security) |
+| Reviewing a change in the CLI | Use `/diff` to inspect changes, including new files. For a requested code review, use `/review` and check each finding against the affected code and callers. Verify Apple builds on macOS as described below. [CLI commands](https://developers.openai.com/codex/cli/slash-commands) |
+| Running an automated check | For a read-only task, such as summarizing changes to the package manifest, use `codex exec --sandbox read-only`. If a script consumes the result, use `--output-schema` for a structured final response or `--json` for a stream of events. [Non-interactive mode](https://developers.openai.com/codex/noninteractive) |
+
 ## 🍎 Develop for Apple platforms
 
 - Before choosing an API, check Context7 or the latest official developer documentation. Use the current supported API and verify its signature and availability for the platforms you are changing.

@@ -34,6 +34,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 ### Changed
 
 - Added checklists for final checks and pull requests, a Claude Code settings table, and a release index in this changelog.
+- Added Codex guidance on loading project instructions, requesting sandbox access, reviewing changes in the CLI, and running read-only checks. [Development rules](AGENTS.md#-work-with-codex)
 - Replaced the sample security policy with private reporting instructions, a first response within seven calendar days, and guidance on affected versions, sensitive evidence, and public disclosure. [Security policy](SECURITY.md)
 - Added a copyable private report template and an update checklist to the security policy. GitHub alerts highlight the reporting address, response time, and guidance on removing sensitive data. [Security policy](SECURITY.md)
 - Raised the SwiftPM tools version from 5.4 to 5.9. Update the Swift toolchain before resolving this revision if your project still uses an older version.
