@@ -18,7 +18,7 @@ Stop work immediately if an operation would seriously damage the project, includ
 ## 📝 Write for readers
 
 - Include the copyright notice shown at the end of this guide in every project source file and document you write or update. Set the year to the current calendar year whenever you write or update the file. Use a comment in source code and place the notice at the very end of documentation.
-- In Markdown documents, put a horizontal rule above the notice and use a blockquote for the footer. Bold the first sentence and put a relative link to the repository's MIT license in a separate paragraph within the same blockquote.
+- In Markdown documents, put a horizontal rule above the footer. Include only the copyright notice in the blockquote and bold its first sentence.
 - Write every README.md below the repository root in US English. The root README.md is exempt from this language rule.
 - Write all source code comments in US English. Use common, TOEIC-level words in comments and English README files. Keep exact API names and technical terms when readers need them.
 - Proofread documentation and comments for spelling, grammar, and meaning. Use natural sentences that a teammate can follow. Remove repeated phrases, filler, and stock wording associated with AI-generated text.
@@ -63,5 +63,3 @@ Stop work immediately if an operation would seriously damage the project, includ
 ---
 
 > **Copyright © 2026 Universal SystemKit.** All rights reserved.
->
-> [MIT License](LICENSE)
