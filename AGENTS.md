@@ -36,8 +36,6 @@ Stop work immediately if an operation would seriously damage the project, includ
 - **Follow the existing style.** Match the names, layout, and conventions used in the surrounding code and follow the project's SwiftLint rules.
 - **Define success and verify it.** Set clear checks before making changes. For work with several steps, pair each step with a check. Reproduce bugs before fixing them when possible, then repeat the same check. Fix issues found during verification and rerun the affected checks. Report any check you could not run.
 
-Based on the [Hancom Tech Blog table](https://tech.hancom.com/claude-md-context-optimization/) and [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills).
-
 ## 🍎 Develop for Apple platforms
 
 - Before choosing an API, check Context7 or the latest official developer documentation. Use the current supported API and verify its signature and availability for the platforms you are changing.
