@@ -4,6 +4,20 @@
 
 This file lists notable changes to Universal SystemKit. The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). Release dates come from GitHub Releases.
 
+<details>
+<summary>Jump to a release</summary>
+
+| Series | Release notes |
+| --- | --- |
+| 2.4.x | [2.4.0](#240---2024-08-18) |
+| 2.3.x | [2.3.2](#232---2024-01-29) · [2.3.1](#231---2023-07-20) · [2.3.0](#230---2023-07-06) |
+| 2.2.x | [2.2.5](#225---2023-06-20) · [2.2.4](#224---2023-05-30) · [2.2.3](#223---2023-05-29) · [2.2.2](#222---2023-05-02) · [2.2.1](#221---2023-04-27) · [2.2.0](#220---2023-04-26) |
+| 2.1.x | [2.1.0](#210---2023-04-03) |
+| 2.0.x | [2.0.0](#200---2023-03-28) |
+| 1.0.x | [1.0.0](#100---2023-01-05) |
+
+</details>
+
 ## [Unreleased]
 
 ### Added
@@ -19,6 +33,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Changed
 
+- Added checklists for final checks and pull requests, a Claude Code settings table, and a release index in this changelog.
 - Replaced the sample security policy with private reporting instructions, a first response within seven calendar days, and guidance on affected versions, sensitive evidence, and public disclosure. [Security policy](SECURITY.md)
 - Added a copyable private report template and an update checklist to the security policy. GitHub alerts highlight the reporting address, response time, and guidance on removing sensitive data. [Security policy](SECURITY.md)
 - Raised the SwiftPM tools version from 5.4 to 5.9. Update the Swift toolchain before resolving this revision if your project still uses an older version.

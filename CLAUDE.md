@@ -4,7 +4,8 @@
 
 @AGENTS.md
 
-You must read and follow the root `AGENTS.md` before starting any work in this repository. If the import is unavailable, open the file directly. If you cannot read it, stop and report the problem.
+> [!IMPORTANT]
+> You must read and follow the root `AGENTS.md` before starting any work in this repository. If the import is unavailable, open the file directly. If you cannot read it, stop and report the problem.
 
 ## 🧭 Plan the work
 
@@ -18,5 +19,14 @@ You must read and follow the root `AGENTS.md` before starting any work in this r
 
 ## ⚙️ Keep settings in the right place
 
-- Keep personal instructions in `CLAUDE.local.md` and personal settings or saved approvals in `.claude/settings.local.json`. Keep both files out of commits. Use `.claude/settings.json` for settings the team intends to share. [Claude Code settings](https://code.claude.com/docs/en/settings)
-- Put a Claude-specific rule in `.claude/rules/` with a `paths` filter when it applies to only part of the repository. Keep rules shared by all coding tools in `AGENTS.md`. [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)
+| What you need to store | Where it belongs |
+| --- | --- |
+| Personal instructions | Keep them in `CLAUDE.local.md` and leave the file out of commits. |
+| Personal settings and saved approvals | Keep them in `.claude/settings.local.json` and leave the file out of commits. |
+| Settings for the team | Use `.claude/settings.json` for settings the team intends to share. [Claude Code settings](https://code.claude.com/docs/en/settings) |
+| Claude rules for specific paths | Use a `paths` filter in `.claude/rules/`. [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules) |
+| Rules shared by all coding tools | Put them in the root [development guide](AGENTS.md). |
+
+---
+
+> **Copyright © 2026 Universal SystemKit.** All rights reserved.

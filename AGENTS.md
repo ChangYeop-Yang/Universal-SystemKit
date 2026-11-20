@@ -13,7 +13,8 @@ Other contributors must propose changes to `AGENTS.md` in a pull request. A repo
 
 ## 🛡️ Protect project files
 
-Stop work immediately if an operation would seriously damage the project, including deleting project source code or documentation. Leave the files in place and report the operation and its likely impact. This rule applies even when you have permission to perform the operation.
+> [!CAUTION]
+> Stop work immediately if an operation would seriously damage the project, including deleting project source code or documentation. Leave the files in place and report the operation and its likely impact. This rule applies even when you have permission to perform the operation.
 
 ## 📝 Write for readers
 
@@ -54,11 +55,11 @@ Stop work immediately if an operation would seriously damage the project, includ
 
 ## ✅ Validate and finish
 
-1. Apply SwiftLint to every Swift source file, including Package.swift. Run the check defined in [.github/workflows/swiftlint.yml](.github/workflows/swiftlint.yml). If you add Swift sources outside its current paths, include them in the lint check. Review findings and fix issues introduced by your change.
-2. A successful build of the final revision is required before development work is complete. Run `swift build -v` on macOS with Xcode, or verify the build for that commit on the GitHub macOS runner. When a required build fails, inspect its log, fix the cause, and run it again.
-3. Verify the Apple platform builds affected by the change. When a fix changes behavior, run a check that would have caught the original problem. Check behavior that depends on device hardware or system permissions on a supported device when one is available, and report what you verified. For package product or public API changes, also check the SwiftPM consumer step. It builds and runs a separate release executable that imports both libraries. [Swift workflow](.github/workflows/swift.yml) and [Apple platform builds](.github/workflows/apple-platforms.yml)
-4. Remove all temporary files and directories created by your task. Check their paths and ownership before cleanup. Preserve existing user files, project sources, and documentation. Review the final diff and `git status --short` for unexpected changes.
-5. Update `CHANGELOG.md` at the end of every task. Wait until all work and checks are complete, then record the final changes under `Unreleased`.
+- [ ] Apply SwiftLint to every Swift source file, including Package.swift. Run the check defined in [.github/workflows/swiftlint.yml](.github/workflows/swiftlint.yml). If you add Swift sources outside its current paths, include them in the lint check. Review findings and fix issues introduced by your change.
+- [ ] A successful build of the final revision is required before development work is complete. Run `swift build -v` on macOS with Xcode, or verify the build for that commit on the GitHub macOS runner. When a required build fails, inspect its log, fix the cause, and run it again.
+- [ ] Verify the Apple platform builds affected by the change. When a fix changes behavior, run a check that would have caught the original problem. Check behavior that depends on device hardware or system permissions on a supported device when one is available, and report what you verified. For package product or public API changes, also check the SwiftPM consumer step. It builds and runs a separate release executable that imports both libraries. [Swift workflow](.github/workflows/swift.yml) and [Apple platform builds](.github/workflows/apple-platforms.yml)
+- [ ] Remove all temporary files and directories created by your task. Check their paths and ownership before cleanup. Preserve existing user files, project sources, and documentation. Review the final diff and `git status --short` for unexpected changes.
+- [ ] Update `CHANGELOG.md` at the end of every task. Wait until all work and checks are complete, then record the final changes under `Unreleased`.
 
 ---
 

@@ -60,7 +60,8 @@ Keep each commit focused on one change. Start the title with an action verb and 
 
 A short title can stand on its own for a small, obvious change. When a reviewer needs more context, leave a blank line after the title and add a body. Include the checks you actually ran. If a change breaks a public API, name the old and new calls and explain how to update existing code. Add an issue reference such as `Refs #123` when relevant.
 
-For example, a commit that updates this guide could read as follows.
+<details>
+<summary>View a complete example commit message</summary>
 
 ```text
 Document commit titles and bodies for SwiftPM changes
@@ -69,13 +70,15 @@ Add examples for changes to package products, dependencies, and CI.
 Each example shows what a reviewer needs to know about the change.
 ```
 
+</details>
+
 ## 📬 Open a pull request
 
 Update the relevant usage guide if the public API or setup steps change. Once the work and checks are complete, record the final change under **Unreleased** in [CHANGELOG.md](CHANGELOG.md).
 
-1. Push your branch to your fork and open a pull request against `main`. Keep it focused on one change.
-2. Explain what changed and why. Link the issue if there is one, and list the commands and Apple platforms you checked. Include any steps you could not verify.
-3. Review the GitHub Actions results on the pull request. Address failed checks, review SwiftLint warnings, and reply to review comments.
+- [ ] Push your branch to your fork and open a pull request against `main`. Keep it focused on one change.
+- [ ] Explain what changed and why. Link the issue if there is one, and list the commands and Apple platforms you checked. Include any steps you could not verify.
+- [ ] Review the GitHub Actions results on the pull request. Address failed checks, review SwiftLint warnings, and reply to review comments.
 
 Changes to `AGENTS.md` follow its [review rules](AGENTS.md#-change-this-guide).
 
