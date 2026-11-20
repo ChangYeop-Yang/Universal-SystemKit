@@ -3,6 +3,8 @@
 [![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange)](Package.swift)
 [![Swift build status](https://img.shields.io/github/actions/workflow/status/ChangYeop-Yang/Universal-SystemKit/swift.yml?branch=main&label=Swift%20build)](https://github.com/ChangYeop-Yang/Universal-SystemKit/actions/workflows/swift.yml)
 
+Copyright © 2026 Universal SystemKit. All rights reserved.
+
 These rules apply throughout the repository, including the SystemKit Swift library, the SystemKit_Objc library, and their build workflows.
 
 ## 🔒 Change this guide
@@ -17,6 +19,7 @@ Stop work immediately if an operation would seriously damage the project, includ
 
 ## 📝 Write for readers
 
+- Include the copyright notice shown at the top of this guide in every project source file and document you write or update. Use a comment in source code and a visible line in documentation. Set the year to the current calendar year whenever you write or update the file.
 - Write every README.md below the repository root in US English. The root README.md is exempt from this language rule.
 - Write all source code comments in US English. Use common, TOEIC-level words in comments and English README files. Keep exact API names and technical terms when readers need them.
 - Proofread documentation and comments for spelling, grammar, and meaning. Use natural sentences that a teammate can follow. Remove repeated phrases, filler, and stock wording associated with AI-generated text.
