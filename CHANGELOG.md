@@ -22,6 +22,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 - `SKDispatchTimer` now queues control changes asynchronously. Calls such as `suspend()`, `reschedule(interval:_:)`, and `cancel()` can return before the change takes effect.
 - Renamed `SKResourceDataUnitType` to `SKResourceDataUnit` in the macOS CPU and memory APIs. Update references to the old type name when upgrading from 2.4.0.
 - Moved GitHub Actions to hosted macOS 26 runners. Build summaries list which steps passed or failed and link to the full logs when available.
+- Updated the development rules to require a changelog update after all work and checks for each task are complete. [Development rules](AGENTS.md)
 
 ## [2.4.0] - 2024-08-18
 
