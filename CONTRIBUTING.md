@@ -43,6 +43,32 @@ RUNNER_TEMP="${TMPDIR:-/tmp}" bash .github/scripts/smoke-test-swift-package.sh
 
 - For changes that affect hardware or permissions, check the behavior on a supported device when available. The [Apple platform workflow](.github/workflows/apple-platforms.yml) builds both products for macOS and the iOS, visionOS, tvOS, and watchOS simulators.
 
+## ✍️ Write a commit message
+
+Keep each commit focused on one change. Start the title with an action verb and name the behavior, API, or file that changed. Use the category that best matches the purpose of the commit to choose what to include in the message.
+
+| Category | When to use it | Example title | What to explain in the body |
+| --- | --- | --- | --- |
+| Feature | Add a capability that callers can use. | Add file monitoring for renamed files | Describe the use case, the public API, and the supported platforms. |
+| Bug fix | Correct behavior that callers already expect. | Fix duplicate file change notifications | Give the steps that trigger the bug, the cause, and the result after the fix. |
+| Performance | Reduce time, memory use, or other resource costs. | Reduce allocations when reading process data | Describe the workload and report measurements taken before and after the change. |
+| Refactor | Change how existing code is organized. | Share CPU usage calculations between process helpers | Explain why the new structure helps and how you checked that callers see the same behavior. |
+| Tests | Add or update checks for package behavior. | Check both library imports in the consumer test | Name the case covered and the regression it would catch. |
+| Package or dependency | Change the SwiftPM manifest, dependencies, or deployment targets. | Raise the minimum macOS version to 11 | Give the reason, affected versions, and any steps package users need to take. |
+| CI | Change how GitHub Actions builds or checks the package. | Add a watchOS simulator build | Identify the workflow, when it runs, and how you verified the changed step. |
+| Documentation | Update a guide, example, or API reference. | Document the SwiftPM consumer check | Explain what the reader can now do and how you checked the instructions. |
+
+A short title can stand on its own for a small, obvious change. When a reviewer needs more context, leave a blank line after the title and add a body. Include the checks you actually ran. If a change breaks a public API, name the old and new calls and explain how to update existing code. Add an issue reference such as `Refs #123` when relevant.
+
+For example, a commit that updates this guide could read as follows.
+
+```text
+Document commit titles and bodies for SwiftPM changes
+
+Add examples for changes to package products, dependencies, and CI.
+Each example shows what a reviewer needs to know about the change.
+```
+
 ## 📬 Open a pull request
 
 Update the relevant usage guide if the public API or setup steps change. Once the work and checks are complete, record the final change under **Unreleased** in [CHANGELOG.md](CHANGELOG.md).

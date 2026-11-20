@@ -14,7 +14,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 - Added a SwiftPM consumer test that imports `SystemKit` and `SystemKit_Objc`, builds a release executable, and runs it. This checks that both products can be linked from a separate package. CI also runs SwiftLint, CodeQL for Swift, and the Xcode static analyzer for Objective-C++.
 - Added an API reference report with the runner's Xcode and SDK versions, the package's minimum OS versions, and Context7 lookup results. The report includes links to official references when a lookup fails.
 - Added repository development rules, Claude Code instructions, and a security reporting policy so contributors know how to work on the project and where to report a vulnerability. [Development rules](AGENTS.md) · [Claude Code instructions](CLAUDE.md) · [Security policy](SECURITY.md)
-- Added a guide for reporting bugs, building and checking the Swift package, and submitting pull requests. [Contributing guide](CONTRIBUTING.md)
+- Added a guide for reporting bugs, building and checking the Swift package, and submitting pull requests. It includes example commit titles and guidance on what to include in the body for eight types of changes. [Contributing guide](CONTRIBUTING.md)
 
 ### Changed
 
