@@ -8,112 +8,115 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Added
 
-- Added `SKDispatchFileMonitor` to monitor file and folder events.
-- Added `SKSystemProcessResource` to read macOS process details and resource use.
-- Added SwiftPM platform declarations and simulator build checks for tvOS, watchOS, and visionOS.
-- Added SwiftLint, Swift and Objective-C++ static analysis, and a SwiftPM consumer test that builds and runs both library products.
-- Added an API reference report that lists installed SDKs, supported OS versions, and Context7 lookup results.
-- Added contributor guidelines, Claude Code instructions, and a security reporting policy.
+- Use `SKDispatchFileMonitor` to watch a file or folder for selected events, such as writes and deletions. Pass an event mask and a handler, then call `start()` and `stop()` to control monitoring. [File monitor guide](Document/SKDispatchFileMonitor.md)
+- On macOS, use `SKSystemProcessResource` to look up a process by PID or list processes with details such as resident memory, virtual memory, and thread counts.
+- Declared tvOS 13, watchOS 6, and visionOS 1 as SwiftPM deployment targets. CI checks these platforms with simulator builds. APIs such as `SKSystemProcessResource` remain limited to macOS.
+- Added a SwiftPM consumer test that imports `SystemKit` and `SystemKit_Objc`, builds a release executable, and runs it. This checks that both products can be linked from a separate package. CI also runs SwiftLint, CodeQL for Swift, and the Xcode static analyzer for Objective-C++.
+- Added an API reference report with the runner's Xcode and SDK versions, the package's minimum OS versions, and Context7 lookup results. The report includes links to official references when a lookup fails.
+- Added repository development rules, Claude Code instructions, and a security reporting policy so contributors know how to work on the project and where to report a vulnerability. [Development rules](AGENTS.md) · [Claude Code instructions](CLAUDE.md) · [Security policy](SECURITY.md)
 
 ### Changed
 
-- Raised the Swift package tools version to 5.9.
-- Updated the iPhone model list to include iPhone 15, iPhone 15 Plus, iPhone 15 Pro, and iPhone 15 Pro Max.
-- Updated dispatch timer controls and macOS resource reporting.
-- Updated GitHub Actions to use hosted macOS 26 runners and provide job summaries with links to downloadable logs.
+- Raised the SwiftPM tools version from 5.4 to 5.9. Update the Swift toolchain before resolving this revision if your project still uses an older version.
+- Added device names for iPhone 15, iPhone 15 Plus, iPhone 15 Pro, and iPhone 15 Pro Max to the model lookup.
+- `SKDispatchTimer` now queues control changes asynchronously. Calls such as `suspend()`, `reschedule(interval:_:)`, and `cancel()` can return before the change takes effect.
+- Renamed `SKResourceDataUnitType` to `SKResourceDataUnit` in the macOS CPU and memory APIs. Update references to the old type name when upgrading from 2.4.0.
+- Moved GitHub Actions to hosted macOS 26 runners. Build summaries list which steps passed or failed and link to the full logs when available.
 
 ## [2.4.0] - 2024-08-18
 
 ### Added
 
-- Added `SKSystemResource` to read macOS memory, CPU, and disk use.
-- Added `SKDispatchTimer` and shared helpers for data, numbers, and strings.
-- Added a privacy manifest with reasons for accessing file timestamps, user defaults, and disk space.
+- Use `SKSystemResource` to read system memory, CPU use, and disk space on macOS. It provides separate calls for these measurements, including free and total space on the system volume.
+- Added `SKDispatchTimer` for repeating work at a chosen interval. It provides controls to activate, suspend, resume, reschedule, or cancel the timer.
+- Added common helpers for Base64 encoding and decoding, string conversions for Core Foundation and C APIs, and notification names.
+- Included `PrivacyInfo.xcprivacy` in the Swift package resources. The manifest declares reasons for the library's use of file timestamps, user defaults, and disk space APIs.
 
 ## [2.3.2] - 2024-01-29
 
 ### Added
 
-- Added the `SystemKit_Objc` product with `SKSecurity` for AES encryption and decryption.
-- Added `SKAtomicValue` for synchronized access to a value.
+- Added the `SystemKit_Objc` product with `SKSecurity` for AES encryption and decryption. Add this product to your target to use the Objective-C API. [SKSecurity guide](Document/SKSecurity.md)
+- Added `SKAtomicValue` for synchronized reads and writes. Use `mutate` when a change needs to read and update the value in a single operation.
 
 ## [2.3.1] - 2023-07-20
 
 ### Added
 
-- Added macOS code signature checks for `.app` and `.pkg` files.
+- Added `SKSystem.verifyCodeSignature(ofPath:)` on macOS. Pass the path of an app bundle or installer package to get a Boolean result. The helper uses `codesign` for `.app` bundles and `pkgutil` for `.pkg` files.
 
 ## [2.3.0] - 2023-07-06
 
 ### Added
 
-- Added `SKPreferencePaneDefine` with identifiers for settings panes.
-- Added an iPhone API for reading the current cellular radio technology.
+- Added `SKPreferencePaneDefine` to name macOS settings panes by their identifiers.
+- Added `getCurrentRadioAccessTechnology()` on iOS to read the current cellular radio technology for each reported service.
 
 ### Changed
 
-- Reworked permission definitions and organized shared operation protocols.
+- Reorganized permission definitions and added `SKOperation` to share operation requirements.
 
 ### Removed
 
-- Removed the separate `SKPermission` implementation.
+- Removed the separate `SKPermission` implementation. Review any direct calls to that class when moving from 2.2.x.
 
 ## [2.2.5] - 2023-06-20
 
 ### Changed
 
-- Reworked `SKMessagePort` setup and its handling of local and remote ports.
+- Replaced the separate local and remote initializers with `init(portName:_:)`. To receive messages, pass the dispatch queue, callback information, and handler to `listen`. To send messages, use the same named-port setup. Existing callers must update their initialization and listener setup.
 
 ## [2.2.4] - 2023-05-30
 
 ### Changed
 
-- Simplified pointer handling in `SKMessagePort` and updated its usage guide.
+- Changed the local `SKMessagePort` initializer to accept an `AnyObject` for callback information. Pass the object directly if your 2.2.3 code previously built a raw pointer for that argument.
 
 ## [2.2.3] - 2023-05-29
 
 ### Added
 
-- Added `SKMessagePort` for sending data between threads or processes on the same machine.
+- Added `SKMessagePort` for sending data between threads or processes on the same machine. It wraps Core Foundation message ports with Swift methods to listen on a named local port and send data to a remote port.
 
 ## [2.2.2] - 2023-05-02
 
 ### Added
 
-- Added `SKFileLock` to control file access within a process.
+- Added `SKFileLock` to coordinate file access within a process. Create the lock with a file path and access mode or an existing file descriptor, then call `lock()` and `unlock()`.
 
 ## [2.2.1] - 2023-04-27
 
 ### Fixed
 
-- Fixed a compilation issue with Swift 5.6.
+- Fixed Swift 5.6 build errors in the package manifest and network address handling. The manifest now uses `from:` for SwiftLog and Swift-DocC and sets their minimum versions to 1.5.2 and 1.2.0, respectively.
 
 ## [2.2.0] - 2023-04-26
 
 ### Added
 
-- Added `SKNetworkInterface` to read local network interface details, including IPv4, IPv6, and MAC addresses.
-- Added `SKDispatchFile` for queue-based file reads and writes.
+- Added `SKNetworkInterface` to list local interfaces and read IPv4, IPv6, and MAC addresses where available.
+- Added `SKDispatchFile` for queue-based file reads and writes. Callers receive the result through a completion handler.
 
 ### Changed
 
-- Reworked the user defaults helper.
+- Restored the user defaults helper after its removal in 2.0.0. It wraps a typed value stored in `UserDefaults` and provides a fallback when the key has no stored value.
 
 ## [2.1.0] - 2023-04-03
 
 ### Added
 
-- Added the Swift-DocC plugin to support documentation builds.
+- Made the Swift-DocC plugin available when the manifest runs with Swift 5.6 or later, so the library's API documentation can be generated through SwiftPM.
 
 ## [2.0.0] - 2023-03-28
 
 ### Added
 
-- Added macOS system, process, and battery helpers based on IOKit.
+- Added IOKit helpers for macOS system, process, and battery information, along with support for reading information about connected displays or printers.
 
 ### Changed
 
-- Packaged PLCrashReporter as an XCFramework.
+- Raised the package deployment targets to macOS 10.13 and iOS 11. Check your app's deployment targets before upgrading from 1.0.0.
+- Switched the SwiftPM target to a bundled PLCrashReporter XCFramework for crash reporting.
 - Replaced the Beltex XCFramework with source code.
 
 ### Removed
@@ -124,7 +127,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Added
 
-- Published the first tagged release of Universal SystemKit.
+- Published the first tagged Swift package with deployment targets of macOS 10.12 and iOS 10. It included helpers for operations, network monitoring, user defaults, crash reporting, and macOS process monitoring and Finder extensions.
 
 [Unreleased]: https://github.com/ChangYeop-Yang/Universal-SystemKit/compare/2.4.0...main
 [2.4.0]: https://github.com/ChangYeop-Yang/Universal-SystemKit/compare/2.3.2...2.4.0
