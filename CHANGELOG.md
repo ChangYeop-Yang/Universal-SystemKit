@@ -23,6 +23,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 - Renamed `SKResourceDataUnitType` to `SKResourceDataUnit` in the macOS CPU and memory APIs. Update references to the old type name when upgrading from 2.4.0.
 - Moved GitHub Actions to hosted macOS 26 runners. Build summaries list which steps passed or failed and link to the full logs when available.
 - Updated the development rules to require a changelog update after all work and checks for each task are complete. [Development rules](AGENTS.md)
+- Added nine rules to the development guide for explaining assumptions and choices, keeping changes focused, and defining and running checks before marking work complete. [Development rules](AGENTS.md#-plan-and-scope-changes)
 
 ## [2.4.0] - 2024-08-18
 

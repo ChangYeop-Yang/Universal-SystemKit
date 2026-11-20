@@ -24,6 +24,20 @@ Stop work immediately if an operation would seriously damage the project, includ
 - Use a few familiar emojis in Markdown headings or status labels to help readers scan the page. Pair each icon with clear text so readers can understand the document without the icon.
 - Use comments to explain a decision, a platform limit, or behavior that a reader could easily miss.
 
+## 🧭 Plan and scope changes
+
+- **Make uncertainty clear.** Read the relevant code and its callers. State assumptions that could affect the result and ask for clarification when an open question changes behavior, compatibility, or scope.
+- **Explain important choices.** When several approaches fit the request, explain the trade-offs that matter and why the chosen approach fits. Point out a simpler option when it meets the same requirements.
+- **Keep one-time logic simple.** Keep code at its call site when it is easy to read there. Add a helper or type only when it makes the code easier to understand, test, or reuse in the current change.
+- **Add only the options the task needs.** Limit new settings, extension points, and API options to the current requirements.
+- **Handle failures that can occur.** Cover invalid inputs and real failures such as denied permissions or unavailable APIs. Base extra error handling on conditions that can occur on supported platforms.
+- **Leave unrelated code alone.** Keep edits tied to the request. Preserve nearby code, comments, formatting, and work already in progress. Clean up imports, variables, or helpers that your change makes unused.
+- **Refactor only when the task calls for it.** Preserve working code unless restructuring is part of the request or needed for the fix. When refactoring, run the same checks before and after to verify the behavior that should stay the same.
+- **Follow the existing style.** Match the names, layout, and conventions used in the surrounding code and follow the project's SwiftLint rules.
+- **Define success and verify it.** Set clear checks before making changes. For work with several steps, pair each step with a check. Reproduce bugs before fixing them when possible, then repeat the same check. Fix issues found during verification and rerun the affected checks. Report any check you could not run.
+
+Based on the [Hancom Tech Blog table](https://tech.hancom.com/claude-md-context-optimization/) and [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills).
+
 ## 🍎 Develop for Apple platforms
 
 - Before choosing an API, check Context7 or the latest official developer documentation. Use the current supported API and verify its signature and availability for the platforms you are changing.
