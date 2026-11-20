@@ -5,6 +5,12 @@
 
 These rules apply throughout the repository, including the SystemKit Swift library, the SystemKit_Objc library, and their build workflows.
 
+## 🔒 Change this guide
+
+Repository administrators may commit and push changes to `AGENTS.md` directly to `main`. A change made on an administrator's behalf may go directly to `main` only when the administrator explicitly requests it.
+
+Other contributors must propose changes to `AGENTS.md` in a pull request. A repository administrator must approve the pull request before it is merged.
+
 ## 🛡️ Protect project files
 
 Stop work immediately if an operation would seriously damage the project, including deleting project source code or documentation. Leave the files in place and report the operation and its likely impact. This rule applies even when you have permission to perform the operation.
