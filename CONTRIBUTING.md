@@ -14,7 +14,7 @@ Search [open and closed issues](https://github.com/ChangYeop-Yang/Universal-Syst
 
 For a feature request, describe the use case and how it would help package users. Discuss public API changes, new dependencies, or changes that affect existing callers in an issue before starting a pull request.
 
-Keep vulnerability details out of public issues and pull requests. If **Report a vulnerability** is available on the [Security tab](https://github.com/ChangYeop-Yang/Universal-SystemKit/security), use it to send a private report.
+Report suspected vulnerabilities privately. For the reporting address, the response time, and guidance on sharing evidence, see the [security policy](SECURITY.md).
 
 ## 🛠️ Set up the Swift package
 
