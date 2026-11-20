@@ -79,6 +79,22 @@ Update the relevant usage guide if the public API or setup steps change. Once th
 
 Changes to `AGENTS.md` follow its [review rules](AGENTS.md#-change-this-guide).
 
+## 🔎 Give and respond to code reviews
+
+**As an author**, read your diff before requesting review. Point reviewers to the public API, platform, or behavior that needs the closest look. If a check ran only on a simulator, say so in the pull request.
+
+**As a reviewer**, describe what the code does and how it affects a caller. Refer to a specific line, test result, or documented SDK requirement. Ask a question when the intent is unclear. Keep the discussion respectful. Personal attacks, ridicule, and assumptions about a contributor's ability have no place in a review.
+
+| GitHub review | When to use it | Example feedback |
+| --- | --- | --- |
+| Comment | Ask a question or offer an optional improvement. Mark personal preferences as optional. | “Optional suggestion: Could the example show which queue receives the callback?” |
+| Request changes | Identify a problem that needs a fix before merge. Explain how to verify the fix. | “This call requires iOS 16, and the package supports iOS 13. Please add an availability check and exercise the fallback on a supported OS version.” |
+| Approve | Use this when you have reviewed the change and your concerns about merging it are resolved. | “I verified that the release consumer imports both products after the manifest change.” |
+
+**During follow-up**, reply in the original thread with the fix and its check, or explain why a different approach meets the requirement. If you disagree, compare the options against the expected behavior. Ask a maintainer for a decision when a trade-off remains open, and record that decision in the pull request. Resolve the thread once the concern is addressed and request another review after pushing the fix.
+
+Further reading includes [GitHub's pull request review guide](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/reviewing-proposed-changes-in-a-pull-request) and [Google's guide to review comments](https://github.com/google/eng-practices/blob/master/review/reviewer/comments.md).
+
 ---
 
 > **Copyright © 2026 Universal SystemKit.** All rights reserved.
