@@ -1,6 +1,7 @@
 # 🛡️ Universal SystemKit security policy
 
-[![Private security contact by email](https://img.shields.io/badge/Security_contact-Email-blue)](mailto:yeop9657@naver.com)
+[![Report a vulnerability by private email](https://img.shields.io/badge/Report-Private%20email-0969da)](mailto:yeop9657@naver.com)
+[![First response within 7 calendar days](https://img.shields.io/badge/First%20response-Within%207%20calendar%20days-8250df)](#-what-happens-after-a-report)
 
 > [!IMPORTANT]
 > **Report privately by email.** [yeop9657@naver.com](mailto:yeop9657@naver.com)

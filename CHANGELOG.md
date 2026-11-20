@@ -1,6 +1,7 @@
 # 📋 Changelog
 
 [![Latest release](https://img.shields.io/github/v/release/ChangYeop-Yang/Universal-SystemKit?label=Latest%20release)](https://github.com/ChangYeop-Yang/Universal-SystemKit/releases/latest)
+[![View unreleased changes](https://img.shields.io/badge/Changes-Unreleased-8250df)](#unreleased)
 
 This file lists notable changes to Universal SystemKit. The format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/). Release dates come from GitHub Releases.
 
@@ -33,6 +34,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Changed
 
+- Updated badges across the project guides, security policy, and changelog to link to relevant sections, private reporting, and release information.
 - Added checklists for final checks and pull requests, a Claude Code settings table, and a release index in this changelog.
 - Added Codex guidance on loading project instructions, requesting sandbox access, reviewing changes in the CLI, and running read-only checks. [Development rules](AGENTS.md#-work-with-codex)
 - Replaced the sample security policy with private reporting instructions, a first response within seven calendar days, and guidance on affected versions, sensitive evidence, and public disclosure. [Security policy](SECURITY.md)

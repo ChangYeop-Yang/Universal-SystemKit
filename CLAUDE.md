@@ -1,6 +1,7 @@
 # 📘 Claude Code project instructions
 
-[![Repository guide](https://img.shields.io/badge/Repository%20guide-AGENTS.md-blue)](AGENTS.md)
+[![Read the shared rules in AGENTS.md](https://img.shields.io/badge/Shared%20rules-AGENTS.md-0969da)](AGENTS.md)
+[![Claude Code settings and file locations](https://img.shields.io/badge/Claude%20Code-Settings-8250df)](#%EF%B8%8F-keep-settings-in-the-right-place)
 
 @AGENTS.md
 

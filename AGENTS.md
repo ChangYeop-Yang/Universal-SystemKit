@@ -1,7 +1,7 @@
 # 📘 Universal SystemKit development guidelines
 
-[![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange)](Package.swift)
-[![Swift build status](https://img.shields.io/github/actions/workflow/status/ChangYeop-Yang/Universal-SystemKit/swift.yml?branch=main&label=Swift%20build)](https://github.com/ChangYeop-Yang/Universal-SystemKit/actions/workflows/swift.yml)
+[![Codex workflow guide](https://img.shields.io/badge/Codex-Workflow-0969da)](#-work-with-codex)
+[![Final validation checklist](https://img.shields.io/badge/Validation-Final%20checklist-1a7f37)](#-validate-and-finish)
 
 These rules apply throughout the repository, including the SystemKit Swift library, the SystemKit_Objc library, and their build workflows.
 
@@ -23,7 +23,7 @@ Other contributors must propose changes to `AGENTS.md` in a pull request. A repo
 - Write every README.md below the repository root in US English. The root README.md is exempt from this language rule.
 - Write all source code comments in US English. Use common, TOEIC-level words in comments and English README files. Keep exact API names and technical terms when readers need them.
 - Proofread documentation and comments for spelling, grammar, and meaning. Use natural sentences that a teammate can follow. Remove repeated phrases, filler, and stock wording associated with AI-generated text.
-- When writing or updating a Markdown document, place relevant [Shields.io](https://shields.io/) badges just below its title. Give each badge descriptive alt text and link it to the source of the information.
+- Place relevant Shields.io badges just below the title. Use a custom badge for a shortcut to a key section or action. Use a live badge when its status is part of the document's purpose. Give each badge descriptive alt text and link it to the matching section, action, or source. [Shields.io](https://shields.io/)
 - Use a few familiar emojis in Markdown headings or status labels to help readers scan the page. Pair each icon with clear text so readers can understand the document without the icon.
 - Use comments to explain a decision, a platform limit, or behavior that a reader could easily miss.
 

@@ -1,6 +1,7 @@
 # 🤝 Contributing to Universal SystemKit
 
-[![Swift package build status](https://img.shields.io/github/actions/workflow/status/ChangYeop-Yang/Universal-SystemKit/swift.yml?branch=main&label=Swift%20build)](https://github.com/ChangYeop-Yang/Universal-SystemKit/actions/workflows/swift.yml)
+[![Pull request checklist](https://img.shields.io/badge/Pull%20request-Checklist-1a7f37)](#-open-a-pull-request)
+[![Code review guide](https://img.shields.io/badge/Code%20review-Guide-0969da)](#-give-and-respond-to-code-reviews)
 
 Bug reports, fixes, and documentation updates are welcome. Keep discussions respectful and focus feedback on the change. Read the [repository development rules](AGENTS.md) before editing files.
 
