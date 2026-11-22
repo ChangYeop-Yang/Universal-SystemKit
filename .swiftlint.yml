@@ -1,0 +1,27 @@
+# Copyright © 2026 Universal SystemKit. All rights reserved.
+
+# Use SwiftLint 0.65.1 to match CI.
+# Run from the repository root to include the manifest and all Swift sources.
+excluded:
+  - .build
+  - .swiftpm
+  - DerivedData
+
+# Keep the default checks and opt in to these additional checks.
+opt_in_rules:
+  - closure_body_length
+  - empty_count
+  - empty_string
+  - redundant_type_annotation
+
+# Use the same length limits as the SwiftLint project's own configuration.
+closure_body_length:
+  warning: 50
+  error: 100
+function_body_length: 60
+type_body_length:
+  warning: 400
+
+# Report findings as warnings while the project addresses existing issues.
+lenient: true
+check_for_updates: false

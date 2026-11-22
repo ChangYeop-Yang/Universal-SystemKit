@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2026 Universal SystemKit. All rights reserved.
  * Copyright (c) 2023 Universal SystemKit. All rights reserved.
  * Copyright (C) 2014-2017  beltex <https://github.com/beltex>
  *
@@ -21,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-// swiftlint:disable all
 #if os(macOS)
 import Foundation
 

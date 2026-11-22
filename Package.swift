@@ -2,6 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /*
+ * Copyright © 2026 Universal SystemKit. All rights reserved.
  * Copyright (c) 2023 Universal SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-// swiftlint:disable all
 import PackageDescription
 
 // The configuration of a Swift package.

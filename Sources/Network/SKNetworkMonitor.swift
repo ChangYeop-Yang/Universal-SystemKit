@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2026 Universal SystemKit. All rights reserved.
  * Copyright (c) 2022 Universal-SystemKit. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +21,6 @@
  * THE SOFTWARE.
  */
 
-// swiftlint:disable all
 #if os(iOS) || os(macOS)
 import Network
 import Foundation

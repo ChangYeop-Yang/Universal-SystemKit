@@ -35,7 +35,7 @@ swift build -v
 ## ✅ Check your changes
 
 - Run `swift build -v` again after the final code change. For a bug fix, run the same example before and after the change to show that the fix works.
-- Install [SwiftLint](https://github.com/realm/SwiftLint) with `brew install swiftlint` if needed. Run `swiftlint lint --lenient --reporter github-actions-logging Package.swift Sources` from the repository root to match [CI](.github/workflows/swiftlint.yml). Review its warnings and fix findings introduced by your change.
+- Install [SwiftLint 0.65.1](https://github.com/realm/SwiftLint/releases/tag/0.65.1) to match [CI](.github/workflows/swiftlint.yml). Run `swiftlint lint --config .swiftlint.yml` from the repository root. The [shared lint policy](.swiftlint.yml) sets the rules, file exclusions, and severity for both local runs and CI. Review warnings and fix findings introduced by your change.
 - For a change to a package product, dependency, or public API, run the same consumer check used in [CI](.github/workflows/swift.yml). It builds and runs a separate release executable that imports both products.
 
 ```bash
