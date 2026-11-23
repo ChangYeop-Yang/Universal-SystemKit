@@ -6,61 +6,59 @@
 [![LinkedIn - Shields.io](https://img.shields.io/badge/Linked--In-창엽--양--3535ab134-informational)](https://www.linkedin.com/in/창엽-양-3535ab134/)
 ![Swift Package Manager - Shields.io](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-success)
 ![Manually - Shields.io](https://img.shields.io/badge/Manually-Compatible-success)
-![Github Repository - Shields.io](https://img.shields.io/badge/Github%20Repository-Compatible-success)
+![GitHub Repository - Shields.io](https://img.shields.io/badge/GitHub%20Repository-Compatible-success)
 [![License - Shields.io](https://img.shields.io/badge/License-MIT-blueviolet)](https://github.com/ChangYeop-Yang/Universal-SystemKit/blob/main/LICENSE)
 
-The `SystemKit` open-source library can be used on Apple Platforms such as `macOS`, `iOS`. and is a common library that enables convenient and efficient use of device system functions.
+`SystemKit` is an open-source library that provides access to device and system functions on Apple platforms such as macOS and iOS.
 
 # Installation
 
-The installation method for Universal SystemKit can be done through the [Swift Package Manager](https://www.swift.org/package-manager) or the [Github Repository](https://docs.github.com/en/repositories), and the details are as follows.
+Install Universal SystemKit with Swift Package Manager, clone its GitHub repository, or add the source files manually.
 
 ### Manually
 
-If you prefer not to use any of the aforementioned dependency managers, you can integrate `SystemKit` into your project manually.
+You can add the `SystemKit` source files to your project manually.
 
-### Github Repository
+### GitHub Repository
 
-You can pull the `SystemKit` Github Repository and include the `SystemKit` to build a dynamic or static library.
+Clone the GitHub repository to build `SystemKit` from source.
 
 ### Swift Package Manager
 
-The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+Swift Package Manager comes with the Swift toolchain and resolves and builds package dependencies.
 
-Once you have your Swift package set up, adding `SystemKit` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+To add `SystemKit` to an Xcode project, choose **File → Add Package Dependencies** and enter the repository URL.
 
-1. From the Xcode menu, click File → Swift Packages → Add Package Dependency.
+    https://github.com/ChangYeop-Yang/Universal-SystemKit.git
 
-2. In the dialog that appears, enter the repository URL: https://github.com/ChangYeop-Yang/Universal-SystemKit.git.
-
-3-1. In Branch, Enter text "master".
+If you use a Swift package manifest, add the dependency to `Package.swift`. To follow the `main` branch, use this declaration.
 
 ```Swift
 dependencies: [
-    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", .branch("master"))
+    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit.git", branch: "main")
 ]
 ```
 
-3-2. In Branch, Enter text "Version(2, 4, 0)".
+To start with a tagged release, use a version requirement.
 
 ```Swift
 dependencies: [
-    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit", from: Version(2, 4, 0))
+    .package(url: "https://github.com/ChangYeop-Yang/Universal-SystemKit.git", from: "2.4.0")
 ]
 ```
 
 # Requirements
 
-The detailed build results for the `Universal-SystemKit` library are as follows.
+The table lists the minimum versions and links to build results.
 
 | Platform | Minimum Swift Version | Installation | Status |
 |:--------:|:---------------------:|:------------:|:------:|
-| iOS 13.0+ | 5.9 | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
-| macOS 10.15+ (Catalina) | 5.9 | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [Github Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
+| iOS 13.0+ | 5.9 | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [GitHub Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
+| macOS 10.15+ (Catalina) | 5.9 | [Swift Package Manager](#swift-package-manager), [Manual](#manually), [GitHub Repository](#github-repository) | [✅ Fully Tested](https://swiftpackageindex.com/ChangYeop-Yang/Universal-SystemKit/builds) |
 
 # Using SystemKit
 
-The method for using the `Universal SystemKit` open-source library is described in the guide path below. For additional related information, please inquire by creating an issue.
+The guides below show how to use individual APIs. To ask a question or report a problem, follow the [support guide](SUPPORT.md).
 
 * [SKAsyncOperation](https://dev-dream-world.tistory.com/231)
 
@@ -92,14 +90,12 @@ The method for using the `Universal SystemKit` open-source library is described 
 
 # License
 
-`SystemKit` is released under the MIT license. [See LICENSE](https://github.com/ChangYeop-Yang/Apple-SystemKit/blob/main/LICENSE) for details.
-
-</br>
+`SystemKit` is released under the MIT license. [Read the license](LICENSE).
 
 ```TEXT
 MIT License
 
-Copyright (c) 2022 Universal-SystemKit
+Copyright © 2026 Universal SystemKit. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -119,3 +115,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+---
+
+> **Copyright © 2026 Universal SystemKit.** All rights reserved.

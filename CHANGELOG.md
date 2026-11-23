@@ -35,6 +35,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Changed
 
+- Corrected the README's SwiftPM installation examples and clarified the wording in the contribution, security, and support guides.
 - Added a shared SwiftLint policy for local checks and CI, pinned CI to SwiftLint 0.65.1, and enabled linting in Swift files that previously disabled all rules. [SwiftLint policy](.swiftlint.yml)
 - Updated badges across the project guides, security policy, and changelog to link to relevant sections, private reporting, and release information.
 - Added checklists for final checks and pull requests, a Claude Code settings table, and a release index in this changelog.

@@ -3,7 +3,7 @@
 [![Find or open a GitHub issue](https://img.shields.io/badge/Public%20support-GitHub%20Issues-0969da)](https://github.com/ChangYeop-Yang/Universal-SystemKit/issues)
 [![Read the private security reporting policy](https://img.shields.io/badge/Security-Private%20reports-8250df)](SECURITY.md)
 
-Get help installing or using `SystemKit` and `SystemKit_Objc`, report a bug, or suggest an improvement.
+Find out where to ask for help with `SystemKit` or `SystemKit_Objc`, report a bug, or request a feature.
 
 ## 📚 Read the documentation
 
@@ -23,7 +23,7 @@ Search existing issues first. If an issue already covers your question, add any 
 
 ## 🐛 Report a bug
 
-Search open and closed issues for the API name or error message. If possible, check whether the bug still occurs on the latest stable release. If you cannot update, say which version you tried and what keeps you on it. [GitHub Issues](https://github.com/ChangYeop-Yang/Universal-SystemKit/issues)
+Search open and closed issues for the API name or error message. If possible, check whether the bug still occurs on the latest stable release. If you cannot update, include the version you use and the reason you need to stay on it. [GitHub Issues](https://github.com/ChangYeop-Yang/Universal-SystemKit/issues)
 
 <details>
 <summary>Copy a bug report outline</summary>

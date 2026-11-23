@@ -22,7 +22,7 @@ Report security issues in either SwiftPM product (`SystemKit` or `SystemKit_Objc
 
 | Where you found the issue | What to report |
 | --- | --- |
-| A tagged release | Give the exact package version your app resolved. You can find it in the SystemKit entry in your app's `Package.resolved`. |
+| A tagged release | Give the exact package version your app resolved. Look for `universal-systemkit` in your app's `Package.resolved`. |
 | A checkout of `main` or a pinned revision | Give the commit SHA and mention any local changes that affect the result. |
 | An older release | Send the version you used, even if you cannot check a newer one. The maintainer will assess which versions are affected and whether a fix can be applied to an older release. |
 | A dependency | Report a dependency issue to its maintainers through their private channel. If SystemKit users may also be affected, send this project the dependency name, resolved version, relevant usage, and any public advisory. |
@@ -65,7 +65,7 @@ Known exposure or temporary mitigation:
 ## 🔎 What happens after a report
 
 1. **First response.** Within 7 calendar days of receipt, a maintainer will acknowledge the report and explain the next step or ask for missing details. Investigation and release dates depend on the issue.
-2. **Assessment.** The maintainer reviews the reported behavior, affected products and versions, required access, and likely impact. If the report is a duplicate, belongs upstream, or cannot be confirmed, the maintainer will explain the outcome to the extent they can share and identify any information that would help.
+2. **Assessment.** The maintainer reviews the reported behavior, affected products and versions, required access, and likely impact. If the report duplicates an earlier report, points to an issue in a dependency, or remains unconfirmed, the maintainer will share what they can about the outcome and explain whether more information would help.
 3. **Fix and verification.** For a confirmed issue, the maintainer considers a fix or a temporary way to reduce exposure. They may ask you to verify a proposed change with sample data. Use the private thread for findings and status questions while the work is underway.
 4. **Coordinated disclosure.** Discuss publication timing in the private thread so users can act when details become public. A published notice should identify affected products and versions, conditions for exposure, and an upgrade or mitigation. Tell the maintainer whether you would like public credit and which name to use. Public credit requires your consent.
 

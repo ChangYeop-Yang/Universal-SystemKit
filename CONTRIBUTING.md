@@ -11,7 +11,7 @@ Search [open and closed issues](https://github.com/ChangYeop-Yang/Universal-Syst
 
 - The library product (`SystemKit` or `SystemKit_Objc`), the API you used, and the package version or commit.
 - The Apple platform and OS version, whether you used a device or simulator, and your Xcode and Swift versions.
-- The shortest steps or Swift sample that reproduce the problem, followed by what you expected and what happened. Include relevant error messages or logs with private data removed.
+- A short list of steps or a small Swift sample that shows how to reproduce the problem. Describe what you expected and what happened. Include relevant error messages or logs with private data removed.
 
 For a feature request, describe the use case and how it would help package users. Discuss public API changes, new dependencies, or changes that affect existing callers in an issue before starting a pull request.
 
