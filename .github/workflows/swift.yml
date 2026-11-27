@@ -6,7 +6,7 @@ name: "🐦 Swift Workflow: Build the Swift Package"
 # Use the Run workflow button to start a build without making a change.
 on:
   push:
-    branches: [main]
+    branches: [main, refactor/systemkit-layout]
 
   pull_request:
     branches: [main]
@@ -67,6 +67,9 @@ jobs:
         run: |
           bash .github/scripts/log-ci-step.sh "Test Swift package as a dependency" swift-consumer.log \
             bash .github/scripts/smoke-test-swift-package.sh
+
+      - name: Test AES migration
+        run: swift test --filter SecurityMigrationTests
 
       # Keep the tool and build logs available when a step fails after checkout.
       - name: 📦 Upload build logs

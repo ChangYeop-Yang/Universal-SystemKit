@@ -21,10 +21,12 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ## [Unreleased]
 
+- Group Swift sources by feature and move usage guides to `Documents/Guide`.
+
 ### Added
 
 - Added a support guide with links for questions, bug reports, feature requests, and private security reports, plus a bug report outline. [Support guide](SUPPORT.md)
-- Use `SKDispatchFileMonitor` to watch a file or folder for selected events, such as writes and deletions. Pass an event mask and a handler, then call `start()` and `stop()` to control monitoring. [File monitor guide](Document/SKDispatchFileMonitor.md)
+- Use `SKDispatchFileMonitor` to watch a file or folder for selected events, such as writes and deletions. Pass an event mask and a handler, then call `start()` and `stop()` to control monitoring. [File monitor guide](Documents/Guide/SKDispatchFileMonitor.md)
 - On macOS, use `SKSystemProcessResource` to look up a process by PID or list processes with details such as resident memory, virtual memory, and thread counts.
 - Declared tvOS 13, watchOS 6, and visionOS 1 as SwiftPM deployment targets. CI checks these platforms with simulator builds. APIs such as `SKSystemProcessResource` remain limited to macOS.
 - Added a SwiftPM consumer test that imports `SystemKit` and `SystemKit_Objc`, builds a release executable, and runs it. This checks that both products can be linked from a separate package. CI also runs SwiftLint, CodeQL for Swift, and the Xcode static analyzer for Objective-C++.
@@ -65,7 +67,7 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ### Added
 
-- Added the `SystemKit_Objc` product with `SKSecurity` for AES encryption and decryption. Add this product to your target to use the Objective-C API. [SKSecurity guide](Document/SKSecurity.md)
+- Added the `SystemKit_Objc` product with `SKSecurity` for AES encryption and decryption. Add this product to your target to use the Objective-C API. [SKSecurity guide](Documents/Guide/SKSecurity.md)
 - Added `SKAtomicValue` for synchronized reads and writes. Use `mutate` when a change needs to read and update the value in a single operation.
 
 ## [2.3.1] - 2023-07-20
