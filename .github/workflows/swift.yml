@@ -68,6 +68,13 @@ jobs:
           bash .github/scripts/log-ci-step.sh "Test Swift package as a dependency" swift-consumer.log \
             bash .github/scripts/smoke-test-swift-package.sh
 
+      - name: Verify packaged privacy manifest
+        run: |
+          resource=$(find "$(swift build --show-bin-path)" -path '*SystemKit_SystemKit.bundle/*' -name PrivacyInfo.xcprivacy -print | head -1)
+          test -n "$resource"
+          plutil -lint "$resource"
+          cmp Sources/SystemKit/PrivacyInfo.xcprivacy "$resource"
+
       - name: Test AES migration
         id: migration
         run: |
