@@ -85,7 +85,7 @@ let package = Package(
                 cSettings: [
                     .headerSearchPath(".")
                 ]),
-        .testTarget(name: "SecurityMigrationTests", dependencies: [InfoPackage.PackageObjcName],
+        .testTarget(name: "SecurityMigrationTests", dependencies: [.target(name: InfoPackage.PackageObjcName)],
                     exclude: ["README.md"])
     ],
     // The list of Swift versions with which this package is compatible.
