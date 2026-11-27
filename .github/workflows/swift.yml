@@ -6,7 +6,7 @@ name: "🐦 Swift Workflow: Build the Swift Package"
 # Use the Run workflow button to start a build without making a change.
 on:
   push:
-    branches: [main, refactor/systemkit-layout]
+    branches: [main]
 
   pull_request:
     branches: [main]
