@@ -38,6 +38,22 @@ final class SecurityMigrationTests: XCTestCase {
         XCTAssertEqual(result.map { String(format: "%02x", $0) }.joined(), "0143db63ee66b0cdff9f69917680151e")
     }
 
+    func testLegacyInputBoundaries() {
+        for capacity in [16, 24, 32] {
+            var buffer = [CChar](repeating: 0, count: capacity)
+            let fits = String(repeating: "a", count: capacity - 1) as NSString
+            XCTAssertTrue(fits.getCString(&buffer, maxLength: capacity, encoding: String.Encoding.utf8.rawValue))
+            for text in [String(repeating: "a", count: capacity),
+                         String(repeating: "a", count: 2 * capacity),
+                         String(repeating: "é", count: capacity / 2)] {
+                XCTAssertFalse((text as NSString).getCString(&buffer, maxLength: capacity,
+                                                             encoding: String.Encoding.utf8.rawValue))
+            }
+        }
+        let generated = SKSecurity.shared().createInitializationVector()
+        XCTAssertEqual(generated.utf8.count, 16)
+    }
+
     func testLegacyCiphertexts() throws {
         let legacy = SKSecurity.shared()
         for (size, kind) in [(16, SKSecurityAESType.AES128), (24, .AES192), (32, .AES256)] {

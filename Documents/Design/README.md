@@ -4,7 +4,7 @@
 
 ## Overview
 
-Holds design decisions about package structure and component responsibilities.
+Holds design decisions about package structure and component responsibilities. See [Package layout](PackageLayout.md) for target boundaries and encryption compatibility.
 
 ---
 
