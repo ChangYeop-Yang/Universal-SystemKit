@@ -69,7 +69,9 @@ jobs:
             bash .github/scripts/smoke-test-swift-package.sh
 
       - name: Test AES migration
-        run: swift test --filter SecurityMigrationTests
+        id: migration
+        run: |
+          bash .github/scripts/log-ci-step.sh "Test AES migration" aes-tests.log swift test --filter SecurityMigrationTests
 
       # Keep the tool and build logs available when a step fails after checkout.
       - name: 📦 Upload build logs
@@ -97,6 +99,7 @@ jobs:
           | Check Xcode and Swift versions | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.toolchain.outcome || 'skipped'] }} |
           | Build Swift package | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.build.outcome || 'skipped'] }} |
           | Test Swift package as a dependency | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.smoke_test.outcome || 'skipped'] }} |
+          | Test AES migration | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.migration.outcome || 'skipped'] }} |
           | Upload build logs | ${{ fromJSON(env.SUMMARY_RESULTS)[steps.logs.outcome || 'skipped'] }} |
 
           ${{ steps.logs.outputs.artifact-url && format('📦 [Download build logs]({0})', steps.logs.outputs.artifact-url) || '📦 No artifact was uploaded.' }}

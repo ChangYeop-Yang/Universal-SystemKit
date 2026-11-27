@@ -6,7 +6,7 @@ name: "🍎 Apple Platform Builds Workflow: Build for Apple Platforms"
 # Use the Run workflow button to repeat the builds on demand.
 on:
   push:
-    branches: [main]
+    branches: [main, refactor/systemkit-layout]
 
   pull_request:
     branches: [main]

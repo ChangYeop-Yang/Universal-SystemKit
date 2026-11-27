@@ -64,9 +64,12 @@ final class SecurityMigrationTests: XCTestCase {
             for count in [0, 1, 15, 16, 17, 32] {
                 let plain = Data(repeating: 0x41, count: count)
                 let original = legacy.encrypt(key, kind, initializationVector, plain)
-                let converted = try crypt(CCOperation(kCCEncrypt), key: keyBytes, initializationVector: ivBytes, input: plain)
+                let converted = try crypt(CCOperation(kCCEncrypt), key: keyBytes,
+                                          initializationVector: ivBytes, input: plain)
                 XCTAssertEqual(original, converted)
-                XCTAssertEqual(try crypt(CCOperation(kCCDecrypt), key: keyBytes, initializationVector: ivBytes, input: original), plain)
+                let decoded = try crypt(CCOperation(kCCDecrypt), key: keyBytes,
+                                        initializationVector: ivBytes, input: original)
+                XCTAssertEqual(decoded, plain)
                 XCTAssertEqual(legacy.decrypt(key, kind, initializationVector, converted), plain)
             }
         }
