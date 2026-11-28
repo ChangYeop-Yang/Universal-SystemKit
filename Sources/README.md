@@ -1,10 +1,10 @@
 # 📂 Sources
 
-[![Open SystemKit](https://img.shields.io/badge/Open-SystemKit-blue)](SystemKit/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains the Swift package library target.
+## Overview
 
-SystemKit is the Swift package target in this directory. Its feature folders compile into the same module, so clients use a single import.
+The Swift library lives in `SystemKit/`. Its feature folders compile together, so a client can use file, network and system APIs through the same `import SystemKit` statement.
 
 ## Contents
 

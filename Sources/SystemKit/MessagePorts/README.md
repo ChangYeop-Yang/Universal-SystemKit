@@ -1,10 +1,12 @@
 # 📂 MessagePorts
 
-[![Open SKMessagePort+Define.swift](https://img.shields.io/badge/Open-SKMessagePort%2BDefine.swift-blue)](SKMessagePort%2BDefine.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Creates local and remote message ports and handles requests.
+## Overview
 
-SKMessagePort manages local and remote Core Foundation ports. The companion definitions describe requests, replies and errors.
+`listen(dispatch:info:_:)` creates a named local Core Foundation message port and schedules its callback on the supplied queue. Its Boolean return value indicates whether the port is valid.
+
+`send` opens a remote port and sends a message ID and a Data payload. The result reports delivery status. An empty payload produces a transport error once the remote port has been opened. Send and receive timeouts both default to zero.
 
 ## Contents
 

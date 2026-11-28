@@ -1,10 +1,10 @@
 # 📂 xcode
 
-[![Open package.xcworkspace](https://img.shields.io/badge/Open-package.xcworkspace-blue)](package.xcworkspace/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains the Xcode workspace used to open the Swift package.
+## Overview
 
-Open the package workspace to inspect the package in Xcode. Its shared descriptor is stored in the workspace bundle.
+The `package.xcworkspace` bundle stores the shared workspace descriptor that Xcode uses when opening the package.
 
 ## Contents
 

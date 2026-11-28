@@ -1,10 +1,10 @@
 # 📂 Design
 
-[![Open PackageLayout.md](https://img.shields.io/badge/Open-PackageLayout.md-blue)](PackageLayout.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Holds design decisions about package structure and component responsibilities. See [Package layout](PackageLayout.md) for target boundaries and encryption compatibility.
+## Overview
 
-PackageLayout.md records how feature folders map to the Swift module and why the encryption migration still needs the Objective-C product.
+The package layout record explains how the feature folders form one Swift module. Its encryption section traces the legacy string-to-buffer conversion and explains why the Objective-C product is still available to existing clients.
 
 ## Contents
 

@@ -1,10 +1,12 @@
 # 📂 Concurrency
 
-[![Open SKAsyncOperation.swift](https://img.shields.io/badge/Open-SKAsyncOperation.swift-blue)](SKAsyncOperation.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Provides dispatch timers, asynchronous operations and synchronized value access.
+## Overview
 
-Use SKAtomicValue for synchronized value access, SKAsyncOperation for Operation state transitions, and SKDispatchTimer for scheduled callbacks.
+`SKAtomicValue` serializes reads and writes on a private queue. Use its `mutate` method for a read-modify-write operation such as incrementing a counter. Separate reads and writes each acquire the queue independently.
+
+`SKAsyncOperation` exposes execution state to Foundation's operation queue. `SKDispatchTimer` schedules callbacks and keeps its timer state in the companion definition file.
 
 ## Contents
 

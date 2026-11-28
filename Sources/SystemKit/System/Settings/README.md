@@ -1,10 +1,10 @@
 # 📂 Settings
 
-[![Open SKPermissionDefine.swift](https://img.shields.io/badge/Open-SKPermissionDefine.swift-blue)](SKPermissionDefine.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Defines macOS preference pane URLs and privacy service identifiers.
+## Overview
 
-SKPermissionDefine lists privacy service identifiers. SKPreferencePaneDefine groups URLs for macOS settings panes, including accessibility and sharing.
+`SKPermissionServiceName` identifies privacy services such as contacts and screen recording. The preference pane enums describe macOS settings URLs for areas such as accessibility, sharing and privacy. Use the service-name file when looking up a permission identifier and the pane definitions when choosing a settings destination.
 
 ## Contents
 

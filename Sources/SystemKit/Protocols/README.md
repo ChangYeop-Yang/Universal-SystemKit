@@ -1,10 +1,10 @@
 # 📂 Protocols
 
-[![Open SKClass+Protocol.swift](https://img.shields.io/badge/Open-SKClass%2BProtocol.swift-blue)](SKClass%2BProtocol.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Defines the shared SKClass and SKOperation contracts.
+## Overview
 
-SKClass defines shared labels and identifiers. SKOperation extends that contract with initialization requirements and optional payload and timer properties.
+`SKClass` requires a static label and identifier and allows conforming classes to expose dispatch or operation queues. `SKOperation` inherits that contract, requires initialization with a name and quality of service, and declares optional payload and timer properties.
 
 ## Contents
 

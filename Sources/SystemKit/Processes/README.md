@@ -1,10 +1,12 @@
 # 📂 Processes
 
-[![Open SKIOProcess.swift](https://img.shields.io/badge/Open-SKIOProcess.swift-blue)](SKIOProcess.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Runs processes, observes signals and reports per-process resource usage.
+## Overview
 
-Use SKProcess for launching a command, SKProcessMonitor for observing events, and SKSignal for POSIX signals. SKIOProcess and the resource files inspect running processes.
+Use `SKProcess` to launch a command and `SKProcessMonitor` to subscribe to process events. `SKSignal` observes POSIX signals through a dispatch source.
+
+For inspection, `SKIOProcessAPI` lists processes and their identifiers. The `SKSystemProcessResource` files group the resource query, its supporting lookups and the type used to return per-process measurements.
 
 ## Contents
 

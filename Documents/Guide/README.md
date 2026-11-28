@@ -1,10 +1,10 @@
 # 📂 Guide
 
-[![Open SKAsyncOperation.md](https://img.shields.io/badge/Open-SKAsyncOperation.md-blue)](SKAsyncOperation.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains usage examples for the library APIs.
+## Overview
 
-Start with the API you plan to call. File monitoring and file I/O have separate guides, as do process launch and process observation.
+Each guide covers a library API. For file operations, choose file reads and writes, file change events, or file locking according to the operation you need. For process work, the launch guide covers running a command and the events guide covers observing a running process.
 
 ## Contents
 

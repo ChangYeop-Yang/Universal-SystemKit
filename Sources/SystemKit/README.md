@@ -1,10 +1,12 @@
 # 📂 SystemKit
 
-[![Open Concurrency](https://img.shields.io/badge/Open-Concurrency-blue)](Concurrency/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Defines the library identity, shared logger and package privacy resource.
+## Overview
 
-SystemKit.swift declares the library version and shared logger. PrivacyInfo.xcprivacy is the target resource that ships with the library.
+`SystemKit.swift` declares the module label, version and shared logger. `PrivacyInfo.xcprivacy` is processed as a target resource. The directories below organize Swift declarations by feature within this target.
+
+For host-wide measurements, open `System/`. For a specific running process, open `Processes/`. File reads, change notifications and locks are grouped in `FileSystem/`, including operations implemented with Dispatch.
 
 ## Contents
 

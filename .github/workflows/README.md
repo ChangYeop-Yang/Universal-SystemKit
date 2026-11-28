@@ -1,10 +1,10 @@
 # 📂 workflows
 
-[![Open api-reference.yml](https://img.shields.io/badge/Open-api--reference.yml-blue)](api-reference.yml)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Defines GitHub Actions jobs for builds, analysis, documentation and linting.
+## Overview
 
-Choose swift.yml to verify a downstream package can link both products. The Apple platform matrix builds each library for five SDK destinations.
+`swift.yml` builds the package on macOS, runs a downstream consumer, checks the bundled privacy manifest and exercises AES migration. `apple-platforms.yml` builds both library schemes for macOS and four simulator destinations. For a style finding, open the SwiftLint job. For a security finding, check the Swift CodeQL or Objective-C++ analyzer job.
 
 ## Contents
 

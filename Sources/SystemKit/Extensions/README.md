@@ -1,10 +1,10 @@
 # 📂 Extensions
 
-[![Open SKData+Extension.swift](https://img.shields.io/badge/Open-SKData%2BExtension.swift-blue)](SKData%2BExtension.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Extends Data, String and Double with conversion and rounding helpers.
+## Overview
 
-Start with the extended type. String and Data provide encoding helpers, while Double provides rounding to two decimal places.
+Choose a file by the value you already have. The String extension provides Base64 conversion and bridges to Core Foundation strings and notification names. The Data extension offers Base64 decoding. In the Double extension, `round2dp` currently multiplies and divides by ten, so its result is rounded to one decimal place.
 
 ## Contents
 

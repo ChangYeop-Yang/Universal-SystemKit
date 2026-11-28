@@ -1,10 +1,10 @@
 # 📂 Diagnostics
 
-[![Open SKCrashReporter.swift](https://img.shields.io/badge/Open-SKCrashReporter.swift-blue)](SKCrashReporter.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Collects crash reports through PLCrashReporter.
+## Overview
 
-SKCrashReporter enables crash collection and reads or saves the resulting report. Its implementation wraps PLCrashReporter.
+On iOS and macOS, `SKCrashReporter.enable(handleSignal:)` installs a PLCrashReporter callback and checks for a pending crash report from an earlier run. If it finds one, it invokes the save path. `getCrashReport` reads report data and produces a text representation. Disabling the reporter purges its pending report and releases the wrapper's reference.
 
 ## Contents
 

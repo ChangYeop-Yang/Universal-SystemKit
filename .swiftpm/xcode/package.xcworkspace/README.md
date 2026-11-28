@@ -1,10 +1,10 @@
 # 📂 package.xcworkspace
 
-[![Open contents.xcworkspacedata](https://img.shields.io/badge/Open-contents.xcworkspacedata-blue)](contents.xcworkspacedata)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Stores the Xcode workspace document for this package.
+## Overview
 
-The workspace descriptor has a single self: file reference. Xcode resolves this reference relative to the workspace.
+`contents.xcworkspacedata` is the XML workspace descriptor. Its single `FileRef` uses the location `self:` to refer to the workspace itself.
 
 ## Contents
 

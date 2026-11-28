@@ -1,10 +1,10 @@
 # 📂 .swiftpm
 
-[![Open xcode](https://img.shields.io/badge/Open-xcode-blue)](xcode/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains package workspace settings for Xcode.
+## Overview
 
-The tracked Xcode settings live under xcode. The workspace records how Xcode opens this package.
+The shared Xcode workspace settings for this Swift package live under `xcode/`.
 
 ## Contents
 

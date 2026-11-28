@@ -1,10 +1,10 @@
 # 📂 ObjcSources
 
-[![Open Cryptor](https://img.shields.io/badge/Open-Cryptor-blue)](Cryptor/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains the Objective-C library target and its public headers.
+## Overview
 
-The Cryptor directory supplies the public interface and implementation for the SystemKit_Objc library product.
+SwiftPM exposes this target as `SystemKit_Objc`. Its `Cryptor/` folder contains the public Objective-C declarations and the Objective-C++ source that implements them.
 
 ## Contents
 

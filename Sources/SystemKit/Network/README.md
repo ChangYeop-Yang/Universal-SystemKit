@@ -1,10 +1,12 @@
 # 📂 Network
 
-[![Open SKNetworkInterface.swift](https://img.shields.io/badge/Open-SKNetworkInterface.swift-blue)](SKNetworkInterface.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Enumerates network interfaces and observes connection changes.
+## Overview
 
-SKNetworkInterface enumerates interfaces and their addresses. SKNetworkMonitor reports changes in connectivity and connection type.
+Use `SKNetworkInterface.allInterfaces` for a snapshot of local interfaces and addresses on iOS or macOS. Use `SKNetworkMonitor` to follow changes over time. Pass a handler at initialization and call `startMonitor()` to begin.
+
+The monitor delivers path updates on its background queue. Dispatch UI work to the main thread in your handler. Call `stopMonitor()` to cancel the underlying NWPathMonitor.
 
 ## Contents
 

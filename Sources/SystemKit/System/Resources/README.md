@@ -1,10 +1,12 @@
 # 📂 Resources
 
-[![Open SKIOBattery.swift](https://img.shields.io/badge/Open-SKIOBattery.swift-blue)](SKIOBattery.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Reports battery, processor, memory and disk statistics.
+## Overview
 
-SKIOBattery reads battery state. SKIOSystem and SKSystemResource query host statistics such as CPU load and memory usage. The companion files define results and IOKit return codes.
+`SKIOBattery` opens the battery service to read charge, temperature and power state. `SKIOSystem` reads host CPU, memory and power information. `SKIOResult` collects related readings into result types.
+
+For disk space, CPU and memory measurements exposed by `SKSystemResource`, read the additions file alongside the companion result definitions. IOKit return codes are listed separately in `SKIOReturn.swift`.
 
 ## Contents
 

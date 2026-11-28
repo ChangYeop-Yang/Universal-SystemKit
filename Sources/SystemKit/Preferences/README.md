@@ -1,10 +1,10 @@
 # 📂 Preferences
 
-[![Open SKUserDefault.swift](https://img.shields.io/badge/Open-SKUserDefault.swift-blue)](SKUserDefault.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Stores application preferences through UserDefaults.
+## Overview
 
-SKUserDefaults reads a typed value from UserDefaults.standard. If the key is missing or the stored value has a different type, the getter returns the configured default.
+`SKUserDefaults<Value>` binds a property to a key in `UserDefaults.standard`. A read casts the stored object to `Value` and falls back to the default supplied at initialization if the key is missing or the type differs. The wrapped value is optional, and the default is nil unless supplied.
 
 ## Contents
 

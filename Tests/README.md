@@ -1,10 +1,10 @@
 # 📂 Tests
 
-[![Open SecurityMigrationTests](https://img.shields.io/badge/Open-SecurityMigrationTests-blue)](SecurityMigrationTests/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Contains package test targets.
+## Overview
 
-The SecurityMigrationTests target links the existing Objective-C product so it can compare its ciphertext with a Swift implementation.
+The package test target checks whether a Swift CommonCrypto implementation can read and reproduce ciphertext from `SystemKit_Objc`. Run `swift test --filter SecurityMigrationTests` from the package root on macOS.
 
 ## Contents
 

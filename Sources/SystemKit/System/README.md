@@ -1,10 +1,12 @@
 # 📂 System
 
-[![Open Finder](https://img.shields.io/badge/Open-Finder-blue)](Finder/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Exposes operating system and device information through SKSystem.
+## Overview
 
-SKSystem.swift contains shared system queries. The iOS and macOS extensions group calls that depend on their respective SDKs. The Define file holds result types.
+`SKSystem.swift` contains shared queries such as the application version and device model. Start with the platform extension for SDK-specific calls. The iOS file collects device and radio information. The macOS file includes Rosetta detection, display information and system settings actions.
+
+The `Resources/` directory groups host measurements. `Settings/` holds the identifiers used by settings actions, and `Finder/` contains the Finder Sync integration.
 
 ## Contents
 

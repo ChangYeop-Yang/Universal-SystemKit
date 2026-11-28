@@ -1,10 +1,12 @@
 # 📂 SecurityMigrationTests
 
-[![Open SecurityMigrationTests.swift](https://img.shields.io/badge/Open-SecurityMigrationTests.swift-blue)](SecurityMigrationTests.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Compares the Swift AES implementation with a known ciphertext and the Objective-C library.
+## Overview
 
-The tests cover a known AES ciphertext, UTF-8 buffer limits and cross-decryption for three AES key sizes. Run swift test --filter SecurityMigrationTests on macOS.
+The known-answer test encrypts an empty payload with a zero AES-128 key and IV, then checks the ciphertext against a fixed value. The boundary test checks which UTF-8 strings fit the legacy buffers, including the NUL terminator.
+
+The compatibility test exercises 128-, 192- and 256-bit keys and payload sizes around the AES block boundary. It compares ciphertext bytes and decrypts each implementation's output with the other implementation. Its key and IV strings fit the legacy buffers.
 
 ## Contents
 

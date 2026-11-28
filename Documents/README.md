@@ -1,10 +1,10 @@
 # 📂 Documents
 
-[![Open Design](https://img.shields.io/badge/Open-Design-blue)](Design/README.md)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Organizes project design records and API usage guides.
+## Overview
 
-Choose Guide for examples of calling an API. Choose Design for the reasons behind package layout and compatibility decisions.
+Choose `Guide/` for examples of calling an API. Choose `Design/` to understand a decision about package boundaries or compatibility.
 
 ## Contents
 

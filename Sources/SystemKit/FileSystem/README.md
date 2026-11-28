@@ -1,10 +1,12 @@
 # 📂 FileSystem
 
-[![Open SKDispatchFile.swift](https://img.shields.io/badge/Open-SKDispatchFile.swift-blue)](SKDispatchFile.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Reads, writes, monitors and locks files.
+## Overview
 
-SKDispatchFile reads and writes file contents. SKDispatchFileMonitor watches for file events. SKFileLock coordinates access through a file descriptor.
+`SKDispatchFile` accepts a path and a completion handler for a read or write. Use `SKDispatchFileMonitor` to receive change events between `start()` and `stop()`. Its companion file defines the event handler type.
+
+`SKFileLock` can work with a file descriptor. Its `lock()` requests an exclusive, nonblocking lock and returns whether it succeeded. Check that result before doing work that requires exclusive access, then call `unlock()`.
 
 ## Contents
 

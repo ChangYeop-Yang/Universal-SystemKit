@@ -1,10 +1,10 @@
 # 📂 Finder
 
-[![Open SKFinderExtension.swift](https://img.shields.io/badge/Open-SKFinderExtension.swift-blue)](SKFinderExtension.swift)
+[![Browse folder contents](https://img.shields.io/badge/Browse-Contents-blue)](#contents)
 
-Manages Finder Sync extensions on macOS.
+## Overview
 
-SKFinderExtension checks Finder Sync status and uses pluginkit to register, enable or disable an extension.
+`SKFinderExtension.isExtensionEnabled` reads the status from FinderSync. The management methods run the macOS pluginkit tool. Registration takes the extension path, while enable and disable pass their argument to pluginkit's identifier option. The caller chooses whether to wait for the command to exit.
 
 ## Contents
 
