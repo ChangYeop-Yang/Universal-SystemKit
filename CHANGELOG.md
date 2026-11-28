@@ -21,6 +21,8 @@ This file lists notable changes to Universal SystemKit. The format follows [Keep
 
 ## [Unreleased]
 
+- Added file and directory indexes to the folder READMEs, with notes on when to use each feature.
+
 - Group Swift sources by feature and move usage guides to `Documents/Guide`.
 
 ### Added

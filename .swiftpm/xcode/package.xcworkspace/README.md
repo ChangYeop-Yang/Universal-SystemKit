@@ -1,10 +1,14 @@
-# package.xcworkspace
+# 📂 package.xcworkspace
 
-[![Folder overview](https://img.shields.io/badge/Folder-Overview-blue)](#overview)
-
-## Overview
+[![Open contents.xcworkspacedata](https://img.shields.io/badge/Open-contents.xcworkspacedata-blue)](contents.xcworkspacedata)
 
 Stores the Xcode workspace document for this package.
+
+The workspace descriptor has a single self: file reference. Xcode resolves this reference relative to the workspace.
+
+## Contents
+
+- [contents.xcworkspacedata](contents.xcworkspacedata)
 
 ---
 
