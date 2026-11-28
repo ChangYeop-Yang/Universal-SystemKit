@@ -19,7 +19,7 @@ Report suspected vulnerabilities privately. For the reporting address, the respo
 
 ## 🛠️ Set up the Swift package
 
-Use macOS with Xcode, Swift 5.9 or later, and the SDKs for the platforms you plan to build. [Package.swift](Package.swift) lists the minimum Swift tools and OS versions. The two library products live in [Sources](Sources) and [ObjcSources](ObjcSources). Usage guides live in [Document](Document).
+Use macOS with Xcode, Swift 5.9 or later, and the SDKs for the platforms you plan to build. [Package.swift](Package.swift) lists the minimum Swift tools and OS versions. The two library products live in [SystemKit](Sources/SystemKit) and [ObjcSources](ObjcSources). Design decisions live in [Documents/Design](Documents/Design). Usage guides live in [Documents/Guide](Documents/Guide).
 
 Fork the repository on GitHub, replace `YOUR-USERNAME` with your GitHub username, and run these commands.
 

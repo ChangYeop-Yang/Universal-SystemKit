@@ -10,7 +10,7 @@ Find out where to ask for help with `SystemKit` or `SystemKit_Objc`, report a bu
 | Resource | Use it to find |
 | --- | --- |
 | [README](README.md) | SwiftPM installation and links to usage examples. |
-| [API usage guides](Document/) | Examples for specific APIs, including file monitoring and system information. |
+| [API usage guides](Documents/Guide/) | Examples for specific APIs, including file monitoring and system information. |
 | [Package.swift](Package.swift) | The minimum Apple OS and Swift tools versions declared on `main`. For a tagged release, check the manifest at that tag. |
 | [Changelog](CHANGELOG.md) | Changes by release and updates still under development. |
 | [Contributing guide](CONTRIBUTING.md) | How to report an issue, run checks, and submit a pull request. |

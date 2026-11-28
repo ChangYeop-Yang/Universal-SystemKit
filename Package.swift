@@ -60,15 +60,33 @@ let package = Package(
     targets: [
         .target(name: InfoPackage.PackageName,
                 dependencies: [RemotePackage.SwiftLog.target, RemotePackage.SwiftHTTPTypes.target, RemotePackage.PLCrashReporter.target],
-                path: InfoPackage.PackagePath,
+                exclude: [
+                    "Concurrency/README.md",
+                    "Diagnostics/README.md",
+                    "Extensions/README.md",
+                    "FileSystem/README.md",
+                    "MessagePorts/README.md",
+                    "Network/README.md",
+                    "Preferences/README.md",
+                    "Processes/README.md",
+                    "Protocols/README.md",
+                    "README.md",
+                    "System/Finder/README.md",
+                    "System/README.md",
+                    "System/Resources/README.md",
+                    "System/Settings/README.md"
+                ],
                 resources: [.process("PrivacyInfo.xcprivacy")]),
         .target(name: InfoPackage.PackageObjcName,
                 path: InfoPackage.PackageObjcPath, 
+                exclude: ["README.md", "Cryptor/README.md"],
                 sources: ["Cryptor/SKSecurity.mm"],
                 publicHeadersPath: ".",
                 cSettings: [
                     .headerSearchPath(".")
-                ])
+                ]),
+        .testTarget(name: "SecurityMigrationTests", dependencies: [.target(name: InfoPackage.PackageObjcName)],
+                    exclude: ["README.md"])
     ],
     // The list of Swift versions with which this package is compatible.
     swiftLanguageVersions: [.v5]
@@ -86,8 +104,6 @@ public struct InfoPackage {
     
     // MARK: String Properties
     public static let PackageName: String = "SystemKit"
-    
-    public static let PackagePath: String = "Sources"
     
     public static let PackageObjcName: String = "SystemKit_Objc"
     
